@@ -1,4 +1,5 @@
 sceneSetups:
-- path: Assets/io scene.unity
+- path: C:/Users/Laure/Documents/GitHub/JLKLoopband/Unitycode/Project 3 - training
+    beroerte/Assets/00 Scenes/Testscene for map.unity
   isLoaded: 1
   isActive: 1

@@ -1,1 +1,2 @@
-123456;Laure;niveau 3
+Laure Leirs;123456;niveau 3
+Christophe Claessens;123;Niveau2

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 public class ioWriter : MonoBehaviour
@@ -10,9 +11,12 @@ public class ioWriter : MonoBehaviour
     StreamReader sReader;
     StreamWriter sWriter;
     profile newProfile;
+    List<profile> Patients;
+    
     // Use this for initialization
     void Start()
     {
+        Patients = new List<profile>();
         readPatientData();
         writePatientData();
     }
@@ -30,13 +34,15 @@ public class ioWriter : MonoBehaviour
             string userData = sReader.ReadLine();
             while (userData != null)
             {
+                Debug.Log("test");
                 dataSplitted = userData.Split(';');
-                Debug.Log(dataSplitted[1]);
-                newProfile = new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2]);
+                Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2]));
                 userData = sReader.ReadLine();
+                
             }
 
-
+            Debug.Log(Patients.Count);
+         //   Patients.
         }
         catch
         {
@@ -51,8 +57,14 @@ public class ioWriter : MonoBehaviour
     {
         try
         {
-            sWriter = File.CreateText("profilesTest1.txt");
-            sWriter.WriteLine(newProfile.writePatientData());
+            sWriter = File.CreateText("profiles.txt");
+            //     sWriter.WriteLine(newProfile.writePatientData());
+            foreach (profile patientData in Patients)
+            {
+               sWriter.WriteLine( patientData.writePatientData());
+            }
+  //          sWriter.WriteLine("123456;Laure Leirs;niveau 3");
+   //         sWriter.WriteLine("123;Christophe Claessens;Niveau2");
         }
         catch
         {
@@ -92,6 +104,6 @@ public class profile
     }
     public string writePatientData()
     {
-        return name + ';' + userNumber + ';' + skill;
+        return userNumber + ';' + name + ';' + skill;
     }
 }
