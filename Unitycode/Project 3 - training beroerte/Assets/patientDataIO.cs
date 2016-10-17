@@ -10,14 +10,28 @@ public class patientDataIO : MonoBehaviour {
     StreamWriter sWriter;
     profile newProfile;
     List<profile> Patients;
-    Dropdown possiblePatientSelect;
+    List<string> patientsToSort;
+    List<string> patientsToAdd;
+    
+
+    //ui public
+    public Dropdown possiblePatientSelect;
+    public Dropdown patientSearch;
+    public InputField inputSearch;
+    public Text txtProfileDetails;
+
     // Use this for initialization
     void Start()
     {
         Patients = new List<profile>();
+        patientsToSort = new List<string>();
+        patientsToAdd = new List<string>();
         readPatientData();
-        writePatientData();
-        
+        showPatientData();
+
+
+       // writePatientData();
+
     }
 
     // Update is called once per frame
@@ -44,7 +58,6 @@ public class patientDataIO : MonoBehaviour {
             string userData = sReader.ReadLine();
             while (userData != null)
             {
-                Debug.Log("test");
                 dataSplitted = userData.Split(';');
                 Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2]));
                 userData = sReader.ReadLine();
@@ -63,6 +76,89 @@ public class patientDataIO : MonoBehaviour {
             sReader.Close();
         }
     }
+
+    public void showPatientDetails()
+    {
+        foreach (profile patientDetailsToShow in Patients)
+        {
+            if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))
+            {
+                txtProfileDetails.text = patientDetailsToShow.showPatientDetails();
+            }
+        }
+       // txtProfileDetails.text = Patients patientsToAdd[possiblePatientSelect.value];
+    }
+
+    public void showPatientData()
+    {
+        inputSearch.text = inputSearch.text.ToLower();
+        patientsToSort.Clear();
+        patientsToAdd.Clear();
+        possiblePatientSelect.ClearOptions();
+        switch (patientSearch.value)
+        {
+            case 0:
+                foreach (profile patient in Patients)
+                {
+                    patientsToSort.Add(patient.UserName);
+                }
+                break;
+            case 1:
+                foreach (profile patient in Patients)
+                {
+                    patientsToSort.Add(patient.UserNumber);
+                }
+                break;
+
+            case 2:
+                foreach (profile patient in Patients)
+                {
+                    //   patientsToSort.Add(patient.UserSkill + " " + patient.UserName);
+                    patientsToSort.Add(patient.UserName);
+                }
+                break;
+        }
+        foreach (string patientDataToSort in patientsToSort)
+        {
+            /* for (int i = 0; i < patientDataToSort.Length; i++)
+             {
+            if( ! (patientDataToSort[i] == inputSearch.text[i]))
+                 {
+
+                 }
+
+             }*/
+            if (recursivePatientData(0, patientDataToSort))
+            {
+                patientsToAdd.Add(patientDataToSort);
+            }
+            
+        }
+        possiblePatientSelect.AddOptions(patientsToAdd);
+        showPatientDetails();
+    }
+    private bool recursivePatientData(int i, string patientDataToSort)
+    {
+        patientDataToSort = patientDataToSort.ToLower();
+        if (i == inputSearch.text.Length)
+        {
+            return true;
+        }
+        else
+        {
+            if (patientDataToSort[i] == inputSearch.text[i])
+            {
+                i++;
+                recursivePatientData(i, patientDataToSort);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     private void writePatientData()
     {
         try
@@ -92,6 +188,7 @@ public class profile
     string userNumber;
     string name;
     string skill;
+    
     public profile() { }
 
     public profile(string tUserNumber, string tName, string tSkill)
@@ -113,8 +210,28 @@ public class profile
         set { skill = value; }
         get { return skill; }
     }
+
+
+   // methods
     public string writePatientData()
     {
         return userNumber + ';' + name + ';' + skill;
     }
+    public bool patientSelectCheck(string nameToTest)
+    {
+        if (nameToTest == name || nameToTest == userNumber)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public string showPatientDetails()
+    {
+        
+      return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: " + skill;
+    }
+    
 }

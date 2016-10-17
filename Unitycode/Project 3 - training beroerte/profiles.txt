@@ -1,4 +1,4 @@
-123456;Laure Leirs;niveau 3
-123;Christophe Claessens;Niveau2
-123456;Laure Leirs;niveau 3
-123;Christophe Claessens;Niveau2
+1;Laure Leirs;niveau 1
+2;Christophe Claessens;niveau 2
+3;Jiska Baeten;niveau 3
+4;Kirsten Verhulst;niveau 4
