@@ -12,6 +12,7 @@ public class patientDataIO : MonoBehaviour {
     List<profile> Patients;
     List<string> patientsToSort;
     List<string> patientsToAdd;
+    bool patientFound;
     
 
     //ui public
@@ -19,10 +20,14 @@ public class patientDataIO : MonoBehaviour {
     public Dropdown patientSearch;
     public InputField inputSearch;
     public Text txtProfileDetails;
+    public GameObject addPatientInterface;
+    public GameObject patientViewInterface;
 
     // Use this for initialization
     void Start()
     {
+        addPatientInterface.SetActive( false);
+        patientViewInterface.SetActive(true);
         Patients = new List<profile>();
         patientsToSort = new List<string>();
         patientsToAdd = new List<string>();
@@ -41,11 +46,30 @@ public class patientDataIO : MonoBehaviour {
     }
 
 
-    void btnPatientAddClicked()
+    public void btnPatientAddClicked()
+    {
+        patientViewInterface.SetActive(false);
+        addPatientInterface.SetActive(true);
+    }
+    
+    public void btnPatientEditClicked()
+    {
+        btnPatientAddClicked();
+        foreach (profile patientDetailsToShow in Patients)
+        {
+            if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))
+            {
+               //change txtboxes to value
+            }
+        }
+    }
+
+    public void btnPatientDeleteClicked()
     {
 
     }
-    void btnPatientSelectClicked()
+
+    public void btnConfirmPatientAddClicked()
     {
 
     }
@@ -59,13 +83,12 @@ public class patientDataIO : MonoBehaviour {
             while (userData != null)
             {
                 dataSplitted = userData.Split(';');
-                Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2]));
+                Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4]));
                 userData = sReader.ReadLine();
 
             }
 
-            Debug.Log(Patients.Count);
-            Debug.Log(Patients[0]);
+
         }
         catch
         {
@@ -79,6 +102,7 @@ public class patientDataIO : MonoBehaviour {
 
     public void showPatientDetails()
     {
+      
         foreach (profile patientDetailsToShow in Patients)
         {
             if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))
@@ -86,11 +110,11 @@ public class patientDataIO : MonoBehaviour {
                 txtProfileDetails.text = patientDetailsToShow.showPatientDetails();
             }
         }
-       // txtProfileDetails.text = Patients patientsToAdd[possiblePatientSelect.value];
     }
 
     public void showPatientData()
     {
+        patientFound = false;
         inputSearch.text = inputSearch.text.ToLower();
         patientsToSort.Clear();
         patientsToAdd.Clear();
@@ -114,9 +138,10 @@ public class patientDataIO : MonoBehaviour {
                 foreach (profile patient in Patients)
                 {
                     //   patientsToSort.Add(patient.UserSkill + " " + patient.UserName);
-                    patientsToSort.Add(patient.UserName);
+                    patientsToSort.Add(patient.UserBirthday);
                 }
                 break;
+
         }
         foreach (string patientDataToSort in patientsToSort)
         {
@@ -131,17 +156,24 @@ public class patientDataIO : MonoBehaviour {
             if (recursivePatientData(0, patientDataToSort))
             {
                 patientsToAdd.Add(patientDataToSort);
+                patientFound = true;
             }
             
+        }
+        if (!patientFound)
+        {
+            patientsToAdd.Add("Niemand gevonden");
         }
         possiblePatientSelect.AddOptions(patientsToAdd);
         showPatientDetails();
     }
+
     private bool recursivePatientData(int i, string patientDataToSort)
     {
         patientDataToSort = patientDataToSort.ToLower();
-        if (i == inputSearch.text.Length)
+        if (i == inputSearch.text.Length || i == patientDataToSort.Length)
         {
+            Debug.Log(inputSearch.text + patientDataToSort);
             return true;
         }
         else
@@ -188,21 +220,26 @@ public class profile
     string userNumber;
     string name;
     string skill;
-    
+    string birthday;
+    string extraInfo;
     public profile() { }
 
-    public profile(string tUserNumber, string tName, string tSkill)
+    public profile(string tUserNumber, string tName, string tSkill, string tBirthday, string tExtraInfo)
     {
         userNumber = tUserNumber;
         name = tName;
         skill = tSkill;
+        birthday = tBirthday;
+        extraInfo = tExtraInfo;
     }
     public string UserNumber
     {
+        set { UserNumber = value; }
         get { return userNumber; }
     }
     public string UserName
     {
+        set { name = value; }
         get { return name; }
     }
     public string UserSkill
@@ -210,16 +247,26 @@ public class profile
         set { skill = value; }
         get { return skill; }
     }
+    public string UserBirthday
+    {
+        set { birthday = value; }
+        get { return birthday; }
+    }
+    public string UserExtraInfo
+    {
+        set { extraInfo = value; }
+        get { return extraInfo; }
+    }
 
 
    // methods
     public string writePatientData()
     {
-        return userNumber + ';' + name + ';' + skill;
+        return userNumber + ';' + name + ';' + skill + ";" + birthday + ";" + extraInfo;
     }
     public bool patientSelectCheck(string nameToTest)
     {
-        if (nameToTest == name || nameToTest == userNumber)
+        if (nameToTest == name || nameToTest == userNumber || nameToTest == birthday)
         {
             return true;
         }
@@ -231,7 +278,7 @@ public class profile
     public string showPatientDetails()
     {
         
-      return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: " + skill;
+      return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nextra info: " + extraInfo;
     }
     
 }
