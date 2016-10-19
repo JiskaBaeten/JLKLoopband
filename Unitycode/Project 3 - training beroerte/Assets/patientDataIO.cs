@@ -3,17 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
-public class patientDataIO : MonoBehaviour {
-    profile testProfile;
+public class patientDataIO : MonoBehaviour
+{
+    //to read and write patient data
     string[] dataSplitted;
     StreamReader sReader;
     StreamWriter sWriter;
-    profile newProfile;
-    List<profile> Patients;
+
+    //to manipulate patient data
+    List<profile> Patients; //overall patient list
+    List<profile> patientsToChange;
     List<string> patientsToSort;
     List<string> patientsToAdd;
-    bool patientFound;
-    
+    profile patientSelected; //player with wich the game will continue
+
+    //multiple methods
+    bool patientFound; //if any patient matches the search terms
+    bool editScreen; //check if the player was added from edit of add (if edit, delete old data)
+    int patientCount; //number of patients in system for patient number
+    string patientCountToString;
+
 
     //ui public
     public Dropdown possiblePatientSelect;
@@ -22,72 +31,177 @@ public class patientDataIO : MonoBehaviour {
     public Text txtProfileDetails;
     public GameObject addPatientInterface;
     public GameObject patientViewInterface;
+    public GameObject chooseSceneInterface;
+    public InputField inputName;
+    public InputField inputBirthday;
+    public InputField inputNumber;
+    public InputField inputExtra;
+    public InputField inputLevel;
+    public InputField inputGender;
+    public Text txtError;
 
-    // Use this for initialization
     void Start()
     {
-        addPatientInterface.SetActive( false);
-        patientViewInterface.SetActive(true);
+        editScreen = false;
+        showStartScreen();
         Patients = new List<profile>();
+        patientsToChange = new List<profile>();
         patientsToSort = new List<string>();
         patientsToAdd = new List<string>();
         readPatientData();
         showPatientData();
-
-
-       // writePatientData();
-
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void showStartScreen()
     {
+        addPatientInterface.SetActive(false);
+        patientViewInterface.SetActive(true);
+        chooseSceneInterface.SetActive(false);
+        txtError.gameObject.SetActive(false);
+    } //shows the interface with user data
 
-    }
-
-
-    public void btnPatientAddClicked()
+    public void changeInterfaceToAdd()
     {
         patientViewInterface.SetActive(false);
         addPatientInterface.SetActive(true);
-    }
-    
+
+    } //to open interface for adding data to user
+
+    public void btnPatientAddClicked()
+    {
+        patientsToSort.Clear();
+
+        foreach (profile patient in Patients)
+        {
+            patientsToSort.Add(patient.UserNumber);
+        }
+        patientCountToString = patientCount.ToString();
+        while (patientsToSort.Contains(patientCountToString)) //check if the patient number is already in system
+        {
+            patientCount++;
+            patientCountToString = patientCount.ToString();
+        }
+        inputNumber.text = patientCountToString;
+        changeInterfaceToAdd();
+    } //to add a patient from scratch
+
     public void btnPatientEditClicked()
     {
-        btnPatientAddClicked();
+        editScreen = true;
         foreach (profile patientDetailsToShow in Patients)
         {
-            if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))
+            if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value])) //search the selected user and add the data 
             {
-               //change txtboxes to value
+                inputNumber.text = patientDetailsToShow.UserNumber;
+                inputBirthday.text = patientDetailsToShow.UserBirthday;
+                inputLevel.text = patientDetailsToShow.UserSkill;
+                inputName.text = patientDetailsToShow.UserName;
+                inputExtra.text = patientDetailsToShow.UserExtraInfo;
             }
         }
-    }
+        changeInterfaceToAdd();
+    } //to edit a patients data
+
+    public void btnChoosePatientClicked()
+    {
+        chooseSceneInterface.SetActive(true);
+        patientViewInterface.SetActive(false);
+        addPatientInterface.SetActive(false);
+        foreach (profile patientDetailsToShow in Patients)
+        {
+            if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value])) //search the selected user and select him
+            {
+                patientSelected = patientDetailsToShow;
+            }
+        }
+    } //switches interface and selects correct user
 
     public void btnPatientDeleteClicked()
     {
-
-    }
+        patientsToChange.Clear();
+        foreach (profile patientToCheck in Patients) 
+        {
+            if (!(patientToCheck.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))) //add all users except selected, then rewrite data
+            {
+                patientsToChange.Add(patientToCheck);
+            }
+        }
+        Patients.Clear();
+        Patients.AddRange(patientsToChange); 
+        possiblePatientSelect.value--;
+        writePatientData();
+        showPatientData();
+    } //delete a user from the list 
 
     public void btnConfirmPatientAddClicked()
     {
+        
+        if (editScreen) //if the user is edited, delete old data
+        {
+            btnPatientDeleteClicked();
+        }
+        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" || inputGender.text == "") 
+        {
+            txtError.gameObject.SetActive(true);
+        }
+        else
+        {
+            txtError.gameObject.SetActive(false);
+            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text,"0","0", inputGender.text));
+            writePatientData();
+            showPatientData();
+            showPatientDetails();
+            showStartScreen();
+            editScreen = false;
+            clearInputs();
+        }
 
-    }
+    } //confirms the data the user filled in
+
+    private void clearInputs()
+    {
+        inputBirthday.text = "";
+        inputExtra.text = "";
+        inputLevel.text = "";
+        inputName.text = "";
+        inputNumber.text = "";
+    } //deletes input fields
+
+    public void btnCancelClicked()
+    {
+        editScreen = false;
+        showStartScreen();
+        showPatientData();
+    } //returns to home screen
+
+    public void btnParkClicked()
+    {
+        patientSelected.playingPark();
+        writePatientData();
+    } //starts park scene + counts to user
+
+    public void btnHomeClicked()
+    {
+        patientSelected.playingHome();
+        writePatientData();
+    } //starts home scene + counts to user
 
     private void readPatientData()
     {
+
         try
         {
             sReader = File.OpenText("profiles.txt");
             string userData = sReader.ReadLine();
+            patientCount = 0;
             while (userData != null)
             {
                 dataSplitted = userData.Split(';');
-                Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4]));
+                Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4], dataSplitted[5], dataSplitted[6], dataSplitted[7]));
                 userData = sReader.ReadLine();
-
+                patientCount++;
             }
-
 
         }
         catch
@@ -98,11 +212,10 @@ public class patientDataIO : MonoBehaviour {
         {
             sReader.Close();
         }
-    }
+    } //reads the file and places it in a list of profiles
 
     public void showPatientDetails()
     {
-      
         foreach (profile patientDetailsToShow in Patients)
         {
             if (patientDetailsToShow.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))
@@ -110,16 +223,20 @@ public class patientDataIO : MonoBehaviour {
                 txtProfileDetails.text = patientDetailsToShow.showPatientDetails();
             }
         }
-    }
+    } //shows the details of the selected user
 
     public void showPatientData()
     {
         patientFound = false;
-        inputSearch.text = inputSearch.text.ToLower();
+        if (inputSearch.text != "")
+        {
+            inputSearch.text = inputSearch.text.ToLower();
+        }
         patientsToSort.Clear();
         patientsToAdd.Clear();
         possiblePatientSelect.ClearOptions();
-        switch (patientSearch.value)
+
+        switch (patientSearch.value) //the value by which the users should be ordened
         {
             case 0:
                 foreach (profile patient in Patients)
@@ -137,28 +254,30 @@ public class patientDataIO : MonoBehaviour {
             case 2:
                 foreach (profile patient in Patients)
                 {
-                    //   patientsToSort.Add(patient.UserSkill + " " + patient.UserName);
                     patientsToSort.Add(patient.UserBirthday);
                 }
                 break;
-
         }
-        foreach (string patientDataToSort in patientsToSort)
+
+
+        foreach (string patientDataToSort in patientsToSort) //using a recursive method to find the right users
         {
-            /* for (int i = 0; i < patientDataToSort.Length; i++)
-             {
-            if( ! (patientDataToSort[i] == inputSearch.text[i]))
-                 {
+            if (inputSearch.text != "")
+            {
+                if (recursivePatientData(0, patientDataToSort))
+                {
 
-                 }
-
-             }*/
-            if (recursivePatientData(0, patientDataToSort))
+                    patientsToAdd.Add(patientDataToSort);
+                    patientFound = true;
+                }
+            }
+            else
             {
                 patientsToAdd.Add(patientDataToSort);
                 patientFound = true;
             }
-            
+
+
         }
         if (!patientFound)
         {
@@ -166,43 +285,49 @@ public class patientDataIO : MonoBehaviour {
         }
         possiblePatientSelect.AddOptions(patientsToAdd);
         showPatientDetails();
-    }
+    } //show the right user (using the search)
 
     private bool recursivePatientData(int i, string patientDataToSort)
     {
         patientDataToSort = patientDataToSort.ToLower();
-        if (i == inputSearch.text.Length || i == patientDataToSort.Length)
+        if (i == inputSearch.text.Length || i == patientDataToSort.Length) //if the end of the word is reached
         {
-            Debug.Log(inputSearch.text + patientDataToSort);
-            return true;
+            return true; 
         }
-        else
+        else 
         {
-            if (patientDataToSort[i] == inputSearch.text[i])
+            if (patientDataToSort[i] == inputSearch.text[i]) //compare letter of the words
             {
                 i++;
-                recursivePatientData(i, patientDataToSort);
-                return true;
+                if (recursivePatientData(i, patientDataToSort))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 return false;
             }
         }
-    }
+    } //recursive method to find the right users
 
     private void writePatientData()
     {
         try
         {
+            if (File.Exists("profiles.txt")) //used for overwriting the file
+            {
+                File.Delete("profiles.txt");
+            }
             sWriter = File.CreateText("profiles.txt");
-            //     sWriter.WriteLine(newProfile.writePatientData());
             foreach (profile patientData in Patients)
             {
                 sWriter.WriteLine(patientData.writePatientData());
             }
-                      //sWriter.WriteLine("123456;Laure Leirs;niveau 3");
-                    // sWriter.WriteLine("123;Christophe Claessens;Niveau2");
         }
         catch
         {
@@ -222,15 +347,21 @@ public class profile
     string skill;
     string birthday;
     string extraInfo;
+    ushort numberOfTimesInHomeScene;
+    ushort numberOfTimesInParkScene;
+    string gender;
     public profile() { }
 
-    public profile(string tUserNumber, string tName, string tSkill, string tBirthday, string tExtraInfo)
+    public profile(string tUserNumber, string tName, string tSkill, string tBirthday, string tExtraInfo, string tTimesInHome, string tTimesInPark, string tGender)
     {
         userNumber = tUserNumber;
         name = tName;
         skill = tSkill;
         birthday = tBirthday;
         extraInfo = tExtraInfo;
+        gender = tGender;
+        numberOfTimesInHomeScene =ushort.Parse( tTimesInHome);
+        numberOfTimesInParkScene = ushort.Parse(tTimesInPark);
     }
     public string UserNumber
     {
@@ -258,11 +389,19 @@ public class profile
         get { return extraInfo; }
     }
 
+    public void playingPark()
+    {
+        numberOfTimesInParkScene++;
+    }
+    public void playingHome()
+    {
+        numberOfTimesInHomeScene++;
+    }
 
-   // methods
+    // methods
     public string writePatientData()
     {
-        return userNumber + ';' + name + ';' + skill + ";" + birthday + ";" + extraInfo;
+        return userNumber + ';' + name + ';' + skill + ";" + birthday + ";" + extraInfo + ";" + numberOfTimesInHomeScene + ";" + numberOfTimesInParkScene + ";" + gender;
     }
     public bool patientSelectCheck(string nameToTest)
     {
@@ -277,8 +416,7 @@ public class profile
     }
     public string showPatientDetails()
     {
-        
-      return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nextra info: " + extraInfo;
+        return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nGeslacht: "+ gender +  "\nAantal keer in het park: " + numberOfTimesInParkScene + "\nAantal keer in het huis: " + numberOfTimesInHomeScene + "\nExtra info: " + extraInfo ;
     }
-    
-}
+
+} //profile objects
