@@ -1,6 +1,5 @@
 2;Christophe Claessens;2;22/02/1995; being bf like a boss;0;0;Man
-4;Kirsten Verhulst;4;04/10/1995; modeling like a boss;0;0;Vrouw
-5;Marleen De Vos;5;19/04/1963;;0;0;Vrouw
+4;Kirsten Verhulst;4;04/10/1995; modeling like a boss;4;5;Vrouw
 6;Michelle Leirs;6;14/04/1990;;0;0;Vrouw
 7;Laure Leirs;2;30/12/1995;;4;6;Vrouw
 8;Archibald Theodore Theofiel Jr;900;29/02/1901;Heeft 2 linkerogen;16;23;Vrouw
