@@ -63,8 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\06 Scripts\cameraMove.cs" />
     <Compile Include="Assets\06 Scripts\endGame.cs" />
     <Compile Include="Assets\06 Scripts\patientDataIO.cs" />
+    <Compile Include="Assets\06 Scripts\steeringBehaviourDog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\About Gizmos.txt" />

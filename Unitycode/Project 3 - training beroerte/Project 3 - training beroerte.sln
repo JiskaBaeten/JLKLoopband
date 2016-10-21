@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 3 - training beroerte.CSharp", "Project 3 - training beroerte.CSharp.csproj", "{238045C2-3C92-7D5E-A9CE-1A8B31ACDDB3}"
 EndProject
 Global
