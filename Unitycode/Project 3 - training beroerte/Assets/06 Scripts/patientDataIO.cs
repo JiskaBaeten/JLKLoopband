@@ -116,7 +116,7 @@ public class patientDataIO : MonoBehaviour
     public void btnPatientAddClicked()
     {
         patientsToSort.Clear();
-
+        clearInputs();
         foreach (profile patient in Patients)
         {
             patientsToSort.Add(patient.UserNumber);
@@ -212,10 +212,12 @@ public class patientDataIO : MonoBehaviour
         inputLevel.text = "";
         inputName.text = "";
         inputNumber.text = "";
+        inputGender.text = "";
     } //deletes input fields
 
     public void btnCancelClicked()
     {
+        clearInputs();
         editScreen = false;
         showStartScreen();
         showPatientData();

@@ -18,6 +18,7 @@ public class endGame : MonoBehaviour {
             }
             else
             {
+                confirmEscapeShowed = true;
                 escapeWarningInterface.SetActive(true);
             }
             
@@ -39,6 +40,7 @@ public class endGame : MonoBehaviour {
     }
     public void btnCancelExit()
     {
+        confirmEscapeShowed = false;
         escapeWarningInterface.SetActive(false);
     }
 }
