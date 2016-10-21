@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
+using Environment = System.Environment;
+using UnityEngine.SceneManagement;
 public class patientDataIO : MonoBehaviour
 {
     //to read and write patient data
     string[] dataSplitted;
     StreamReader sReader;
     StreamWriter sWriter;
+    string readWritePath;
 
     //to manipulate patient data
     List<profile> Patients; //overall patient list
@@ -39,9 +42,18 @@ public class patientDataIO : MonoBehaviour
     public InputField inputLevel;
     public InputField inputGender;
     public Text txtError;
+    public Button btnConfirmData;
+    public Button btnCancelData;
 
+    //ui private
+    InputField[] allInputs;
+    byte currentInput;
+    
     void Start()
     {
+        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+ "\\A walk in the park");
+        readWritePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+        readWritePath += "\\A walk in the park\\PatientProfiles.txt";
         editScreen = false;
         showStartScreen();
         Patients = new List<profile>();
@@ -50,9 +62,42 @@ public class patientDataIO : MonoBehaviour
         patientsToAdd = new List<string>();
         readPatientData();
         showPatientData();
+        currentInput = 0;
+        allInputs = new InputField[6] {inputNumber, inputName, inputLevel, inputBirthday, inputGender, inputExtra};
+    }
+    void Update()
+    {
+        if (!patientViewInterface.activeInHierarchy)
+        {
+            
+             
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (currentInput < allInputs.Length)
+                {
+                    allInputs[currentInput].Select();
+                    currentInput++;
+                }
+                else if (currentInput < allInputs.Length + 1 )
+                {
+                    currentInput++;
+                    btnConfirmData.Select();
+                }
+                else if (currentInput < allInputs.Length + 2)
+                {
+                    currentInput++;
+                    btnCancelData.Select();
+                }
+                else
+                {
+                    currentInput = 0;
+                    allInputs[currentInput].Select();
+                }
+            }
+           
+        }
         
     }
-
     private void showStartScreen()
     {
         addPatientInterface.SetActive(false);
@@ -98,6 +143,7 @@ public class patientDataIO : MonoBehaviour
                 inputLevel.text = patientDetailsToShow.UserSkill;
                 inputName.text = patientDetailsToShow.UserName;
                 inputExtra.text = patientDetailsToShow.UserExtraInfo;
+                inputGender.text = patientDetailsToShow.UserGender;
             }
         }
         changeInterfaceToAdd();
@@ -179,39 +225,50 @@ public class patientDataIO : MonoBehaviour
     {
         patientSelected.playingPark();
         writePatientData();
+        SceneManager.LoadScene("scene_park");
     } //starts park scene + counts to user
 
     public void btnHomeClicked()
     {
         patientSelected.playingHome();
         writePatientData();
+        SceneManager.LoadScene("scene_home");
     } //starts home scene + counts to user
 
     private void readPatientData()
     {
-
-        try
+        if (File.Exists(readWritePath))
         {
-            sReader = File.OpenText("profiles.txt");
-            string userData = sReader.ReadLine();
-            patientCount = 0;
-            while (userData != null)
+            try
             {
-                dataSplitted = userData.Split(';');
-                Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4], dataSplitted[5], dataSplitted[6], dataSplitted[7]));
-                userData = sReader.ReadLine();
-                patientCount++;
+                sReader = File.OpenText(readWritePath );
+                string userData = sReader.ReadLine();
+                patientCount = 0;
+                while (userData != null)
+                {
+                    dataSplitted = userData.Split(';');
+                    Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4], dataSplitted[5], dataSplitted[6], dataSplitted[7]));
+                    userData = sReader.ReadLine();
+                    patientCount++;
+                }
+
             }
+            catch
+            {
 
+            }
+            finally
+            {
+                sReader.Close();
+            }
         }
-        catch
+        else
         {
-
+            patientsToAdd.Clear();
+            patientsToAdd.Add("Niemand Gevonden");
+            possiblePatientSelect.AddOptions(patientsToAdd);
         }
-        finally
-        {
-            sReader.Close();
-        }
+       
     } //reads the file and places it in a list of profiles
 
     public void showPatientDetails()
@@ -284,6 +341,7 @@ public class patientDataIO : MonoBehaviour
             patientsToAdd.Add("Niemand gevonden");
         }
         possiblePatientSelect.AddOptions(patientsToAdd);
+        possiblePatientSelect.value = 0;
         showPatientDetails();
     } //show the right user (using the search)
 
@@ -319,11 +377,11 @@ public class patientDataIO : MonoBehaviour
     {
         try
         {
-            if (File.Exists("profiles.txt")) //used for overwriting the file
+            if (File.Exists(readWritePath)) //used for overwriting the file
             {
-                File.Delete("profiles.txt");
+                File.Delete(readWritePath);
             }
-            sWriter = File.CreateText("profiles.txt");
+            sWriter = File.CreateText(readWritePath);
             foreach (profile patientData in Patients)
             {
                 sWriter.WriteLine(patientData.writePatientData());
@@ -387,6 +445,10 @@ public class profile
     {
         set { extraInfo = value; }
         get { return extraInfo; }
+    }
+    public string UserGender
+    {
+        get { return gender; }
     }
 
     public void playingPark()
