@@ -67,7 +67,6 @@ public class steeringBehaviourDog : MonoBehaviour {
         controller = GetComponent<CharacterController>();//this GO's CharacterController
         behaviour = defaultBehaviour;
         wanderJitter = Random.Range(wanderJitterMin, wanderJitterMax);//for the first time use.
-        Debug.Log(GameObject.FindWithTag("WayPoints"));
         WayPointContainer = GameObject.FindWithTag("WayPoints").transform;//for path finding, other paths also possible
         
         Path = new Vector3[WayPointContainer.childCount];//init Path
@@ -113,7 +112,7 @@ public class steeringBehaviourDog : MonoBehaviour {
     }
     public Vector3 FollowPath(Vector3[] myPath)
     {
-        tmrTimeSpentOnPathPoint += Time.deltaTime;//keep track of time
+
         //if no currentPathPoint is selected, pick closest one
         if (currentPathPoint == Vector3.zero)//no currentPathPoint selected, find closest one
         {
@@ -125,33 +124,23 @@ public class steeringBehaviourDog : MonoBehaviour {
                     float distanceToWayPoint = Vector3.Distance(transform.position, myPath[i]);//calc distance
                     if (distanceToWayPoint <= Vector3.Distance(transform.position, myPath[indexOfCurrentPathPoint]))//a closer waypoint found
                     {
+
                         currentPathPoint = myPath[i];//select the closer one
                         indexOfCurrentPathPoint = i;
                         tmrTimeSpentOnPathPoint = 0;//reset clock for this point
                     }
                 }
             }
-            if (currentPathPoint == Vector3.zero)//no currentPathPoint selected because none was visible => wander
-            {
-                behaviour = "WanderSomeRandomTime";//hopefully the GO will correct himself
-                behaviourAfterSomeRandomWandering = "Follow Path";//remember this and switch back to this
-            }
         }
         else if (Vector3.Distance(transform.position, currentPathPoint) < minDistToPathPoint)//if close enough pick next one
         {
-            tmrTimeSpentOnPathPoint = 0;//reset clock for this point
+
             indexOfCurrentPathPoint++;//increase index
             if (indexOfCurrentPathPoint == myPath.Length)//set to the first one if out of bounds
             {
                 indexOfCurrentPathPoint = 0;
             }
             currentPathPoint = myPath[indexOfCurrentPathPoint];//pick the next one
-        }
-        if (tmrTimeSpentOnPathPoint > MaxTimeToSpendOnPathPoint)//spend a lot of time on the current point, maybe stuck => wander around
-        {
-            tmrTimeSpentOnPathPoint = 0;//reset clock for this point
-            behaviour = "WanderSomeRandomTime";//hopefully the GO will correct himself
-            behaviourAfterSomeRandomWandering = "Follow Path";//remember this and switch back to this
         }
         //go to currentPathPoint like seek
         return Seek(currentPathPoint);
