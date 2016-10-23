@@ -1,0 +1,13 @@
+All models reload + materials in the folder they're in
+
+For fountain:
+in shader normal maps, just place fountaintexBump
+
+for trees and bushes;
+in shader set rendering mode to cutout
+
+the bump maps for the kibbles (doggiebowl)
+normal (20)+ height map (0.08)
+
+
+==> consider trying to put models + materials in 1 folder??
