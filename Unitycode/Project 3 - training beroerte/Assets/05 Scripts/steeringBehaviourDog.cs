@@ -148,6 +148,22 @@ public class steeringBehaviourDog : MonoBehaviour
             Debug.Log("path chosen right" + currentPath.NextPathNumberRight);
         }
     }
+
+    public void chooseNextRandomPath()
+    {
+      float rndPathChoice = UnityEngine.Random.Range(0, 2);//for the first time use.
+        Debug.Log(rndPathChoice);
+        if (rndPathChoice == 0)
+        {
+            nextPathNumber = currentPath.NextPathNumberLeft;
+            nextPathIsChosen = true;
+        }
+        else
+        {
+            nextPathNumber = currentPath.NextPathNumberRight;
+            nextPathIsChosen = true;
+        }
+    }
     public Vector3 FollowPath(Vector3[] myPath)
     {
         
@@ -177,6 +193,10 @@ public class steeringBehaviourDog : MonoBehaviour
             indexOfCurrentPathPoint++;//increase index
             if (indexOfCurrentPathPoint == myPath.Length)
             {
+                if (!nextPathIsChosen)
+                {
+                    chooseNextRandomPath();
+                }
                 waypointsCurrentPath = selectPath();
                
                 indexOfCurrentPathPoint = 0; 
