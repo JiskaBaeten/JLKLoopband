@@ -12,10 +12,6 @@ public class steeringBehaviourDog : MonoBehaviour
     public int maxWalkSpeed = 5;
     public int rotateSpeed = 2;
 
-    public string behaviour;//what this GO is are doing
-    public string defaultBehaviour;//at startup
-    public string behaviourAfterSomeRandomWandering;//what this GO is supposed to do but can't so wanders a bit instead
-
     public bool ObstacleAvoidanceOn;
     public bool SeparationOn;
     public bool CohesionOn;
@@ -33,7 +29,6 @@ public class steeringBehaviourDog : MonoBehaviour
     private int indexOfCurrentPathPoint = 0;
     private float tmrTimeSpentOnPathPoint = 0;
     public float MaxTimeToSpendOnPathPoint = 8;
-    private float randomWanderTime;
     public float randomTimeToWanderMin = 2;
     public float randomTimeToWanderMax = 5;
     public float checkForStuckTime = 5;
@@ -59,33 +54,33 @@ public class steeringBehaviourDog : MonoBehaviour
 
     GameObject[] waypointPathsContainer;
     Vector3 currentPathPoint;
-    Vector3[] Path;
+    Vector3[] waypointsCurrentPath;
     List<Path> allPaths;
-    public byte currentPath;
+    public Path currentPath;
     public byte nextPathNumber;
+    bool nextPathIsChosen;
 
     CharacterController controller;//this GO's CharacterController
                                    // Use this for initialization
     void Start()
     {
 
-        currentPath = 0;
+        allPaths = new List<Path>();
         controller = GetComponent<CharacterController>();//this GO's CharacterController
-        behaviour = defaultBehaviour;
         wanderJitter = UnityEngine.Random.Range(wanderJitterMin, wanderJitterMax);//for the first time use.
         waypointPathsContainer = GameObject.FindGameObjectsWithTag("WayPoints");
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        foreach (GameObject pathToAdd in waypointPathsContainer)
         {
-            allPaths.Add(new Path(waypointPathsContainer[i].transform));
+            allPaths.Add(new Path(pathToAdd));
         }
-        Path = choosePath();
-        randomWanderTime = UnityEngine.Random.Range(randomTimeToWanderMin, randomTimeToWanderMax);//for the first time use
+        currentPath = allPaths[0];
+        waypointsCurrentPath = selectPath();
     }
 
     // Update is called once per frame
     void Update()
     {
-        steerForce = FollowPath(Path);
+        steerForce = FollowPath(waypointsCurrentPath);
         //calc movement
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
@@ -106,6 +101,10 @@ public class steeringBehaviourDog : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.z)), rotateSpeed * Time.deltaTime);
         }
+        if (!nextPathIsChosen)
+        {
+            findNextPath();
+        }
     }
     private void Truncate(ref Vector3 myVector, int myMax)//not above max
     {
@@ -115,25 +114,32 @@ public class steeringBehaviourDog : MonoBehaviour
             myVector *= myMax;//scale to max
         }
     }
-    public Vector3[] choosePath()
+    public Vector3[] selectPath()
     {
-        Vector3[] chosenPath;
 
-        Debug.Log(waypointPathsContainer[currentPath].name);
         foreach (Path pathToCheck in allPaths)
         {
             if (pathToCheck.PathNumber == nextPathNumber)
             {
-                nextPathNumber = pathToCheck.NextPathNumber;
+                //next path number??
+                nextPathIsChosen = false;
+                currentPath = pathToCheck;
                 return pathToCheck.WaypointsFromPath;
             }
         }
-        return null;
-        /* for (int i = 0; i < waypointPathsContainer[currentPath].transform.childCount; i++)//fill in the locations in the Path array
-         {
-             chosenPath[i] = waypointPathsContainer[currentPath].transform.GetChild(i).transform.position;
-         }
-         */
+        return allPaths[0].WaypointsFromPath;
+    }
+
+    public void findNextPath()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow)) //go left
+        {
+            nextPathNumber = currentPath.NextPathNumberLeft;
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            nextPathNumber = currentPath.NextPathNumberRight;
+        }
     }
     public Vector3 FollowPath(Vector3[] myPath)
     {
@@ -163,7 +169,8 @@ public class steeringBehaviourDog : MonoBehaviour
             indexOfCurrentPathPoint++;//increase index
             if (indexOfCurrentPathPoint == myPath.Length)//set to the first one if out of bounds
             {
-                choosePath();
+                myPath = selectPath();
+                indexOfCurrentPathPoint = 0; //????
             }
             currentPathPoint = myPath[indexOfCurrentPathPoint];//pick the next one
         }
@@ -186,177 +193,206 @@ public class Path
     byte pathAfterLeft;
     byte pathAfterRight;
     bool isReversed;
+
     Vector3[] waypointsPath;
    public Path() { }
-    public Path(Transform path)
+    public Path(GameObject path)
     {
         initializePathName(path);
-        
+        initializePathWaypoints(path);
     }
 
-    private void initializePathWaypoints(Transform path)
+    private void initializePathWaypoints(GameObject path)
     {
-        for (int i = 0; i < path.childCount; i++)
+        waypointsPath = new Vector3[path.transform.childCount];
+        Debug.Log("initialize path");
+        Debug.Log(path.transform.childCount);
+        for (int i = 0; i < path.transform.childCount; i++)
         {
-            waypointsPath[i] = path.GetChild(i).position;
+            Debug.Log("i" + i + "child" + path.transform.childCount);
+            Debug.Log(path.transform.GetChild(i).position);
+            waypointsPath[i] = path.transform.GetChild(i).position;
         }
+        Debug.Log(waypointsPath[0]);
     }
 
-    private void initializePathName(Transform path)
+    private void initializePathName(GameObject path)
     {
         switch (path.name)
         {
             case "Path(0)":
 
                 pathNumber = 0;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(1)":
 
                 pathNumber = 1;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 5;
                 pathAfterRight = 4;
                 break;
             case "Path(2)":
 
                 pathNumber = 2;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 17;
                 pathAfterRight = 3;
                 break;
             case "Path(3)":
 
                 pathNumber = 3;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(4)":
 
                 pathNumber = 4;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(5)":
 
                 pathNumber = 5;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(6)":
 
                 pathNumber = 6;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(7)":
 
                 pathNumber = 7;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(8)":
 
                 pathNumber = 8;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(9)":
 
                 pathNumber = 9;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(10)":
 
                 pathNumber = 10;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(11)":
 
                 pathNumber = 11;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(12)":
 
                 pathNumber = 12;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(13)":
 
                 pathNumber = 13;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(14)":
 
                 pathNumber = 14;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(15)":
 
                 pathNumber = 15;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(16)":
 
                 pathNumber = 16;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(17)":
 
                 pathNumber = 17;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(18)":
 
                 pathNumber = 18;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(19)":
 
                 pathNumber = 19;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(20)":
 
                 pathNumber = 20;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
             case "Path(21)":
 
                 pathNumber = 21;
-                pathBeforeLeft = 0; //change
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathAfterLeft = 7;
                 pathAfterRight = 1;
                 break;
@@ -371,7 +407,11 @@ public class Path
     {
         get { return waypointsPath; }
     }
-    public byte NextPathNumber //nog aanpassen!!!
+    public byte NextPathNumberLeft //nog aanpassen!!!
+    {
+        get { return pathAfterLeft; }
+    }
+    public byte NextPathNumberRight //nog aanpassen!!!
     {
         get { return pathAfterLeft; }
     }
