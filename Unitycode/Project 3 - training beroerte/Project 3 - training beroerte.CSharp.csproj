@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\05 Scripts\HomeCamera.cs" />
+    <Compile Include="Assets\05 Scripts\SetTime.cs" />
     <Compile Include="Assets\05 Scripts\cameraMove.cs" />
     <Compile Include="Assets\05 Scripts\endGame.cs" />
     <Compile Include="Assets\05 Scripts\patientDataIO.cs" />
