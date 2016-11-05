@@ -59,7 +59,7 @@ public class steeringBehaviourDog : MonoBehaviour
     public Path currentPath;
     public byte nextPathNumber;
     bool nextPathIsChosen;
-
+    bool pathDirectionIsReversed;
     CharacterController controller;//this GO's CharacterController
                                    // Use this for initialization
     void Start()
@@ -74,7 +74,7 @@ public class steeringBehaviourDog : MonoBehaviour
             allPaths.Add(new Path(pathToAdd));
         }
         nextPathNumber = 0;
-        
+        pathDirectionIsReversed = false;
         waypointsCurrentPath = selectPath();
     }
 
@@ -124,7 +124,7 @@ public class steeringBehaviourDog : MonoBehaviour
                 //next path number??
                 nextPathIsChosen = false;
                 currentPath = pathToCheck;
-                Debug.Log(pathToCheck.PathNumber);
+                Debug.Log(pathToCheck.PathNumber + "reverse");
                 currentPathPoint = pathToCheck.WaypointsFromPath[0];
                 return pathToCheck.WaypointsFromPath;
             }
@@ -222,11 +222,14 @@ public class Path
     byte pathAfterLeft;
     byte pathAfterRight;
     bool isReversed;
+    bool pathReversesOtherPaths; //If the player takes this path, he will start using the other paths as reversed
+    // path 5
 
     Vector3[] waypointsPath;
-   public Path() { }
+    public Path() { }
     public Path(GameObject path)
     {
+        pathReversesOtherPaths = false;
         initializePathName(path);
         initializePathWaypoints(path);
     }
@@ -293,6 +296,8 @@ public class Path
                 pathBeforeRight = 7;
                 pathAfterLeft = 1;
                 pathAfterRight = 1;
+                pathReversesOtherPaths = true;
+
                 break;
             case "Path (6)":
                 pathNumber = 6;
@@ -320,18 +325,18 @@ public class Path
 
             case "Path (9)":
                 pathNumber = 9;
-                pathBeforeLeft = 8;
-                pathBeforeRight = 3;
-                pathAfterLeft = 11;
-                pathAfterRight = 14;
+                pathBeforeLeft = 11;
+                pathBeforeRight = 14;
+                pathAfterLeft = 8;
+                pathAfterRight = 21;
                 break;
 
             case "Path (10)":
                 pathNumber = 10;
-                pathBeforeLeft = 8;
-                pathBeforeRight = 3;
-                pathAfterLeft = 18;
-                pathAfterRight = 20;
+                pathBeforeLeft = 18;
+                pathBeforeRight = 20;
+                pathAfterLeft = 8;
+                pathAfterRight = 3;
                 break;
 
             case "Path (11)":
@@ -393,10 +398,10 @@ public class Path
             case "Path (18)":
 
                 pathNumber = 18;
-                pathBeforeLeft = 10;
-                pathBeforeRight = 10;
-                pathAfterLeft = 17;
-                pathAfterRight = 17;
+                pathBeforeLeft = 17;
+                pathBeforeRight = 17;
+                pathAfterLeft = 10;
+                pathAfterRight = 10;
                 break;
             case "Path (19)":
 
@@ -433,6 +438,7 @@ public class Path
     {
         get { return waypointsPath; }
     }
+
     public byte NextPathNumberLeft //nog aanpassen!!!
     {
         get { return pathBeforeLeft; }
@@ -441,8 +447,16 @@ public class Path
     {
         get { return pathBeforeRight; }
     }
+    public bool pathIsReversed
+    {
+        get { return isReversed; }
+    }
+    public bool pathReversesGeneralDirection
+    {
+        get { return pathReversesOtherPaths; }
+    }
 
-    private void reversePath()
+    public void reversePath()
     {
         isReversed = !isReversed;
         Array.Reverse(waypointsPath);
