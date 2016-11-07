@@ -57,11 +57,14 @@ public class steeringBehaviourDog : MonoBehaviour
     Vector3[] waypointsCurrentPath;
     List<Path> allPaths;
     public Path currentPath;
-    public byte nextPathNumber;
+    public int nextPathNumber;
     bool nextPathIsChosen;
     bool pathDirectionIsReversed;
     CharacterController controller;//this GO's CharacterController
-                                   // Use this for initialization
+    bool nextPathShouldBeReversed = false;
+    int numberToCheckIfReversed = 100;
+
+
     void Start()
     {
 
@@ -117,14 +120,25 @@ public class steeringBehaviourDog : MonoBehaviour
     }
     public Vector3[] selectPath()
     {
+        if (nextPathNumber >= numberToCheckIfReversed) //if the number is bigger than 100, the path should be reversed
+        {
+            nextPathShouldBeReversed = true;
+            nextPathNumber = nextPathNumber - numberToCheckIfReversed; 
+        }
+        else
+        {
+            nextPathShouldBeReversed = false;
+        }
         foreach (Path pathToCheck in allPaths)
         {
+            
             if (pathToCheck.PathNumber == nextPathNumber)
             {
+                
                 //next path number??
                 nextPathIsChosen = false;
+                pathToCheck.reversePath(nextPathShouldBeReversed);
                 currentPath = pathToCheck;
-                Debug.Log(pathToCheck.PathNumber + "reverse");
                 currentPathPoint = pathToCheck.WaypointsFromPath[0];
                 return pathToCheck.WaypointsFromPath;
             }
@@ -137,15 +151,30 @@ public class steeringBehaviourDog : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow)) //go left
         {
-            nextPathNumber = currentPath.NextPathNumberLeft;
+            if (currentPath.pathIsReversed)
+            {
+                nextPathNumber = currentPath.NextPathNumberLeftBehind;
+
+            }
+            else
+            {
+                nextPathNumber = currentPath.NextPathNumberLeftBefore;
+            }
             nextPathIsChosen = true;
-            Debug.Log("path chosen left" + currentPath.NextPathNumberLeft);
+            Debug.Log("path chosen left" + nextPathNumber);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            nextPathNumber = currentPath.NextPathNumberRight;
+            if (currentPath.pathIsReversed)
+            {
+                nextPathNumber = currentPath.NextPathNumberRightBehind;
+            }
+            else
+            {
+                nextPathNumber = currentPath.NextPathNumberRightBefore; 
+            }
             nextPathIsChosen = true;
-            Debug.Log("path chosen right" + currentPath.NextPathNumberRight);
+            Debug.Log("path chosen right" + nextPathNumber);
         }
     }
 
@@ -155,12 +184,26 @@ public class steeringBehaviourDog : MonoBehaviour
         Debug.Log(rndPathChoice);
         if (rndPathChoice == 0)
         {
-            nextPathNumber = currentPath.NextPathNumberLeft;
+            if (currentPath.pathIsReversed)
+            {
+                nextPathNumber = currentPath.NextPathNumberLeftBehind;
+            }
+            else
+            {
+                nextPathNumber = currentPath.NextPathNumberLeftBefore;
+            }
             nextPathIsChosen = true;
         }
         else
         {
-            nextPathNumber = currentPath.NextPathNumberRight;
+            if (currentPath.pathIsReversed)
+            {
+                nextPathNumber = currentPath.NextPathNumberRightBehind;
+            }
+            else
+            {
+                nextPathNumber = currentPath.NextPathNumberRightBefore;
+            }
             nextPathIsChosen = true;
         }
     }
@@ -217,19 +260,16 @@ public class steeringBehaviourDog : MonoBehaviour
 public class Path
 {
     byte pathNumber;
-    byte pathBeforeLeft;
-    byte pathBeforeRight;
-    byte pathAfterLeft;
-    byte pathAfterRight;
+    int pathBeforeLeft;
+    int pathBeforeRight;
+    int pathBehindLeft;
+    int pathBehindRight;
     bool isReversed;
-    bool pathReversesOtherPaths; //If the player takes this path, he will start using the other paths as reversed
-    // path 5
 
     Vector3[] waypointsPath;
     public Path() { }
     public Path(GameObject path)
     {
-        pathReversesOtherPaths = false;
         initializePathName(path);
         initializePathWaypoints(path);
     }
@@ -253,32 +293,35 @@ public class Path
                 pathNumber = 0;
                 pathBeforeLeft = 7;
                 pathBeforeRight = 1;
-                pathAfterLeft = 16;
-                pathAfterRight = 16;
+                pathBehindLeft = 116; //path 16
+                pathBehindRight = 116;
                 break;
+
             case "Path (1)":
 
                 pathNumber = 1;
                 pathBeforeLeft = 5;
                 pathBeforeRight = 4;
-                pathAfterLeft = 0;
-                pathAfterRight = 7;
+                pathBehindLeft = 100; //path 0
+                pathBehindRight = 100;
                 break;
+
             case "Path (2)":
 
                 pathNumber = 2;
                 pathBeforeLeft = 17;
                 pathBeforeRight = 3;
-                pathAfterLeft = 4;
-                pathAfterRight = 6;
+                pathBehindLeft = 104;
+                pathBehindRight = 6;
                 break;
+
             case "Path (3)":
 
                 pathNumber = 3;
-                pathBeforeLeft = 10;
-                pathBeforeRight = 10;
-                pathAfterLeft = 2;
-                pathAfterRight = 17;
+                pathBeforeLeft = 110; //path 10
+                pathBeforeRight = 110;
+                pathBehindLeft = 102;
+                pathBehindRight = 17; 
                 break;
 
             case "Path (4)":
@@ -286,89 +329,88 @@ public class Path
                 pathNumber = 4;
                 pathBeforeLeft = 2;
                 pathBeforeRight = 2;
-                pathAfterLeft = 1;
-                pathAfterRight = 1;
+                pathBehindLeft = 101;
+                pathBehindRight = 101;
                 break;
 
             case "Path (5)":
                 pathNumber = 5;
-                pathBeforeLeft = 7;
-                pathBeforeRight = 7;
-                pathAfterLeft = 1;
-                pathAfterRight = 1;
-                pathReversesOtherPaths = true;
+                pathBeforeLeft = 107;
+                pathBeforeRight = 107;
+                pathBehindLeft = 101;
+                pathBehindRight = 101;
 
                 break;
             case "Path (6)":
                 pathNumber = 6;
-                pathBeforeLeft = 2;
-                pathBeforeRight = 2;
-                pathAfterLeft = 7;
-                pathAfterRight = 7;
+                pathBeforeLeft = 107;
+                pathBeforeRight = 107;
+                pathBehindLeft = 2;
+                pathBehindRight = 2;
                 break;
 
             case "Path (7)":
                 pathNumber = 7;
-                pathBeforeLeft = 6;
+                pathBeforeLeft = 106;
                 pathBeforeRight = 5;
-                pathAfterLeft = 0;
-                pathAfterRight = 0;
+                pathBehindLeft = 100;
+                pathBehindRight = 100;
                 break;
 
             case "Path (8)":
                 pathNumber = 8;
-                pathBeforeLeft = 0;
-                pathBeforeRight = 0;
-                pathAfterLeft = 21;
-                pathAfterRight = 9;
+                pathBeforeLeft = 121;
+                pathBeforeRight = 9;
+                pathBehindLeft = 110;
+                pathBehindRight = 110;
                 break;
 
             case "Path (9)":
                 pathNumber = 9;
                 pathBeforeLeft = 11;
                 pathBeforeRight = 14;
-                pathAfterLeft = 8;
-                pathAfterRight = 21;
+                pathBehindLeft = 108;
+                pathBehindRight = 121;
                 break;
 
             case "Path (10)":
                 pathNumber = 10;
-                pathBeforeLeft = 18;
-                pathBeforeRight = 20;
-                pathAfterLeft = 8;
-                pathAfterRight = 3;
+                pathBeforeLeft = 8;
+                pathBeforeRight = 103;
+                pathBehindLeft = 18;
+                pathBehindRight = 20;
                 break;
 
             case "Path (11)":
                 pathNumber = 11;
                 pathBeforeLeft = 15;
                 pathBeforeRight = 15;
-                pathAfterLeft = 9;
-                pathAfterRight = 9;
+                pathBehindLeft = 109;
+                pathBehindRight = 109;
                 break;
 
             case "Path (12)":
                 pathNumber = 12;
                 pathBeforeLeft = 13;
                 pathBeforeRight = 13;
-                pathAfterLeft = 15;
-                pathAfterRight = 15;
+                pathBehindLeft = 15;
+                pathBehindRight = 15;
                 break;
 
             case "Path (13)":
                 pathNumber = 13;
                 pathBeforeLeft = 16;
                 pathBeforeRight = 16;
-                pathAfterLeft = 12;
-                pathAfterRight = 14;
+                pathBehindLeft = 114;
+                pathBehindRight = 112;
                 break;
 
             case "Path (14)":
                 pathNumber = 14;
                 pathBeforeLeft = 13;
                 pathBeforeRight = 13;
-                pathAfterLeft = 9;
-                pathAfterRight = 9;
+                pathBehindLeft = 109;
+                pathBehindRight = 109;
                 break;
 
             case "Path (15)":
@@ -376,56 +418,56 @@ public class Path
                 pathNumber = 15;
                 pathBeforeLeft = 16;
                 pathBeforeRight = 16;
-                pathAfterLeft = 12;
-                pathAfterRight = 11;
+                pathBehindLeft = 12;
+                pathBehindRight = 111;
                 break;
             case "Path (16)":
 
                 pathNumber = 16;
                 pathBeforeLeft = 0;
                 pathBeforeRight = 0;
-                pathAfterLeft = 13;
-                pathAfterRight = 15;
+                pathBehindLeft = 113;
+                pathBehindRight = 115;
                 break;
             case "Path (17)":
 
                 pathNumber = 17;
                 pathBeforeLeft = 19;
-                pathBeforeRight = 18;
-                pathAfterLeft = 3;
-                pathAfterRight = 3;
+                pathBeforeRight = 118;
+                pathBehindLeft = 103;
+                pathBehindRight = 103;
                 break;
             case "Path (18)":
 
                 pathNumber = 18;
-                pathBeforeLeft = 17;
-                pathBeforeRight = 17;
-                pathAfterLeft = 10;
-                pathAfterRight = 10;
+                pathBeforeLeft = 117;
+                pathBeforeRight = 117;
+                pathBehindLeft = 110;
+                pathBehindRight = 110;
                 break;
             case "Path (19)":
 
                 pathNumber = 19;
                 pathBeforeLeft = 21;
                 pathBeforeRight = 21;
-                pathAfterLeft = 17;
-                pathAfterRight = 17;
+                pathBehindLeft = 117;
+                pathBehindRight = 117;
                 break;
             case "Path (20)":
 
                 pathNumber = 20;
                 pathBeforeLeft = 21;
                 pathBeforeRight = 21;
-                pathAfterLeft = 10;
-                pathAfterRight = 10;
+                pathBehindLeft = 10;
+                pathBehindRight = 10;
                 break;
             case "Path (21)":
 
                 pathNumber = 21;
-                pathBeforeLeft = 8;
-                pathBeforeRight = 8;
-                pathAfterLeft = 20;
-                pathAfterRight = 19;
+                pathBeforeLeft = 108;
+                pathBeforeRight = 108;
+                pathBehindLeft = 120;
+                pathBehindRight = 119;
                 break;
         }
     }
@@ -439,27 +481,34 @@ public class Path
         get { return waypointsPath; }
     }
 
-    public byte NextPathNumberLeft //nog aanpassen!!!
+    public int NextPathNumberLeftBefore //nog aanpassen!!!
     {
         get { return pathBeforeLeft; }
     }
-    public byte NextPathNumberRight //nog aanpassen!!!
+    public int NextPathNumberRightBefore //nog aanpassen!!!
     {
         get { return pathBeforeRight; }
+    }
+    public int NextPathNumberLeftBehind //nog aanpassen!!!
+    {
+        get { return pathBehindLeft; }
+    }
+    public int NextPathNumberRightBehind //nog aanpassen!!!
+    {
+        get { return pathBehindRight; }
     }
     public bool pathIsReversed
     {
         get { return isReversed; }
     }
-    public bool pathReversesGeneralDirection
-    {
-        get { return pathReversesOtherPaths; }
-    }
 
-    public void reversePath()
+    public void reversePath(bool pathShouldBeReversed)
     {
-        isReversed = !isReversed;
-        Array.Reverse(waypointsPath);
+        if (pathShouldBeReversed != isReversed)
+        {
+            isReversed = !isReversed;
+            Array.Reverse(waypointsPath);
+        }
     }
 
 }
