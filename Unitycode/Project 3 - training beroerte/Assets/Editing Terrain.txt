@@ -1,0 +1,5 @@
+If you want to edit the terrain, 
+disable the box collider and enable the terrain collider.
+
+Do not start the game with the terrain collider enabled, it will crash unity!
+The box collider makes sure Moustache stays on the roads.
