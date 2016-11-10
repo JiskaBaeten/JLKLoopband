@@ -3,13 +3,15 @@ using System.Collections;
 
 public class MicInput : MonoBehaviour {
     AudioSource audioSource;
+    AudioSource audioSource2;
     public float updateStep = 0.1f;
     public int sampleDataLength = 1024;
     private float timeBetweenStartAndEnd;
     private float TimeStarted;
     private float currentUpdateTime = 0f;
     private float currentTime = 0f;
-    bool isRecording;
+    bool isRecording1;
+    bool isRecording2;
     public float clipLoudness;
     private float[] clipSampleData;
 
@@ -18,8 +20,9 @@ public class MicInput : MonoBehaviour {
     
         timeBetweenStartAndEnd = 1;
         audioSource = GetComponent<AudioSource>();
+        audioSource2 = GetComponent<AudioSource>();
      //  audioSource.clip = Microphone.Start(null, true, 10, 44100);
-        isRecording = false;
+        isRecording1 = false;
        // audioSource.Play();
         if (!audioSource)
         {
@@ -32,22 +35,25 @@ public class MicInput : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!isRecording)
+        if (currentTime >= TimeStarted + timeBetweenStartAndEnd && isRecording2)
         {
-            isRecording = true;
+            Microphone.End(null);
+            isRecording1 = true;
             Debug.Log("starting mic" + TimeStarted);
             TimeStarted = currentTime;
-            audioSource.clip = Microphone.Start(null, true, 10, 44100);
+            audioSource.clip = Microphone.Start(null, true, 2, 44100);
         }
         
-        else if (currentTime >= TimeStarted + timeBetweenStartAndEnd) 
+        else if (currentTime >= TimeStarted + timeBetweenStartAndEnd && isRecording1) 
         {
             
             Debug.Log("end mic");
-            isRecording = false;
+            isRecording1 = false;
             Microphone.End(null);
           //  audioSource.mute = true;
             audioSource.Play(); // Play the audio source!
+            audioSource2.clip = Microphone.Start(null, true, 2, 44100);
+            isRecording2 = true;
         }
         
         currentUpdateTime += Time.deltaTime;
