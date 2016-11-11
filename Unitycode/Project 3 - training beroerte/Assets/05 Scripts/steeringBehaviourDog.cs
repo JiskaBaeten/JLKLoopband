@@ -181,7 +181,6 @@ public class steeringBehaviourDog : MonoBehaviour
     public void chooseNextRandomPath()
     {
       float rndPathChoice = UnityEngine.Random.Range(0, 2);//for the first time use.
-        Debug.Log(rndPathChoice);
         if (rndPathChoice == 0)
         {
             if (currentPath.pathIsReversed)
