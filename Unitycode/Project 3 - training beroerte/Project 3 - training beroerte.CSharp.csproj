@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\05 Scripts\ControllersVive.cs" />
     <Compile Include="Assets\05 Scripts\HomeCamera.cs" />
     <Compile Include="Assets\05 Scripts\MicInput.cs" />
     <Compile Include="Assets\05 Scripts\SetTime.cs" />
