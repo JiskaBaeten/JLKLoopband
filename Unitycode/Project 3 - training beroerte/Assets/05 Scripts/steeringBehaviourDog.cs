@@ -55,8 +55,8 @@ public class steeringBehaviourDog : MonoBehaviour
     GameObject[] waypointPathsContainer;
     Vector3 currentPathPoint;
     Vector3[] waypointsCurrentPath;
-    List<Path> allPaths;
-    public Path currentPath;
+    List<WaypointPath> allPaths;
+    public WaypointPath currentPath;
     public int nextPathNumber;
     bool nextPathIsChosen;
     bool pathDirectionIsReversed;
@@ -68,13 +68,13 @@ public class steeringBehaviourDog : MonoBehaviour
     void Start()
     {
 
-        allPaths = new List<Path>();
+        allPaths = new List<WaypointPath>();
         controller = GetComponent<CharacterController>();//this GO's CharacterController
         wanderJitter = UnityEngine.Random.Range(wanderJitterMin, wanderJitterMax);//for the first time use.
         waypointPathsContainer = GameObject.FindGameObjectsWithTag("WayPoints");
         foreach (GameObject pathToAdd in waypointPathsContainer)
         {
-            allPaths.Add(new Path(pathToAdd));
+            allPaths.Add(new WaypointPath(pathToAdd));
         }
         nextPathNumber = 0;
         pathDirectionIsReversed = false;
@@ -129,7 +129,7 @@ public class steeringBehaviourDog : MonoBehaviour
         {
             nextPathShouldBeReversed = false;
         }
-        foreach (Path pathToCheck in allPaths)
+        foreach (WaypointPath pathToCheck in allPaths)
         {
             
             if (pathToCheck.PathNumber == nextPathNumber)
@@ -256,7 +256,7 @@ public class steeringBehaviourDog : MonoBehaviour
     }
 }
 
-public class Path
+public class WaypointPath
 {
     byte pathNumber;
     int pathBeforeLeft;
@@ -266,8 +266,8 @@ public class Path
     bool isReversed;
 
     Vector3[] waypointsPath;
-    public Path() { }
-    public Path(GameObject path)
+    public WaypointPath() { }
+    public WaypointPath(GameObject path)
     {
         initializePathName(path);
         initializePathWaypoints(path);
