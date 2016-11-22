@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 697260cb4b9c935489314430b260315e
+timeCreated: 1479330868
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - instrucHomeText: {fileID: 2800000, guid: 8056af5f0a518234c8077bf568d7e1f1, type: 3}
+  - instrucHomeFindDog: {fileID: 2800000, guid: 560fd802d1eb3fc488a5fbf193099b54,
+      type: 3}
+  - instrucChoosePathText: {fileID: 2800000, guid: f9d10212839aeb34cb26226c892e01da,
+      type: 3}
+  - instrucChoosePathHowTo: {fileID: 2800000, guid: 4514036722e5aa943972630e76b227e8,
+      type: 3}
+  - instrucCallDog: {fileID: 2800000, guid: e823125aa8e329342ab06b9674ff188f, type: 3}
+  - instrucArrows: {fileID: 2800000, guid: ed8b983adeea285478bf259a778cf3a2, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
