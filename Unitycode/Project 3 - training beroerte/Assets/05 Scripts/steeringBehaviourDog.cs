@@ -292,8 +292,8 @@ public class WaypointPath
                 pathNumber = 0;
                 pathBeforeLeft = 7;
                 pathBeforeRight = 1;
-                pathBehindLeft = 116; //path 16
-                pathBehindRight = 116;
+                pathBehindLeft = 113; //path 13
+                pathBehindRight = 115;
                 break;
 
             case "Path (1)":
@@ -308,7 +308,7 @@ public class WaypointPath
             case "Path (2)":
 
                 pathNumber = 2;
-                pathBeforeLeft = 17;
+                pathBeforeLeft = 3;
                 pathBeforeRight = 3;
                 pathBehindLeft = 104;
                 pathBehindRight = 6;
@@ -326,8 +326,8 @@ public class WaypointPath
             case "Path (4)":
 
                 pathNumber = 4;
-                pathBeforeLeft = 2;
-                pathBeforeRight = 2;
+                pathBeforeLeft = 22;
+                pathBeforeRight = 22;
                 pathBehindLeft = 101;
                 pathBehindRight = 101;
                 break;
@@ -344,14 +344,14 @@ public class WaypointPath
                 pathNumber = 6;
                 pathBeforeLeft = 107;
                 pathBeforeRight = 107;
-                pathBehindLeft = 2;
-                pathBehindRight = 2;
+                pathBehindLeft = 22;
+                pathBehindRight = 22;
                 break;
 
             case "Path (7)":
                 pathNumber = 7;
                 pathBeforeLeft = 106;
-                pathBeforeRight = 5;
+                pathBeforeRight = 105;
                 pathBehindLeft = 100;
                 pathBehindRight = 100;
                 break;
@@ -366,10 +366,10 @@ public class WaypointPath
 
             case "Path (9)":
                 pathNumber = 9;
-                pathBeforeLeft = 11;
-                pathBeforeRight = 14;
+                pathBeforeLeft = 124;
+                pathBeforeRight = 124;
                 pathBehindLeft = 108;
-                pathBehindRight = 121;
+                pathBehindRight = 108;
                 break;
 
             case "Path (10)":
@@ -384,8 +384,8 @@ public class WaypointPath
                 pathNumber = 11;
                 pathBeforeLeft = 15;
                 pathBeforeRight = 15;
-                pathBehindLeft = 109;
-                pathBehindRight = 109;
+                pathBehindLeft = 24;
+                pathBehindRight = 24;
                 break;
 
             case "Path (12)":
@@ -398,8 +398,8 @@ public class WaypointPath
 
             case "Path (13)":
                 pathNumber = 13;
-                pathBeforeLeft = 16;
-                pathBeforeRight = 16;
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathBehindLeft = 114;
                 pathBehindRight = 112;
                 break;
@@ -408,55 +408,48 @@ public class WaypointPath
                 pathNumber = 14;
                 pathBeforeLeft = 13;
                 pathBeforeRight = 13;
-                pathBehindLeft = 109;
-                pathBehindRight = 109;
+                pathBehindLeft = 24;
+                pathBehindRight = 24;
                 break;
 
             case "Path (15)":
 
                 pathNumber = 15;
-                pathBeforeLeft = 16;
-                pathBeforeRight = 16;
+                pathBeforeLeft = 0;
+                pathBeforeRight = 0;
                 pathBehindLeft = 12;
                 pathBehindRight = 111;
                 break;
-            case "Path (16)":
 
-                pathNumber = 16;
-                pathBeforeLeft = 0;
-                pathBeforeRight = 0;
-                pathBehindLeft = 113;
-                pathBehindRight = 115;
-                break;
             case "Path (17)":
 
                 pathNumber = 17;
-                pathBeforeLeft = 19;
-                pathBeforeRight = 118;
-                pathBehindLeft = 103;
-                pathBehindRight = 103;
+                pathBeforeLeft = 23;
+                pathBeforeRight = 23;
+                pathBehindLeft = 03;
+                pathBehindRight = 03;
                 break;
             case "Path (18)":
 
                 pathNumber = 18;
-                pathBeforeLeft = 117;
-                pathBeforeRight = 117;
-                pathBehindLeft = 110;
-                pathBehindRight = 110;
+                pathBeforeLeft = 123;
+                pathBeforeRight = 123;
+                pathBehindLeft = 10;
+                pathBehindRight = 10;
                 break;
             case "Path (19)":
 
                 pathNumber = 19;
-                pathBeforeLeft = 21;
-                pathBeforeRight = 21;
-                pathBehindLeft = 117;
-                pathBehindRight = 117;
+                pathBeforeLeft = 125;
+                pathBeforeRight = 125;
+                pathBehindLeft = 123;
+                pathBehindRight = 123;
                 break;
             case "Path (20)":
 
                 pathNumber = 20;
-                pathBeforeLeft = 21;
-                pathBeforeRight = 21;
+                pathBeforeLeft = 125;
+                pathBeforeRight = 125;
                 pathBehindLeft = 10;
                 pathBehindRight = 10;
                 break;
@@ -465,8 +458,40 @@ public class WaypointPath
                 pathNumber = 21;
                 pathBeforeLeft = 108;
                 pathBeforeRight = 108;
-                pathBehindLeft = 120;
-                pathBehindRight = 119;
+                pathBehindLeft = 25;
+                pathBehindRight = 25;
+                break;
+            case "Path (22)":
+
+                pathNumber = 22;
+                pathBeforeLeft = 23;
+                pathBeforeRight = 2;
+                pathBehindLeft = 104;
+                pathBehindRight = 6;
+                break;
+            case "Path (23)":
+
+                pathNumber = 23;
+                pathBeforeLeft = 19;
+                pathBeforeRight = 118;
+                pathBehindLeft = 117;
+                pathBehindRight = 122;
+                break;
+            case "Path (24)":
+
+                pathNumber = 24;
+                pathBeforeLeft = 109;
+                pathBeforeRight = 25;
+                pathBehindLeft = 11;
+                pathBehindRight = 14;
+                break;
+            case "Path (25)":
+
+                pathNumber = 25;
+                pathBeforeLeft = 120;
+                pathBeforeRight = 119;
+                pathBehindLeft = 124;
+                pathBehindRight = 21;
                 break;
         }
     }

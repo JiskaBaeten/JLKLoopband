@@ -7,12 +7,12 @@ public class ControllersVive : MonoBehaviour {
      public bool gripButtonUp = false;
      public bool gripButtonPressed = false;
  
- 
      private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
      public bool triggerButtonDown = false;
      public bool triggerButtonUp = false;
      public bool triggerButtonPressed = false;
- 
+
+    public GameObject dog;
      private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
      private SteamVR_TrackedObject trackedObj;
   	// Use this for initialization
@@ -40,16 +40,16 @@ public class ControllersVive : MonoBehaviour {
        
                if (gripButtonDown)
         {
-            Debug.Log("Grip Button was just pressed");
-                   }
+            Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        }
                if (gripButtonUp)
         {
             Debug.Log("Grip Button was just unpressed");
                    }
                if (triggerButtonDown)
         {
-            Debug.Log("Trigger Button was just pressed");
-                    }
+            Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(180, 180, 180)));
+        }
                if (triggerButtonUp)
         {
             Debug.Log("Trigger Button was just unpressed");
