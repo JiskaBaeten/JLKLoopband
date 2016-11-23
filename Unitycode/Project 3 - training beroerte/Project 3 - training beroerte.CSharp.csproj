@@ -72,6 +72,7 @@
     <Compile Include="Assets\05 Scripts\VoiceCommands.cs" />
     <Compile Include="Assets\05 Scripts\cameraMove.cs" />
     <Compile Include="Assets\05 Scripts\endGame.cs" />
+    <Compile Include="Assets\05 Scripts\leash.cs" />
     <Compile Include="Assets\05 Scripts\patientDataIO.cs" />
     <Compile Include="Assets\05 Scripts\steeringBehaviourDog.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />

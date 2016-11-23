@@ -12,7 +12,7 @@ public class ControllersVive : MonoBehaviour {
      public bool triggerButtonUp = false;
      public bool triggerButtonPressed = false;
 
-    public GameObject viveCam;
+    public GameObject viveCam; //werken met camera rig of met head??
     public GameObject dog;
      private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
      private SteamVR_TrackedObject trackedObj;

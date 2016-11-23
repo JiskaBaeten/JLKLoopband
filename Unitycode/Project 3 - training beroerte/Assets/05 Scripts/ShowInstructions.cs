@@ -41,18 +41,23 @@ public class ShowInstructions : MonoBehaviour
 
     if (sceneName == "scene_home")
     {
-      if (this.tag == "InstrucAnimation")
-      {
-        instructionImage.texture = (Texture)instrucArrows;
-      }
-      else
-      { 
-      instructionImage.texture = (Texture)arrInstrucScene_Home[0]; //just to make sure this is the first to show
-      }
+            if (PlayerPrefs.GetInt("numberOfTimesPlayedHome") == 0)
+            {
+                PlayerPrefs.DeleteKey("numberOfTimesPlayedHome");
+                instructionImage.texture = (Texture)instrucArrows;
+                instructionImage.texture = (Texture)arrInstrucScene_Home[0]; //just to make sure this is the first to show
+            }
+      
+      
     }
     else if (sceneName == "scene_park")
     {
-      instructionImage.texture = (Texture)arrInstrucScene_Park[0]; //just to make sure this is the first to show
+            if (PlayerPrefs.GetInt("numberOfTimesPlayedPark") == 0)
+            {
+                PlayerPrefs.DeleteKey("numberOfTimesPlayedHome");
+                instructionImage.texture = (Texture)arrInstrucScene_Park[0]; //just to make sure this is the first to show
+            }
+
     }
   }
 
