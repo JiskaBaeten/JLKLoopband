@@ -12,6 +12,7 @@ public class ControllersVive : MonoBehaviour {
      public bool triggerButtonUp = false;
      public bool triggerButtonPressed = false;
 
+    public GameObject viveCam;
     public GameObject dog;
      private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
      private SteamVR_TrackedObject trackedObj;
@@ -48,6 +49,15 @@ public class ControllersVive : MonoBehaviour {
                    }
                if (triggerButtonDown)
         {
+            if (viveCam.transform.position.x - transform.position.x > 0)
+            {
+                Debug.LogError("right");
+                Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(180, 180, 180)));
+            }
+            else if (viveCam.transform.position.x - transform.position.x < 0)
+            {
+                Debug.LogError("left");
+            }
             Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(180, 180, 180)));
         }
                if (triggerButtonUp)
@@ -56,3 +66,7 @@ public class ControllersVive : MonoBehaviour {
                   }
          }
 }
+
+
+//camera x = 5  hand x = 4 --> if cam - hand = 5 - 4 --> 1 links
+//camera x = 4 hand x = 5 --> if cam - hand = 4-5 --> -1 rechts
