@@ -151,6 +151,7 @@ public class patientDataIO : MonoBehaviour
 
     public void btnChoosePatientClicked()
     {
+
         chooseSceneInterface.SetActive(true);
         patientViewInterface.SetActive(false);
         addPatientInterface.SetActive(false);
@@ -161,6 +162,8 @@ public class patientDataIO : MonoBehaviour
                 patientSelected = patientDetailsToShow;
             }
         }
+        PlayerPrefs.SetInt("numberOfTimesPlayedHome", patientSelected.timesInHomeScene);
+        PlayerPrefs.SetInt("numberOfTimesPlayedPark", patientSelected.timesInParkScene);
     } //switches interface and selects correct user
 
     public void btnPatientDeleteClicked()
@@ -451,6 +454,16 @@ public class profile
     public string UserGender
     {
         get { return gender; }
+    }
+
+    public ushort timesInHomeScene
+    {
+       get { return numberOfTimesInHomeScene; }
+    }
+
+    public ushort timesInParkScene
+    {
+        get { return numberOfTimesInParkScene; }
     }
 
     public void playingPark()

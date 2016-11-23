@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/testsun.unity
+- path: Assets/scene_park.unity
   isLoaded: 1
   isActive: 1
