@@ -58,7 +58,7 @@ public class MicInput : MonoBehaviour
 
             if (volume > isYelling && currentTime >= timeSpoken + timeBetweenStartAndEnd)
             {
-                timeSpoken = currentTime;
+                timeSpoken = currentTime; 
                 Debug.Log("yelling" + volume);
                 if (cameraRenderer.isVisible)
                 {

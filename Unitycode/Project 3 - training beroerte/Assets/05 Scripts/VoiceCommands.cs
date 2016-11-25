@@ -8,7 +8,7 @@ using System.Linq;
 public class VoiceCommands : MonoBehaviour {
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords;
-    AudioSource dogBark;
+    AudioSource dogBark; //playing bark
     // Use this for initialization
     void Start () {
         keywords = new Dictionary<string, System.Action>();
@@ -23,6 +23,7 @@ public class VoiceCommands : MonoBehaviour {
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
         keywordRecognizer.Start();
+        
     }
 
     private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
@@ -34,9 +35,4 @@ public class VoiceCommands : MonoBehaviour {
             keywordAction.Invoke();
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }
