@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEngine.Windows.Speech;
+using UnityEngine.Windows.Speech;
 using System.Collections.Generic;
 using System.Linq;
 
 
 public class VoiceCommands : MonoBehaviour {
-  /*  KeywordRecognizer keywordRecognizer;
+    KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords;
     AudioSource dogBark; //playing bark
     // Use this for initialization
@@ -34,5 +34,5 @@ public class VoiceCommands : MonoBehaviour {
         {
             keywordAction.Invoke();
         }
-    }*/
+    }
 }

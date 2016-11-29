@@ -1,5 +1,0 @@
-CHANGELOG 0.2 vs 0.1
-====================
-* new field for entering the number of bytes to be received before calling data_received
-* Direct use of datareceived based on the bytes read so no more use for the timer
-* thread safe writing to textbox (see outputmessage method)
