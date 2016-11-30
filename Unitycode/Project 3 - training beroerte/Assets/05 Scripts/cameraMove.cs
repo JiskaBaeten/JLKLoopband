@@ -12,7 +12,7 @@ public class cameraMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = Vector3.Lerp(transform.position, new Vector3( dog.transform.position.x, transform.position.y, dog.transform.position.z), lerpSpeed);
+        transform.localPosition = Vector3.Lerp(transform.position, new Vector3( dog.transform.position.x, transform.position.y, dog.transform.position.z), lerpSpeed);
             if (Input.GetKey(KeyCode.D))
              {
                  gameObject.transform.Rotate(0, 1, 0);

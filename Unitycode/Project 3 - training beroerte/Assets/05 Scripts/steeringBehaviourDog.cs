@@ -53,7 +53,7 @@ public class steeringBehaviourDog : MonoBehaviour
     public Vector3 targetPosition;//where to go
 
     GameObject[] waypointPathsContainer;
-    Vector3 currentPathPoint;
+    public Vector3 currentPathPoint;
     Vector3[] waypointsCurrentPath;
     List<WaypointPath> allPaths;
     public WaypointPath currentPath;
