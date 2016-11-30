@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/SerialComm/Scenes/DemoSceneUserPoll_ReadWrite.unity
+  isLoaded: 1
+  isActive: 1
