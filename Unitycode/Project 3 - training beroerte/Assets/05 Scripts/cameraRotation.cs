@@ -9,7 +9,9 @@ public class cameraRotation : MonoBehaviour {
     public float rotateCameraStrength;
     public GameObject dog;
     public steeringBehaviourDog scriptDogMove;
+    Vector3 lookAtWaypoint;
     Quaternion targetRotationCamera;
+    Vector3 cameraPosition;
     void Start () {
         currentCameraRotation = cameraEye.transform.position;
         rotateCameraStrength = 0.1f;
@@ -19,15 +21,18 @@ public class cameraRotation : MonoBehaviour {
 	}
 	
 	void Update () {
+        cameraPosition = transform.position;
+        lookAtWaypoint = scriptDogMove.currentPathPoint;
+        Debug.Log("rotate" + lookAtWaypoint);
 
+        Debug.DrawRay(cameraPosition, dog.transform.position, Color.red);
         //transform.LookAt(scriptDogMove.currentPathPoint);
         //transform.rotation = Quaternion.LookRotation( Vector3.RotateTowards(transform.localPosition, dog.transform.position,10*Time.deltaTime,0));
-        targetRotationCamera = Quaternion.LookRotation(scriptDogMove.currentPathPoint);
-        Debug.Log("before" +targetRotationCamera);
-       // targetRotationCamera.y -= 22.037f;
-        Debug.Log("afteré" + targetRotationCamera);
-        transform.rotation = Quaternion.Lerp(transform.rotation,targetRotationCamera,0.5f );
+        targetRotationCamera = Quaternion.LookRotation(dog.transform.position);
 
+        //Debug.DrawRay(transform.position,scriptDogMove.currentPathPoint, Color.red);
+        transform.rotation = Quaternion.Slerp(transform.rotation,targetRotationCamera, 0.02f );
+       
 
         /* if (cameraEye.transform.position.z < currentCameraRotation.z)
         {

@@ -84,6 +84,7 @@ public class steeringBehaviourDog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("dog " + currentPathPoint);
         steerForce = FollowPath(waypointsCurrentPath);
         //calc movement
         Truncate(ref steerForce, maxForce);// not > max
