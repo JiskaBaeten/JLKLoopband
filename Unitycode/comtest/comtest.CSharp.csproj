@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MessageListener.cs" />
+    <Compile Include="Assets\MessageReadWrite.cs" />
     <Compile Include="Assets\SerialComm\Scripts\Samples\SampleMessageListener.cs" />
     <Compile Include="Assets\SerialComm\Scripts\Samples\SampleUserPolling_JustRead.cs" />
     <Compile Include="Assets\SerialComm\Scripts\Samples\SampleUserPolling_ReadWrite.cs" />
