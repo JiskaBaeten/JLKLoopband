@@ -1,29 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Windows.Speech;
 using System.Collections.Generic;
 using System.Linq;
 
 
-public class VoiceCommands : MonoBehaviour {
+public class continuousRecognition : MonoBehaviour {
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords;
-    AudioSource dogBark; //playing bark
     // Use this for initialization
     void Start () {
         keywords = new Dictionary<string, System.Action>();
-        dogBark = this.GetComponent<AudioSource>();
-        dogBark.loop = false;
-        keywords.Add("zit", () => {Debug.Log("aye aye cap");});
-        keywords.Add("woof", () => {
-            Debug.Log("woof");
-            dogBark.Play();
-        });
-        keywords.Add("roll", () => {Debug.Log("they see me rolllliinnggg"); });
+        keywords.Add("how are you", () => {Debug.Log("marvelous");});
+        keywords.Add("bark", () => {Debug.Log("woof");});
+        keywords.Add("activate", () => {Debug.Log("activated"); });
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
         keywordRecognizer.Start();
-        
     }
 
     private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
@@ -35,4 +27,9 @@ public class VoiceCommands : MonoBehaviour {
             keywordAction.Invoke();
         }
     }
+
+    // Update is called once per frame
+    void Update () {
+	
+	}
 }
