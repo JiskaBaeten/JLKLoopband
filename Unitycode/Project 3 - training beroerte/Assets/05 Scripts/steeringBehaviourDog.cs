@@ -25,7 +25,7 @@ public class steeringBehaviourDog : MonoBehaviour
     private float wanderJitter;
     public float wanderJitterMin = 0.5f;
     public float wanderJitterMax = 2;
-    public float minDistToPathPoint = 3;
+    public float minDistToPathPoint = 3; 
     private int indexOfCurrentPathPoint = 0;
     private float tmrTimeSpentOnPathPoint = 0;
     public float MaxTimeToSpendOnPathPoint = 8;
