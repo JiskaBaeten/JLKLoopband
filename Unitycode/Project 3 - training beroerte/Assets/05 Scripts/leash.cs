@@ -13,9 +13,8 @@ public class leash : MonoBehaviour {
         lineRendererObject.SetWidth(dogLeashWidth, dogLeashWidth);
         //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
         //lineRendererObject.material = whiteDiffuseMat;
-        GetComponent<Renderer>().material.color = Color.blue;
-        dog = GameObject.Find("Dog");
-        lineRendererObject.SetColors(Color.blue, Color.blue);
+        GetComponent<Renderer>().material.color = Color.red;
+        lineRendererObject.SetColors(Color.red, Color.red);
     }
 	
 	// Update is called once per frame

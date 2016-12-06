@@ -29,8 +29,13 @@ public class cameraRotation : MonoBehaviour {
         Debug.DrawRay(cameraPosition, dog.transform.position, Color.red);
         //transform.LookAt(scriptDogMove.currentPathPoint);
         //transform.rotation = Quaternion.LookRotation( Vector3.RotateTowards(transform.localPosition, dog.transform.position,10*Time.deltaTime,0));
+
         transform.LookAt(dog.transform.position);
-        transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, lockPos);
+       // transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, lockPos);
+
+
+
+
         //Debug.DrawRay(transform.position,scriptDogMove.currentPathPoint, Color.red);
         // transform.rotation = Quaternion.Slerp(transform.rotation,targetRotationCamera, 0.02f );
 

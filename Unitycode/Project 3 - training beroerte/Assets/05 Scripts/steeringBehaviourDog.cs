@@ -64,6 +64,7 @@ public class steeringBehaviourDog : MonoBehaviour
     bool nextPathShouldBeReversed = false;
     int numberToCheckIfReversed = 100;
 
+    float yPosDogStart;
 
     void Start()
     {
@@ -79,6 +80,8 @@ public class steeringBehaviourDog : MonoBehaviour
         nextPathNumber = 0;
         pathDirectionIsReversed = false;
         waypointsCurrentPath = selectPath();
+
+        yPosDogStart = transform.position.y;
     }
 
     // Update is called once per frame
@@ -94,6 +97,7 @@ public class steeringBehaviourDog : MonoBehaviour
         if (controller.isGrounded)
         {
             controller.Move(velocity * Time.deltaTime);//move
+
 
         }
         else
