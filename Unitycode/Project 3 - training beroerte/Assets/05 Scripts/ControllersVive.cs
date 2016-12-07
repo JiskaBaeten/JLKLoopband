@@ -13,14 +13,18 @@ public class ControllersVive : MonoBehaviour
     public bool triggerButtonUp = false;
     public bool triggerButtonPressed = false;
 
+
     public GameObject viveCam; //werken met camera rig of met head??
-    public GameObject dog;
+    private GameObject dog;
+    public Animator dogAnimationController;
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
     // Use this for initialization
     void Start()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
+        dog = GameObject.FindWithTag("Dog");
+       dogAnimationController =  dog.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -35,6 +39,7 @@ public class ControllersVive : MonoBehaviour
         gripButtonDown = controller.GetPressDown(gripButton);
         gripButtonUp = controller.GetPressUp(gripButton);
         gripButtonPressed = controller.GetPress(gripButton);
+        
 
         triggerButtonDown = controller.GetPressDown(triggerButton);
         triggerButtonUp = controller.GetPressUp(triggerButton);
@@ -42,7 +47,15 @@ public class ControllersVive : MonoBehaviour
 
         if (gripButtonDown)
         {
-            Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+            if (dogAnimationController.GetBool("dogIsLoose"))
+            {
+                dogAnimationController.SetBool("dogIsLoose", false);
+            }
+            else
+            {
+                dogAnimationController.SetBool("dogIsLoose", true);
+            }
+            
         }
         if (gripButtonUp)
         {
@@ -53,13 +66,13 @@ public class ControllersVive : MonoBehaviour
             if (viveCam.transform.position.x - transform.position.x > 0)
             {
                 Debug.LogError("right");
-                Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(180, 180, 180)));
+                
             }
             else if (viveCam.transform.position.x - transform.position.x < 0)
             {
                 Debug.LogError("left");
             }
-            Instantiate(dog, this.transform.position, Quaternion.Euler(new Vector3(180, 180, 180)));
+            
         }
         if (triggerButtonUp)
         {

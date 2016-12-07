@@ -24,16 +24,20 @@ public class steeringBehaviourDog : MonoBehaviour
 
     public cameraSteeringBehaviour cameraMoveScript;
 
-
+    public Animator animationController;
     void Start()
     {
         currentPathPointDog = cameraMoveScript.currentPathPoint;
         controller = GetComponent<CharacterController>();
+        animationController = GetComponent<Animator>();
+
+        //animationController.SetBool("dogIsLoose", true);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        animationController.SetFloat("speed", maxRunningSpeed);
+        
         if (Vector3.Distance(transform.position, cameraMoveScript.currentPathPoint) < minDistToPathPoint)//if close enough pick next one
         {
             currentPathPointDog = cameraMoveScript.nextPathPoint;
