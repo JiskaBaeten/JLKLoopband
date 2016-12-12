@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Windows.Kinect;
+using System.IO;
+using Environment = System.Environment;
 
 public class BodySourceManager : MonoBehaviour 
 {
     private KinectSensor _Sensor;
     private BodyFrameReader _Reader;
     private Body[] _Data = null;
-    
+
+    StreamWriter sWriter;
+    string writePath;
+    string lstring, rstring;
+
     public Body[] GetData()
     {
         return _Data;
@@ -26,9 +32,13 @@ public class BodySourceManager : MonoBehaviour
             {
                 _Sensor.Open();
             }
-        }   
+        }
+
+        //IO
+        writePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+        writePath += "\\KinectData.txt";   
     }
-    
+
     void Update () 
     {
         if (_Reader != null)
@@ -46,7 +56,8 @@ public class BodySourceManager : MonoBehaviour
                 frame.Dispose();
                 frame = null;
             }
-        }    
+        }
+        WriteKinectData();
     }
     
     void OnApplicationQuit()
@@ -66,5 +77,38 @@ public class BodySourceManager : MonoBehaviour
             
             _Sensor = null;
         }
+    }
+    void WriteKinectData()
+    {
+        try
+        {
+            foreach (var body in _Data)
+            {
+                if (body != null)
+                {
+                    if (body.IsTracked)
+                    {
+                        sWriter = File.AppendText(writePath);
+                        Windows.Kinect.Joint lShoulder = body.Joints[JointType.ShoulderLeft];
+                        Windows.Kinect.Joint rShoulder = body.Joints[JointType.ShoulderRight];
+
+                        lstring = lShoulder.Position.X + " " + lShoulder.Position.Y + " " + lShoulder.Position.Z; ;
+                        rstring = rShoulder.Position.X + " " + rShoulder.Position.Y + " " + rShoulder.Position.Z;
+                        sWriter.WriteLine(lstring);
+                        sWriter.WriteLine(rstring);
+                        Debug.Log("right:" + rShoulder.Position.X + " " + rShoulder.Position.Y + " " + rShoulder.Position.Z);
+                        Debug.Log("left:" + lShoulder.Position.X + " " + lShoulder.Position.Y + " " + lShoulder.Position.Z);
+                        sWriter.Close();
+                    }
+                }
+            }
+
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("could not write KinectData to file");
+            throw;
+        }
+
     }
 }
