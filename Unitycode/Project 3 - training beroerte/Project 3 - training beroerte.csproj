@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
@@ -65,17 +65,21 @@
   <ItemGroup>
     <Compile Include="Assets\05 Scripts\ControllersVive.cs" />
     <Compile Include="Assets\05 Scripts\HomeCamera.cs" />
+    <Compile Include="Assets\05 Scripts\MessageListener.cs" />
+    <Compile Include="Assets\05 Scripts\MessageReadWrite.cs" />
     <Compile Include="Assets\05 Scripts\MicInput.cs" />
     <Compile Include="Assets\05 Scripts\SetTime.cs" />
     <Compile Include="Assets\05 Scripts\ShowInstructions.cs" />
     <Compile Include="Assets\05 Scripts\SpawnObstacle.cs" />
     <Compile Include="Assets\05 Scripts\VoiceCommands.cs" />
-    <Compile Include="Assets\05 Scripts\cameraMove.cs" />
-    <Compile Include="Assets\05 Scripts\cameraRotation.cs" />
+    <Compile Include="Assets\05 Scripts\cameraSetAtStart.cs" />
+    <Compile Include="Assets\05 Scripts\cameraSteeringBehaviour.cs" />
     <Compile Include="Assets\05 Scripts\endGame.cs" />
     <Compile Include="Assets\05 Scripts\leash.cs" />
     <Compile Include="Assets\05 Scripts\patientDataIO.cs" />
     <Compile Include="Assets\05 Scripts\steeringBehaviourDog.cs" />
+    <Compile Include="Assets\SerialComm\Scripts\SerialController.cs" />
+    <Compile Include="Assets\SerialComm\Scripts\SerialThread.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
