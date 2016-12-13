@@ -60,16 +60,16 @@ public class cameraSteeringBehaviour : MonoBehaviour {
         acceleration = steerForce / mass;
         velocity += acceleration;//velocity = transform.TransformDirection(velocity);
         Truncate(ref velocity, maxRunningSpeed);
-        if (controller.isGrounded)
-        {
+       /* if (controller.isGrounded)
+        {*/
             controller.Move(velocity * Time.deltaTime);//move
 
 
-        }
+      /*  }
         else
         {
             controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));//fall down
-        }
+        }*/
 
         //rotate
         if (new Vector3(velocity.x, 0, velocity.z) != Vector3.zero)//otherwise warning
@@ -79,6 +79,10 @@ public class cameraSteeringBehaviour : MonoBehaviour {
         if (!nextPathIsChosen)
         {
             findNextPath();
+        }
+        else
+        {
+
         }
     }
     private void Truncate(ref Vector3 myVector, int myMax)//not above max

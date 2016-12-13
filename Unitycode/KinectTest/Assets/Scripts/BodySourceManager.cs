@@ -2,6 +2,7 @@
 using System.Collections;
 using Windows.Kinect;
 using System.IO;
+using System.Text;
 using Environment = System.Environment;
 
 public class BodySourceManager : MonoBehaviour 
@@ -10,9 +11,9 @@ public class BodySourceManager : MonoBehaviour
     private BodyFrameReader _Reader;
     private Body[] _Data = null;
 
-    StreamWriter sWriter;
     string writePath;
-    string lstring, rstring;
+    string newline;
+    StringBuilder csv;
 
     public Body[] GetData()
     {
@@ -36,7 +37,9 @@ public class BodySourceManager : MonoBehaviour
 
         //IO
         writePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        writePath += "\\KinectData.txt";   
+        writePath += "\\A walk in the park\\KinectData.csv";
+        csv = new StringBuilder();
+
     }
 
     void Update () 
@@ -77,38 +80,50 @@ public class BodySourceManager : MonoBehaviour
             
             _Sensor = null;
         }
+
+        try
+        {
+           File.AppendAllText(writePath,csv.ToString());
+            Debug.Log("File written to:" + writePath);
+        }
+
+        catch (System.Exception)
+        {
+            Debug.Log("Could not write to file: ");
+            throw;
+        }
     }
     void WriteKinectData()
     {
-        try
-        {
-            foreach (var body in _Data)
-            {
-                if (body != null)
-                {
-                    if (body.IsTracked)
-                    {
-                        sWriter = File.AppendText(writePath);
-                        Windows.Kinect.Joint lShoulder = body.Joints[JointType.ShoulderLeft];
-                        Windows.Kinect.Joint rShoulder = body.Joints[JointType.ShoulderRight];
 
-                        lstring = lShoulder.Position.X + " " + lShoulder.Position.Y + " " + lShoulder.Position.Z; ;
-                        rstring = rShoulder.Position.X + " " + rShoulder.Position.Y + " " + rShoulder.Position.Z;
-                        sWriter.WriteLine(lstring);
-                        sWriter.WriteLine(rstring);
-                        Debug.Log("right:" + rShoulder.Position.X + " " + rShoulder.Position.Y + " " + rShoulder.Position.Z);
-                        Debug.Log("left:" + lShoulder.Position.X + " " + lShoulder.Position.Y + " " + lShoulder.Position.Z);
-                        sWriter.Close();
+            if (_Data != null)
+            {
+                foreach (var body in _Data)
+                {
+                    if (body != null)
+                    {
+                        if (body.IsTracked)
+                        {
+                            Windows.Kinect.Joint lShoulder = body.Joints[JointType.ShoulderLeft];
+                            Windows.Kinect.Joint rShoulder = body.Joints[JointType.ShoulderRight];
+                            Windows.Kinect.Joint spineShoulder = body.Joints[JointType.SpineShoulder];
+                            Windows.Kinect.Joint spineBase = body.Joints[JointType.SpineBase];
+
+                            newline = string.Format("{0},{1},{2}{3}", lShoulder.Position.X, lShoulder.Position.Y, lShoulder.Position.Z, Environment.NewLine);
+                            csv.Append(newline);
+                            newline = string.Format("{0},{1},{2}{3}", rShoulder.Position.X, rShoulder.Position.Y, rShoulder.Position.Z, Environment.NewLine);
+                            csv.Append(newline);
+                            newline = string.Format("{0},{1},{2}{3}", spineShoulder.Position.X, spineShoulder.Position.Y, spineShoulder.Position.Z, Environment.NewLine);
+                            csv.Append(newline);
+                            newline = string.Format("{0},{1},{2}{3}", spineBase.Position.X, spineBase.Position.Y, spineBase.Position.Z, Environment.NewLine);
+                            csv.Append(newline);
+
+                            Debug.Log("right:" + rShoulder.Position.X + " " + rShoulder.Position.Y + " " + rShoulder.Position.Z);
+                            Debug.Log("left:" + lShoulder.Position.X + " " + lShoulder.Position.Y + " " + lShoulder.Position.Z);
+                        }
                     }
                 }
             }
-
-        }
-        catch (System.Exception)
-        {
-            Debug.Log("could not write KinectData to file");
-            throw;
-        }
-
     }
+
 }

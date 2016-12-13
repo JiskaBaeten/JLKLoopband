@@ -22,6 +22,7 @@ public class leash : MonoBehaviour {
         // GameObject gameObjectLineRenderer = new GameObject();
 
         // GameObject hand = GameObject.Find("manArm");
+        
         lineRendererObject.SetPosition(0, dog.transform.position);
         lineRendererObject.SetPosition(1, hand.transform.position);
     }

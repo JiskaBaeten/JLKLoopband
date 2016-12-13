@@ -24,7 +24,7 @@ public class ControllersVive : MonoBehaviour
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         dog = GameObject.FindWithTag("Dog");
-       dogAnimationController =  dog.GetComponent<Animator>();
+        dogAnimationController = dog.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -39,7 +39,7 @@ public class ControllersVive : MonoBehaviour
         gripButtonDown = controller.GetPressDown(gripButton);
         gripButtonUp = controller.GetPressUp(gripButton);
         gripButtonPressed = controller.GetPress(gripButton);
-        
+
 
         triggerButtonDown = controller.GetPressDown(triggerButton);
         triggerButtonUp = controller.GetPressUp(triggerButton);
@@ -55,32 +55,47 @@ public class ControllersVive : MonoBehaviour
             {
                 dogAnimationController.SetBool("dogIsLoose", true);
             }
-            
+
         }
         if (gripButtonUp)
         {
             Debug.Log("Grip Button was just unpressed");
         }
-        if (triggerButtonDown)
+      /*  if (triggerButtonDown)
         {
-            if (viveCam.transform.position.x - transform.position.x > 0)
+
+
+            if (viveCam.transform.forward.x > transform.position.x)
             {
                 Debug.LogError("right");
-                
+
+
             }
-            else if (viveCam.transform.position.x - transform.position.x < 0)
+            else if (viveCam.transform.forward.x < transform.position.x)
             {
                 Debug.LogError("left");
             }
-            
+
         }
         if (triggerButtonUp)
         {
             Debug.Log("Trigger Button was just unpressed");
+        }*/
+    }
+
+
+    void OnTriggerStay(Collider col)
+    {
+        if (triggerButtonDown)
+        {
+            if (col.gameObject.tag == "controllerColliderLeft")
+            {
+                Debug.LogError("left");
+            }
+            else if (col.gameObject.tag == "controllerColliderRight")
+            {
+                Debug.LogError("right");
+            }
         }
     }
 }
-
-
-//camera x = 5  hand x = 4 --> if cam - hand = 5 - 4 --> 1 links
-//camera x = 4 hand x = 5 --> if cam - hand = 4-5 --> -1 rechts
