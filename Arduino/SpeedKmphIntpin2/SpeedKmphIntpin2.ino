@@ -1,21 +1,15 @@
 /*
-30/09/2016 Wim Van Weyenberg
-Speedometer: external interrupt on PIN2 high to low edge: read timervalue and reset
-clock speed ATMega328 = 16 Mc
-*/
-/*
 //calculations
-//wheel circomference 24.6 cm
-//max speed of 10 km/uur =  277,8 cm/second
-//max rps = 11.29 rps
-//min time ms/rev = 88.56 ms/rev = 88560 micros
-
-12km/h => 73800
+//wheel circomference 2.3 cm
+//max speed of 10 km/uur =  277,8 cm/second => 10 / 0.036
+//max rps = 277.8 cm/second / 2.3 cm = 120.783 rps
+//min time ms/rev = 9360 micros = 9.360 ms/rev
+//ZIE PAPIER VOOR MAX rotatie bij 12km/uur
 */
 
 #define OPTOINPUT 2//pin connected to read switch
 #define LEDONBOARD 13
-#define WHEELCIRCOMFERENCECM 24.6 //NOG AANPASSEN
+#define WHEELPINDISTANCE 0.723 //wiel dat draait op band > OMTREK!! dlen door 10 mdat 10 pinnen
 
 volatile unsigned long microsecondsNow;
 unsigned long microsecondsOld = 0;
@@ -25,10 +19,9 @@ double kmph;
 void setup() 
 {
   Serial.begin(9600);
-    pinMode(LEDONBOARD, OUTPUT); //moet dit niet op HIGH gezet worden?
-    pinMode(OPTOINPUT,INPUT_PULLUP);
-    //bij ons niet falling, maar rising
-    attachInterrupt(digitalPinToInterrupt(OPTOINPUT), ISRreadTime, RISING);
+    pinMode(LEDONBOARD, OUTPUT); 
+    pinMode(OPTOINPUT,INPUT); //mag geen pullup zijn door led
+    attachInterrupt(digitalPinToInterrupt(OPTOINPUT), ISRreadTime, FALLING);
 }
 
 void loop(void)
@@ -37,10 +30,9 @@ void loop(void)
     {
       deltamicros = microsecondsNow - microsecondsOld;
       microsecondsOld = microsecondsNow;
-      if(deltamicros > 73000) //wat is 73000 hier?, nog aanpassen waarschijnlijk
+      if(deltamicros > 2000) //als tijd te lang (stilstaan), tijd negeren (was 73000) tijd voor 12 km/uur afronden voor de veiligheid
       {
-      //Serial.println(deltamicros);
-      kmph = WHEELCIRCOMFERENCECM*36000/deltamicros;
+      kmph = WHEELPINDISTANCE*36000/deltamicros; //omtrek * 36000 (voor km) / tijd, 10 waarschijnlijk voor aantal flanken
       Serial.print(kmph);
       Serial.println(" km/h");
       }
