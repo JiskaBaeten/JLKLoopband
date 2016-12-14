@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0967555a8867ba9458a1ff869a4d8ead
-timeCreated: 1480940857
+guid: 2f2c1574997cf414396875c2036828e7
+timeCreated: 1481701915
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -169,7 +169,8 @@ ModelImporter:
     3300000: Collar
     4300000: Collar
     4300002: Dog
-    7400000: CINEMA_4D_Main
+    7400000: Walk_Anim
+    7400002: Run_Anim
     9500000: //RootNode
     13700000: Dog
   materials:
@@ -179,14 +180,14 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 0
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -194,7 +195,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: CINEMA_4D_Main
+      name: Walk_Anim
       takeName: CINEMA_4D_Main
       firstFrame: 26
       lastFrame: 55
@@ -205,7 +206,195 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Collar
+        weight: 1
+      - path: Dog
+        weight: 1
+      - path: Dog/Quadruped_rig
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Back_Leg_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Back_Leg_con_/L_Paw_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Back_Leg_con_/L_Paw_goal/L_Phalanges_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Back_Leg_con_/L_Paw_goal/L_Phalanges_goal/L_Metatarsus_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Front_Leg_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Front_Leg_con_/L_Paw_Tip_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Front_Leg_con_/L_Paw_Tip_goal/L_Phanges_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/L_Front_Leg_con_/L_Paw_Tip_goal/L_Phanges_goal/L_Metacarpua_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Back_Leg_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Back_Leg_con_/R_Paw_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Back_Leg_con_/R_Paw_goal/R_Phalanges_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Back_Leg_con_/R_Paw_goal/R_Phalanges_goal/R_Metatarsus_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Front_Leg_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Front_Leg_con_/R_Paw_Tip_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Front_Leg_con_/R_Paw_Tip_goal/R_Phanges_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/R_Front_Leg_con_/R_Paw_Tip_goal/R_Phanges_goal/R_Metacarpua_goal
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/Root_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/Root_con_/Chest_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/Root_con_/Chest_con_/Neck_Base_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/Root_con_/Chest_con_/Neck_Base_con_/Neck_Midd_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/Root_con_/Chest_con_/Neck_Base_con_/Neck_Midd_con_/Neck_Top_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Master_con_/Root_con_/Hip_con_
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Back_Leg_pole
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Back_Leg_pole/L_Back_Leg_pole_2_2
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Femur_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Femur_00_jnt/L_Tibia_Fibula_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Femur_00_jnt/L_Tibia_Fibula_01_jnt/L_Metatarsus_02_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Femur_00_jnt/L_Tibia_Fibula_01_jnt/L_Metatarsus_02_jnt/L_Phalanges_03_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/L_Back_Leg_null/L_Femur_00_jnt/L_Tibia_Fibula_01_jnt/L_Metatarsus_02_jnt/L_Phalanges_03_jnt/L_Paw_04_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Back_Leg_pole
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Back_Leg_pole/R_Back_Leg_pole_2_2
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Femur_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Femur_00_jnt/R_Tibia_Fibula_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Femur_00_jnt/R_Tibia_Fibula_01_jnt/R_Metatarsus_02_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Femur_00_jnt/R_Tibia_Fibula_01_jnt/R_Metatarsus_02_jnt/R_Phalanges_03_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/R_Back_Leg_null/R_Femur_00_jnt/R_Tibia_Fibula_01_jnt/R_Metatarsus_02_jnt/R_Phalanges_03_jnt/R_Paw_04_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt/Neck_FK_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt/Neck_FK_01_jnt/Neck_FK_02_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt/Neck_FK_01_jnt/Neck_FK_02_jnt/Neck_FK_end_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt/Neck_FK_01_jnt/Neck_FK_02_jnt/Neck_FK_end_jnt/Head_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt/Neck_FK_01_jnt/Neck_FK_02_jnt/Neck_FK_end_jnt/Head_null/Skull_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/FK_Neck_null/Neck_FK_00_jnt/Neck_FK_01_jnt/Neck_FK_02_jnt/Neck_FK_end_jnt/Head_null/Skull_00_jnt/Skull_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Front_leg_pole
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Front_leg_pole/L_Front_leg_pole_2_2
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Humerus_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Humerus_01_jnt/L_Unla_Radius_02_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Humerus_01_jnt/L_Unla_Radius_02_jnt/L_Metacarpua_03_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Humerus_01_jnt/L_Unla_Radius_02_jnt/L_Metacarpua_03_jnt/L_Phanges_04_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/L_Front_Leg_null/L_Scapula_00_jnt/L_Humerus_01_jnt/L_Unla_Radius_02_jnt/L_Metacarpua_03_jnt/L_Phanges_04_jnt/L_Paw_Tip_05_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Front_leg_pole
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Front_leg_pole/R_Front_leg_pole_2_2
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Humerus_01_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Humerus_01_jnt/R_Unla_Radius_02_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Humerus_01_jnt/R_Unla_Radius_02_jnt/R_Metacarpua_03_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Humerus_01_jnt/R_Unla_Radius_02_jnt/R_Metacarpua_03_jnt/R_Phanges_04_jnt
+        weight: 1
+      - path: Dog/Quadruped_rig/Root_jnt/Spine_null/Spine_00_jnt/Spine_01_jnt/Spine_02_jnt/Spine_03_jnt/Spine_04_jnt/Spine_05_jnt/Spine_06_jnt/Spine_07_jnt/Spine_08_jnt/R_Front_Leg_null/R_Scapula_00_jnt/R_Humerus_01_jnt/R_Unla_Radius_02_jnt/R_Metacarpua_03_jnt/R_Phanges_04_jnt/R_Paw_Tip_05_jnt
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Run_Anim
+      takeName: CINEMA_4D_Main
+      firstFrame: 75
+      lastFrame: 110
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -387,7 +576,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 1
     addColliders: 0
-    importBlendShapes: 1
+    importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1

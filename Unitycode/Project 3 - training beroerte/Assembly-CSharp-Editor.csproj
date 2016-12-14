@@ -53,11 +53,16 @@
      <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
      <None Include="Assets\Editing Terrain.txt" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\About Gizmos.txt" />
+     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\things that go wrong when switching computers.txt" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
      <None Include="Assets\SteamVR\readme.txt" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_ColorOut.shader" />
  <Reference Include="Assembly-UnityScript">
  <HintPath>C:/Users/Kirsten/Documents/KDG/ProjectVirtual3D/JLKLoopband/Unitycode/Project 3 - training beroerte/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
@@ -94,6 +99,8 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{BD65F0ED-46F9-C07A-E330-302F85329195}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{98B029CD-576C-C4C2-D1EA-34933071E566}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
