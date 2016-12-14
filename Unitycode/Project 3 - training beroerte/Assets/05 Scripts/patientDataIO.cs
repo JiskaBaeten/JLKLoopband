@@ -28,13 +28,11 @@ public class patientDataIO : MonoBehaviour
 
 
     //ui public
-    public Dropdown possiblePatientSelect;
-    public Dropdown patientSearch;
-    public InputField inputSearch;
     public Text txtProfileDetails;
     public GameObject addPatientInterface;
     public GameObject patientViewInterface;
     public GameObject chooseSceneInterface;
+
     public InputField inputName;
     public InputField inputBirthday;
     public InputField inputNumber;
@@ -45,13 +43,33 @@ public class patientDataIO : MonoBehaviour
     public Button btnConfirmData;
     public Button btnCancelData;
 
+    public Button btnChooseHome;
+    public Button btnChoosePark;
+    public Button btnCancelChoose;
+
+    //view interface
+    public Button btnEditPatient;
+    public Button btnSelectPatient;
+    public Button btnDeletePatient;
+    public Button btnAddPatient;
+    public Dropdown possiblePatientSelect;
+    public Dropdown patientSearch;
+    public InputField inputSearch;
+
     //ui private
     InputField[] allInputs;
-    byte currentInput;
-    
+    Button[] interfaceButtonsView;
+    Button[] interfaceButtonsChoose;
+    byte addPatientSelectedInput;
+    byte viewPatientSelectedInput;
+    byte chooseProjectSelectedInput;
+
+    int currentSelectedDropdownValuePatientdata;
+    int currentSelectedDropdownValuePatientSearch;
+
     void Start()
     {
-        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+ "\\A walk in the park");
+        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\A walk in the park");
         readWritePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
         readWritePath += "\\A walk in the park\\PatientProfiles.txt";
         editScreen = false;
@@ -62,42 +80,136 @@ public class patientDataIO : MonoBehaviour
         patientsToAdd = new List<string>();
         readPatientData();
         showPatientData();
-        currentInput = 0;
-        allInputs = new InputField[6] {inputNumber, inputName, inputLevel, inputBirthday, inputGender, inputExtra};
+
+
+
+        addPatientSelectedInput = 0;
+        viewPatientSelectedInput = 4;
+        chooseProjectSelectedInput = 0;
+
+        currentSelectedDropdownValuePatientdata = 0;
+        currentSelectedDropdownValuePatientSearch = 0;
+
+        interfaceButtonsView = new Button[4] { btnEditPatient, btnSelectPatient, btnDeletePatient, btnAddPatient };
+        interfaceButtonsChoose = new Button[3] { btnChooseHome, btnChoosePark, btnCancelChoose };
+        allInputs = new InputField[6] { inputNumber, inputName, inputLevel, inputBirthday, inputGender, inputExtra };
     }
     void Update()
     {
-        if (!patientViewInterface.activeInHierarchy)
+        if (addPatientInterface.activeInHierarchy)
         {
-            
-             
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if (currentInput < allInputs.Length)
-                {
-                    allInputs[currentInput].Select();
-                    currentInput++;
-                }
-                else if (currentInput < allInputs.Length + 1 )
-                {
-                    currentInput++;
-                    btnConfirmData.Select();
-                }
-                else if (currentInput < allInputs.Length + 2)
-                {
-                    currentInput++;
-                    btnCancelData.Select();
-                }
-                else
-                {
-                    currentInput = 0;
-                    allInputs[currentInput].Select();
-                }
-            }
-           
+            toggleTabAddPatient();
         }
-        
+        else if (patientViewInterface.activeInHierarchy)
+        {
+            toggleTabViewData();
+        }
+        else if (chooseSceneInterface.activeInHierarchy)
+        {
+            toggleTabChooseProject();
+        }
     }
+
+    private void toggleTabAddPatient()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            addPatientSelectedInput++;
+            if (addPatientSelectedInput < allInputs.Length)
+            {
+                allInputs[addPatientSelectedInput].Select();
+            }
+            else if (addPatientSelectedInput < allInputs.Length + 1)
+            {
+                btnConfirmData.Select();
+            }
+            else if (addPatientSelectedInput < allInputs.Length + 2)
+            {
+                btnCancelData.Select();
+            }
+            else
+            {
+                addPatientSelectedInput = 0;
+                allInputs[addPatientSelectedInput].Select();
+            }
+        }
+    }
+
+    private void toggleTabViewData()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+
+            viewPatientSelectedInput++;
+
+            if (viewPatientSelectedInput < 4)
+            {
+                Debug.Log(viewPatientSelectedInput);
+                interfaceButtonsView[viewPatientSelectedInput].Select();
+            }
+            else if (viewPatientSelectedInput == 4)
+            {
+                inputSearch.Select();
+            }
+            else if (viewPatientSelectedInput == 5)
+            {
+                patientSearch.Select();
+             /*   if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    Debug.Log(currentSelectedDropdownValuePatientdata);
+                    currentSelectedDropdownValuePatientdata--;
+                    if (currentSelectedDropdownValuePatientdata < 0)
+                    {
+                        currentSelectedDropdownValuePatientdata = possiblePatientSelect.options.Count;
+                    }
+                    possiblePatientSelect.RefreshShownValue();
+                    possiblePatientSelect.value = currentSelectedDropdownValuePatientdata;
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    currentSelectedDropdownValuePatientdata++;
+                    if (!(currentSelectedDropdownValuePatientdata < possiblePatientSelect.options.Count))
+                    {
+                        currentSelectedDropdownValuePatientdata = 0;
+                    }
+                    possiblePatientSelect.RefreshShownValue();
+                    possiblePatientSelect.value = currentSelectedDropdownValuePatientdata;
+                }*/
+                
+            }
+            else if (viewPatientSelectedInput == 6)
+            {
+                possiblePatientSelect.Select();
+            }
+            else if (viewPatientSelectedInput > 6)
+            {
+                viewPatientSelectedInput = 0;
+                interfaceButtonsView[viewPatientSelectedInput].Select();
+            }
+        }
+
+
+    }
+
+    private void toggleTabChooseProject()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            chooseProjectSelectedInput++;
+            if (chooseProjectSelectedInput < interfaceButtonsChoose.Length)
+            {
+                interfaceButtonsChoose[chooseProjectSelectedInput].Select();
+            }
+            else
+            {
+                chooseProjectSelectedInput = 0;
+                interfaceButtonsChoose[chooseProjectSelectedInput].Select();
+            }
+
+        }
+    }
+
     private void showStartScreen()
     {
         addPatientInterface.SetActive(false);
@@ -110,6 +222,8 @@ public class patientDataIO : MonoBehaviour
     {
         patientViewInterface.SetActive(false);
         addPatientInterface.SetActive(true);
+        addPatientSelectedInput = 0;
+        allInputs[addPatientSelectedInput].Select();
 
     } //to open interface for adding data to user
 
@@ -169,7 +283,7 @@ public class patientDataIO : MonoBehaviour
     public void btnPatientDeleteClicked()
     {
         patientsToChange.Clear();
-        foreach (profile patientToCheck in Patients) 
+        foreach (profile patientToCheck in Patients)
         {
             if (!(patientToCheck.patientSelectCheck(patientsToAdd[possiblePatientSelect.value]))) //add all users except selected, then rewrite data
             {
@@ -177,7 +291,7 @@ public class patientDataIO : MonoBehaviour
             }
         }
         Patients.Clear();
-        Patients.AddRange(patientsToChange); 
+        Patients.AddRange(patientsToChange);
         possiblePatientSelect.value--;
         writePatientData();
         showPatientData();
@@ -185,19 +299,19 @@ public class patientDataIO : MonoBehaviour
 
     public void btnConfirmPatientAddClicked()
     {
-        
+
         if (editScreen) //if the user is edited, delete old data
         {
             btnPatientDeleteClicked();
         }
-        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" || inputGender.text == "") 
+        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" || inputGender.text == "")
         {
             txtError.gameObject.SetActive(true);
         }
         else
         {
             txtError.gameObject.SetActive(false);
-            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text,"0","0", inputGender.text));
+            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0", inputGender.text));
             writePatientData();
             showPatientData();
             showPatientDetails();
@@ -246,7 +360,7 @@ public class patientDataIO : MonoBehaviour
         {
             try
             {
-                sReader = File.OpenText(readWritePath );
+                sReader = File.OpenText(readWritePath);
                 string userData = sReader.ReadLine();
                 patientCount = 0;
                 while (userData != null)
@@ -273,7 +387,7 @@ public class patientDataIO : MonoBehaviour
             patientsToAdd.Add("Niemand Gevonden");
             possiblePatientSelect.AddOptions(patientsToAdd);
         }
-       
+
     } //reads the file and places it in a list of profiles
 
     public void showPatientDetails()
@@ -355,9 +469,9 @@ public class patientDataIO : MonoBehaviour
         patientDataToSort = patientDataToSort.ToLower();
         if (i == inputSearch.text.Length || i == patientDataToSort.Length) //if the end of the word is reached
         {
-            return true; 
+            return true;
         }
-        else 
+        else
         {
             if (patientDataToSort[i] == inputSearch.text[i]) //compare letter of the words
             {
@@ -423,7 +537,7 @@ public class profile
         birthday = tBirthday;
         extraInfo = tExtraInfo;
         gender = tGender;
-        numberOfTimesInHomeScene =ushort.Parse( tTimesInHome);
+        numberOfTimesInHomeScene = ushort.Parse(tTimesInHome);
         numberOfTimesInParkScene = ushort.Parse(tTimesInPark);
     }
     public string UserNumber
@@ -458,7 +572,7 @@ public class profile
 
     public ushort timesInHomeScene
     {
-       get { return numberOfTimesInHomeScene; }
+        get { return numberOfTimesInHomeScene; }
     }
 
     public ushort timesInParkScene
@@ -493,7 +607,7 @@ public class profile
     }
     public string showPatientDetails()
     {
-        return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nGeslacht: "+ gender +  "\nAantal keer in het park: " + numberOfTimesInParkScene + "\nAantal keer in het huis: " + numberOfTimesInHomeScene + "\nExtra info: " + extraInfo ;
+        return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nGeslacht: " + gender + "\nAantal keer in het park: " + numberOfTimesInParkScene + "\nAantal keer in het huis: " + numberOfTimesInHomeScene + "\nExtra info: " + extraInfo;
     }
 
 } //profile objects

@@ -63,6 +63,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Project 3 - training beroerte.CSharp.Plugins.csproj">
+      <Project>{77C7F932-8079-FCC2-769A-AD5B843501DF}</Project>
+      <Name>Project 3 - training beroerte.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\05 Scripts\ControllersVive.cs" />
     <Compile Include="Assets\05 Scripts\HomeCamera.cs" />
     <Compile Include="Assets\05 Scripts\MessageListener.cs" />
@@ -121,6 +127,11 @@
   <ItemGroup>
     <None Include="Assets\About Gizmos.txt" />
     <None Include="Assets\Editing Terrain.txt" />
+    <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
     <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_ColorOut.shader" />
