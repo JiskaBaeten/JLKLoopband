@@ -1,6 +1,6 @@
 /*
 //calculations
-//wheel circomference 2.3 cm
+//wheel circomference 2.3 cm*pi
 //max speed of 10 km/uur =  277,8 cm/second => 10 / 0.036
 //max rps = 277.8 cm/second / 2.3 cm = 120.783 rps
 //min time ms/rev = 9360 micros = 9.360 ms/rev

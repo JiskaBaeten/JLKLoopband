@@ -96,6 +96,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Project 3 - training beroerte.Plugins.csproj">
+      <Project>{1F4DFE3E-6B61-1B96-E9B3-0948697EC434}</Project>
+      <Name>Project 3 - training beroerte.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="Project 3 - training beroerte.csproj">
       <Project>{13ABCA5E-3FB5-BEF1-57AA-6C78124B62C9}</Project>
       <Name>Project 3 - training beroerte</Name>
@@ -111,6 +115,11 @@
   <ItemGroup>
     <None Include="Assets\About Gizmos.txt" />
     <None Include="Assets\Editing Terrain.txt" />
+    <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
+    <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
     <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_ColorOut.shader" />
