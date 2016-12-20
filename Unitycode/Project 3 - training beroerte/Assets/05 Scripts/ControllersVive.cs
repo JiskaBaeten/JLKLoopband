@@ -12,16 +12,19 @@ public class ControllersVive : MonoBehaviour
     public bool triggerButtonDown = false;
     public bool triggerButtonUp = false;
     public bool triggerButtonPressed = false;
-
+    
 
     public GameObject viveCam; //werken met camera rig of met head??
     private GameObject dog;
     public Animator dogAnimationController;
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
+    private cameraSteeringBehaviour cameraSteeringScript;
     // Use this for initialization
     void Start()
     {
+        viveCam = GameObject.FindWithTag("cameraTopObject");
+        cameraSteeringScript = viveCam.GetComponent<cameraSteeringBehaviour>();
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         dog = GameObject.FindWithTag("Dog");
         dogAnimationController = dog.GetComponent<Animator>();
@@ -30,10 +33,16 @@ public class ControllersVive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("update");
         if (controller == null)
         {
             Debug.Log("Controller not initialized");
             return;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Debug.Log("left");
+            cameraSteeringScript.findNextPath("left");
         }
 
         gripButtonDown = controller.GetPressDown(gripButton);
@@ -61,26 +70,6 @@ public class ControllersVive : MonoBehaviour
         {
             Debug.Log("Grip Button was just unpressed");
         }
-      /*  if (triggerButtonDown)
-        {
-
-
-            if (viveCam.transform.forward.x > transform.position.x)
-            {
-                Debug.LogError("right");
-
-
-            }
-            else if (viveCam.transform.forward.x < transform.position.x)
-            {
-                Debug.LogError("left");
-            }
-
-        }
-        if (triggerButtonUp)
-        {
-            Debug.Log("Trigger Button was just unpressed");
-        }*/
     }
 
 
@@ -91,9 +80,12 @@ public class ControllersVive : MonoBehaviour
             if (col.gameObject.tag == "controllerColliderLeft")
             {
                 Debug.LogError("left");
+                cameraSteeringScript.findNextPath("left");
+                
             }
             else if (col.gameObject.tag == "controllerColliderRight")
             {
+                cameraSteeringScript.findNextPath("right");
                 Debug.LogError("right");
             }
         }

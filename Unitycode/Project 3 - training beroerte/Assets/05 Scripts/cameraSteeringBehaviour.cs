@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class cameraSteeringBehaviour : MonoBehaviour {
+public class cameraSteeringBehaviour : MonoBehaviour
+{
 
     //character control parameters
     public int maxForce = 150;
@@ -48,7 +49,7 @@ public class cameraSteeringBehaviour : MonoBehaviour {
 
         currentPathPoint = nextPathPoint;
         Debug.Log("next" + nextPathPoint);
-        
+
     }
 
     // Update is called once per frame
@@ -60,29 +61,12 @@ public class cameraSteeringBehaviour : MonoBehaviour {
         acceleration = steerForce / mass;
         velocity += acceleration;//velocity = transform.TransformDirection(velocity);
         Truncate(ref velocity, maxRunningSpeed);
-       /* if (controller.isGrounded)
-        {*/
-            controller.Move(velocity * Time.deltaTime);//move
-
-
-      /*  }
-        else
-        {
-            controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));//fall down
-        }*/
+        controller.Move(velocity * Time.deltaTime);//move
 
         //rotate
         if (new Vector3(velocity.x, 0, velocity.z) != Vector3.zero)//otherwise warning
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.z)), rotateSpeed * Time.deltaTime);
-        }
-        if (!nextPathIsChosen)
-        {
-            findNextPath();
-        }
-        else
-        {
-
         }
     }
     private void Truncate(ref Vector3 myVector, int myMax)//not above max
@@ -109,7 +93,7 @@ public class cameraSteeringBehaviour : MonoBehaviour {
 
             if (pathToCheck.PathNumber == nextPathNumber)
             {
-                
+
                 //next path number??
                 nextPathIsChosen = false;
                 pathToCheck.reversePath(nextPathShouldBeReversed);
@@ -121,35 +105,37 @@ public class cameraSteeringBehaviour : MonoBehaviour {
         return allPaths[0].WaypointsFromPath;
     }
 
-    public void findNextPath()
+    public void findNextPath(string direction)
     {
 
-        if (Input.GetKey(KeyCode.LeftArrow)) //go left
+        if (direction == "left") //go left
         {
-            if (currentPath.pathIsReversed)
+            if (!nextPathIsChosen)
             {
-                nextPathNumber = currentPath.NextPathNumberLeftBehind;
-
+                if (currentPath.pathIsReversed)
+                {
+                    nextPathNumber = currentPath.NextPathNumberLeftBehind;
+                }
+                else
+                {
+                    nextPathNumber = currentPath.NextPathNumberLeftBefore;
+                }
+                nextPathIsChosen = true;
+                Debug.Log("path chosen left" + nextPathNumber);
             }
-            else
+            else if (direction == "right")
             {
-                nextPathNumber = currentPath.NextPathNumberLeftBefore;
+                if (currentPath.pathIsReversed)
+                {
+                    nextPathNumber = currentPath.NextPathNumberRightBehind;
+                }
+                else
+                {
+                    nextPathNumber = currentPath.NextPathNumberRightBefore;
+                }
+                nextPathIsChosen = true;
+                Debug.Log("path chosen right" + nextPathNumber);
             }
-            nextPathIsChosen = true;
-            Debug.Log("path chosen left" + nextPathNumber);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            if (currentPath.pathIsReversed)
-            {
-                nextPathNumber = currentPath.NextPathNumberRightBehind;
-            }
-            else
-            {
-                nextPathNumber = currentPath.NextPathNumberRightBefore;
-            }
-            nextPathIsChosen = true;
-            Debug.Log("path chosen right" + nextPathNumber);
         }
     }
 
@@ -206,7 +192,7 @@ public class cameraSteeringBehaviour : MonoBehaviour {
         else if (Vector3.Distance(transform.position, currentPathPoint) < minDistToPathPoint)//if close enough pick next one
         {
             currentPathPoint = nextPathPoint;
-            
+
         }
 
         else if (nextPathPoint == currentPathPoint)
@@ -214,19 +200,19 @@ public class cameraSteeringBehaviour : MonoBehaviour {
             if (Vector3.Distance(transform.position, currentPathPoint) < distanceForNewPath)
             {
                 Debug.Log("new path random");
-            indexOfCurrentPathPoint++;//increase index
-            if (indexOfCurrentPathPoint == myPath.Length)
-            {
-                if (!nextPathIsChosen)
+                indexOfCurrentPathPoint++;//increase index
+                if (indexOfCurrentPathPoint == myPath.Length)
                 {
-                    chooseNextRandomPath();
-                }
-                waypointsCurrentPath = selectPath();
+                    if (!nextPathIsChosen)
+                    {
+                        chooseNextRandomPath();
+                    }
+                    waypointsCurrentPath = selectPath();
 
-                indexOfCurrentPathPoint = 0;
+                    indexOfCurrentPathPoint = 0;
+                }
+                nextPathPoint = waypointsCurrentPath[indexOfCurrentPathPoint];//pick the next one
             }
-            nextPathPoint = waypointsCurrentPath[indexOfCurrentPathPoint];//pick the next one
-        }
         }
 
         //go to currentPathPoint like seek

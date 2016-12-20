@@ -12,11 +12,4 @@ public class headRotationSetRig : MonoBehaviour {
         transform.localRotation = Quaternion.Euler(0, cameraToTurn, 0);
     }
 	
-	// Update is called once per frame
-	void Update () {
-       Debug.Log(360 - mainCamVR.transform.localRotation.eulerAngles.y);
-      // Debug.Log( Quaternion.EulerAngles(mainCamVR.transform));
-      //  Debug.Log(mainCamVR.rotation.y);
-      //  Debug.Log("local" + mainCamVR.localRotation.y);
-    }
 }

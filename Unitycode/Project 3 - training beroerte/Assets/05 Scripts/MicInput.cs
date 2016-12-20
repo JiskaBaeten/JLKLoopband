@@ -25,6 +25,7 @@ public class MicInput : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        dog = GameObject.FindWithTag("dogMesh");
         isYelling = 0.05f;
         timeBetweenStartAndEnd = 3;
         audioSource = GetComponent<AudioSource>();

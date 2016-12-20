@@ -8,6 +8,7 @@ public class leash : MonoBehaviour {
     float dogLeashWidth;
     // Use this for initialization
     void Start () {
+        dog = GameObject.FindWithTag("Dog");
         lineRendererObject = GetComponent<LineRenderer>();
         dogLeashWidth = 0.02f;
         lineRendererObject.SetWidth(dogLeashWidth, dogLeashWidth);
