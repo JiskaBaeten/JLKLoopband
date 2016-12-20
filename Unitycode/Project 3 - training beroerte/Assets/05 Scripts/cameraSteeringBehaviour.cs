@@ -107,10 +107,10 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
     public void findNextPath(string direction)
     {
-
-        if (direction == "left") //go left
+        Debug.Log("in camera script" + direction);
+        if (!nextPathIsChosen)
         {
-            if (!nextPathIsChosen)
+            if (direction == "left") //go left
             {
                 if (currentPath.pathIsReversed)
                 {

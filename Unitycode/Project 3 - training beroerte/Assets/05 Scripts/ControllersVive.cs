@@ -20,6 +20,7 @@ public class ControllersVive : MonoBehaviour
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
     private cameraSteeringBehaviour cameraSteeringScript;
+    private steeringBehaviourDog dogSteeringBehaviourScript;
     // Use this for initialization
     void Start()
     {
@@ -28,6 +29,7 @@ public class ControllersVive : MonoBehaviour
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         dog = GameObject.FindWithTag("Dog");
         dogAnimationController = dog.GetComponent<Animator>();
+        dogSteeringBehaviourScript = dog.GetComponent<steeringBehaviourDog>();
     }
 
     // Update is called once per frame
@@ -38,11 +40,6 @@ public class ControllersVive : MonoBehaviour
         {
             Debug.Log("Controller not initialized");
             return;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Debug.Log("left");
-            cameraSteeringScript.findNextPath("left");
         }
 
         gripButtonDown = controller.GetPressDown(gripButton);
@@ -56,19 +53,21 @@ public class ControllersVive : MonoBehaviour
 
         if (gripButtonDown)
         {
-            if (dogAnimationController.GetBool("dogIsLoose"))
-            {
-                dogAnimationController.SetBool("dogIsLoose", false);
-            }
-            else
-            {
-                dogAnimationController.SetBool("dogIsLoose", true);
-            }
+            
 
         }
         if (gripButtonUp)
         {
-            Debug.Log("Grip Button was just unpressed");
+            if (dogAnimationController.GetBool("dogIsLoose"))
+            {
+                dogSteeringBehaviourScript.maxRunningSpeed = 1;
+                dogAnimationController.SetBool("dogIsLoose", false);
+            }
+            else
+            {
+                dogSteeringBehaviourScript.maxRunningSpeed = 2;
+                dogAnimationController.SetBool("dogIsLoose", true);
+            }
         }
     }
 
