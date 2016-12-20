@@ -35,7 +35,6 @@ public class ControllersVive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("update");
         if (controller == null)
         {
             Debug.Log("Controller not initialized");
@@ -69,6 +68,8 @@ public class ControllersVive : MonoBehaviour
                 dogAnimationController.SetBool("dogIsLoose", true);
             }
         }
+        
+        
     }
 
 

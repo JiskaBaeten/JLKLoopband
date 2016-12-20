@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class tempControlsSteering : MonoBehaviour {
+public class tempControlsSteering : MonoBehaviour
+{
 
     public GameObject viveCam; //werken met camera rig of met head??
     private GameObject dog;
     public Animator dogAnimationController;
     private cameraSteeringBehaviour cameraSteeringScript;
+    private steeringBehaviourDog dogSteeringBehaviourScript;
     // Use this for initialization
     void Start()
     {
@@ -14,10 +16,12 @@ public class tempControlsSteering : MonoBehaviour {
         cameraSteeringScript = viveCam.GetComponent<cameraSteeringBehaviour>();
         dog = GameObject.FindWithTag("Dog");
         dogAnimationController = dog.GetComponent<Animator>();
+        dogSteeringBehaviourScript = dog.GetComponent<steeringBehaviourDog>();
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Debug.Log("left");
@@ -27,6 +31,20 @@ public class tempControlsSteering : MonoBehaviour {
         {
             Debug.Log("right");
             cameraSteeringScript.findNextPath("right");
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (dogAnimationController.GetBool("dogIsLoose"))
+            {
+                dogSteeringBehaviourScript.maxRunningSpeed = 1;
+                dogAnimationController.SetBool("dogIsLoose", false);
+            }
+            else
+            {
+                dogSteeringBehaviourScript.maxRunningSpeed = 2;
+                dogAnimationController.SetBool("dogIsLoose", true);
+            }
         }
     }
 }

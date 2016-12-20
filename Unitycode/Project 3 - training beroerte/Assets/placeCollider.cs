@@ -8,7 +8,7 @@ public class placeCollider : MonoBehaviour {
         viveCam = GameObject.FindWithTag("MainCamera");
         if (tag == "controllerColliderLeft") //collider left
         {
-            Debug.Log("lefty");
+
             transform.position = viveCam.transform.position + new Vector3(0, 0,1);
         }
         else if (tag == "controllerColliderRight")

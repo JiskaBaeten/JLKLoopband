@@ -199,7 +199,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, currentPathPoint) < distanceForNewPath)
             {
-                Debug.Log("new path random");
+
                 indexOfCurrentPathPoint++;//increase index
                 if (indexOfCurrentPathPoint == myPath.Length)
                 {
