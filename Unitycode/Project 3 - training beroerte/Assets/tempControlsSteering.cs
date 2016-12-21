@@ -22,16 +22,17 @@ public class tempControlsSteering : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Debug.Log("left");
-            cameraSteeringScript.findNextPath("left");
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Debug.Log("right");
-            cameraSteeringScript.findNextPath("right");
-        }
+        /*   if (Input.GetKeyDown(KeyCode.LeftArrow))
+           {
+               Debug.Log("left");
+               cameraSteeringScript.findNextPath("left");
+           }
+           else if (Input.GetKeyDown(KeyCode.RightArrow))
+           {
+               Debug.Log("right");
+               cameraSteeringScript.findNextPath("right");
+           }
+           */
 
         if (Input.GetKeyDown(KeyCode.R))
         {

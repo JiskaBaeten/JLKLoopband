@@ -19,6 +19,7 @@ public class steeringBehaviourDog : MonoBehaviour
 
     //path 
     public float minDistToPathPoint = 1;
+    public float minDistanceToWait = 0.5f;
     Vector3 currentPathPointDog;
     CharacterController controller;//this GO's CharacterController
 
@@ -33,10 +34,10 @@ public class steeringBehaviourDog : MonoBehaviour
 
 
     //obstacle avoidance
-   public  float ObstacleAvoidanceDistance;
+    public float ObstacleAvoidanceDistance;
     public cameraSteeringBehaviour cameraMoveScript;
     GameObject cameraPlayer;
-  public  float ObstacleAvoidanceForce;
+    public float ObstacleAvoidanceForce;
 
     public Animator animationController;
     void Start()
@@ -50,27 +51,45 @@ public class steeringBehaviourDog : MonoBehaviour
 
     void Update()
     {
-      
-        if (Vector3.Distance(transform.position, currentPathPointDog) < minDistToPathPoint)//if close enough pick next one
+
+        if (Vector3.Distance(transform.position, currentPathPointDog) < minDistToPathPoint || tmrDogFree > maxWanderTime)//if close enough pick next one
         {
-            currentPathPointDog = cameraMoveScript.nextPathPoint;
+            if (currentPathPointDog == cameraMoveScript.nextPathPoint)
+            {
+                if (Vector3.Distance(transform.position, currentPathPointDog) < minDistanceToWait){ 
+                animationController.SetBool("dogIsWaiting", true);
+                }
+            }
+            else
+            {
+                animationController.SetBool("dogIsWaiting", false);
+                currentPathPointDog = cameraMoveScript.nextPathPoint;
+            }
+            
         }
 
         if (animationController.GetBool("dogIsLoose"))
         {
+            maxRunningSpeed = 2;
+            rotateSpeed = 2;
             steerForce = dogLooseBehaviour();
         }
+
         else
         {
-            steerForce = Seek(currentPathPointDog);
+                rotateSpeed = 0.5f;
+                maxRunningSpeed = 1;
+            steerForce = Seek(currentPathPointDog);           
         }
 
-        
+
         //calc movement
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
         velocity += acceleration;//velocity = transform.TransformDirection(velocity);
         Truncate(ref velocity, maxRunningSpeed);
+
+
 
         if (controller.isGrounded)
         {
@@ -115,28 +134,23 @@ public class steeringBehaviourDog : MonoBehaviour
 
             if (Vector3.Distance(cameraPlayer.transform.position, transform.position) > 10)
             {
-                maxRunningSpeed = 2;
-                rotateSpeed = 2;
                 return Seek(currentPathPointDog);
             }
+
             else
             {
-                maxRunningSpeed = 2;
-                rotateSpeed = 2;
-
                 if (UnityEngine.Random.Range(0, 3) > 1f)
                 {
-                    Debug.Log("minus");
-                    PathPointDogRandom = new Vector3((PathPointDogRandom.x - UnityEngine.Random.Range(0, 5)), currentPathPointDog.y, (PathPointDogRandom.z - UnityEngine.Random.Range(0, 5)));
 
+                    PathPointDogRandom = new Vector3((PathPointDogRandom.x - UnityEngine.Random.Range(0, 5)), currentPathPointDog.y, (PathPointDogRandom.z - UnityEngine.Random.Range(0, 5)));
                 }
                 else
                 {
-                    PathPointDogRandom = new Vector3((UnityEngine.Random.Range(0, 5) + PathPointDogRandom.x), currentPathPointDog.y, (UnityEngine.Random.Range(0, 5) + PathPointDogRandom.z));
+
+                    PathPointDogRandom = new Vector3((UnityEngine.Random.Range(0, 5) + currentPathPointDog.x), currentPathPointDog.y, (UnityEngine.Random.Range(0, 5) + currentPathPointDog.z));
 
                 }
             }
-
             return Seek(PathPointDogRandom);
         }
         else
@@ -149,7 +163,7 @@ public class steeringBehaviourDog : MonoBehaviour
 
     public Vector3 ObstacleAvoidance()
     {
-       
+
         //two ray system, like antenna's
         //one extra ray for the middle
         Vector3 mySteeringForceL = Vector3.zero;
@@ -171,26 +185,27 @@ public class steeringBehaviourDog : MonoBehaviour
         //obstacle found
         if (hitObstacleOnTheLeft || hitObstacleOnTheRight || hitObstacleInTheMiddle)
         {
-            Debug.Log("avoiding");
+
             //calc forces for each direction
             if (hitObstacleOnTheLeft) mySteeringForceL = CalcAvoidanceForce(hitL);
-                if (hitObstacleOnTheRight) mySteeringForceR = CalcAvoidanceForce(hitR);
-                if (hitObstacleInTheMiddle) mySteeringForceM = CalcAvoidanceForce(hitM);
+            if (hitObstacleOnTheRight) mySteeringForceR = CalcAvoidanceForce(hitR);
+            if (hitObstacleInTheMiddle) mySteeringForceM = CalcAvoidanceForce(hitM);
 
-                //sum them
-                if (mySteeringForceL != Vector3.zero &&
-                    mySteeringForceR != Vector3.zero &&
-                    mySteeringForceM == Vector3.zero)
-                {//possible narrow pathway
-                    return Vector3.zero;//keep on going 
-                }
-                else
-                {//full force
-               
-                    return ObstacleAvoidanceForce * (mySteeringForceL + mySteeringForceR +
+            //sum them
+            if (mySteeringForceL != Vector3.zero &&
+                mySteeringForceR != Vector3.zero &&
+                mySteeringForceM == Vector3.zero)
+            {//possible narrow pathway
+                Debug.Log("narrow");
+                return Vector3.zero;//keep on going 
+            }
+            else
+            {//full force
+             //   Debug.Log("avoiding");
+                tmrDogFree = maxWanderTime;
+                return ObstacleAvoidanceForce * (mySteeringForceL + mySteeringForceR +
                            mySteeringForceM);//just return the sum of all three
-                }
-            
+            }
         }
         return Vector3.zero;//no steering force  because no obstacle was detected}
     }

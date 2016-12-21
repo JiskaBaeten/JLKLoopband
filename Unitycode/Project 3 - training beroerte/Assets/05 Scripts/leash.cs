@@ -6,6 +6,7 @@ public class leash : MonoBehaviour {
     LineRenderer lineRendererObject;
     public GameObject dog;
     float dogLeashWidth;
+    Animator dogAnimationController;
     // Use this for initialization
     void Start () {
         dog = GameObject.FindWithTag("Dog");
@@ -16,6 +17,7 @@ public class leash : MonoBehaviour {
         //lineRendererObject.material = whiteDiffuseMat;
         GetComponent<Renderer>().material.color = Color.red;
         lineRendererObject.SetColors(Color.red, Color.red);
+        dogAnimationController = dog.GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -23,9 +25,17 @@ public class leash : MonoBehaviour {
         // GameObject gameObjectLineRenderer = new GameObject();
 
         // GameObject hand = GameObject.Find("manArm");
-        
-        lineRendererObject.SetPosition(0, dog.transform.position);
-        lineRendererObject.SetPosition(1, hand.transform.position);
+        if (!dogAnimationController.GetBool("dogIsLoose"))
+        {
+            lineRendererObject.enabled = true;
+            lineRendererObject.SetPosition(0, dog.transform.position);
+            lineRendererObject.SetPosition(1, hand.transform.position);
+        }
+        else
+        {
+            lineRendererObject.enabled = false;
+        }
+
     }
 
     private void OnDestroy()
