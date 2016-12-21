@@ -1,26 +1,44 @@
 fileFormatVersion: 2
-guid: 9dc3560eacc371847addf18727d39156
-timeCreated: 1482314424
+guid: 5e13d92e3666e7d429037c01845f9aef
+timeCreated: 1482321505
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: armKortRecht2__Body
-    100002: Flexiline__Cube
-    100004: //RootNode
-    400000: armKortRecht2__Body
-    400002: Flexiline__Cube
-    400004: //RootNode
-    2300000: armKortRecht2__Body
-    2300002: Flexiline__Cube
-    3300000: armKortRecht2__Body
-    3300002: Flexiline__Cube
-    4300000: Flexiline__Cube
-    4300002: armKortRecht2__Body
+    100000: Cap_1
+    100002: Cap_2
+    100004: FlexiLine
+    100006: //RootNode
+    100008: sideWheel
+    100010: Watch
+    400000: Cap_1
+    400002: Cap_2
+    400004: FlexiLine
+    400006: //RootNode
+    400008: sideWheel
+    400010: Watch
+    2300000: Cap_1
+    2300002: Cap_2
+    2300004: FlexiLine
+    2300006: //RootNode
+    2300008: sideWheel
+    2300010: Watch
+    3300000: Cap_1
+    3300002: Cap_2
+    3300004: FlexiLine
+    3300006: //RootNode
+    3300008: sideWheel
+    3300010: Watch
+    4300000: Arm_right
+    4300002: FlexiLine
+    4300004: Watch
+    4300006: sideWheel
+    4300008: Cap_1
+    4300010: Cap_2
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
+    materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
