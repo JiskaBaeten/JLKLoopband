@@ -70,7 +70,7 @@ public class ControllersVive : MonoBehaviour
             }
             else
             {
-                dogSteeringBehaviourScript.dogCalled = false;
+                dogSteeringBehaviourScript.dogCalledInScript = false;
                 dogSteeringBehaviourScript.maxRunningSpeed = 2;
                 dogAnimationController.SetBool("dogIsLoose", true);
             }

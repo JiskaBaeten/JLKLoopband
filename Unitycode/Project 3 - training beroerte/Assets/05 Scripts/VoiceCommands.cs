@@ -23,56 +23,12 @@ public class VoiceCommands : MonoBehaviour {
         keywords.Add("bark", () => {Debug.Log("woof");});
 
         keywords.Add("come", () => {
-            Debug.LogError("coming call");
-            if (animationControllerDog.GetBool("dogIsLoose"))
-            {
-                dogSteeringBehaviourScript.maxRunningSpeed = 0;
-                animationControllerDog.SetTrigger("dogCalled");
-                animationControllerDog.SetBool("dogIsWaiting", true);
-                if (UnityEngine.Random.Range(0, 3) >= 1)
-                {
 
-                    animationControllerDog.SetTrigger("callToWalkingWithExitTime");
-                    Debug.LogError("dog called and coming");
-                    animationControllerDog.SetBool("dogIsLoose", false);
-                }
-                else
-                {
-                    Debug.LogError("dog called and not coming");
-
-                    animationControllerDog.SetBool("dogIsLoose", true);
-                }
-                animationControllerDog.SetBool("dogIsWaiting", false);
-            }
 
         });
 
         keywords.Add("kom", () => {
-            Debug.LogError("coming call");
-            if (animationControllerDog.GetBool("dogIsLoose"))
-            {
-                dogSteeringBehaviourScript.maxRunningSpeed = 0;
-                animationControllerDog.SetTrigger("dogCalled");
-                Debug.Log("waiting true");
-                animationControllerDog.SetBool("dogIsWaiting", true);
-                if (UnityEngine.Random.Range(0, 3) >= 1)
-                {
-                    animationControllerDog.SetTrigger("callToWalkingWithExitTime");
-                    Debug.LogError("dog called and coming");
-                    animationControllerDog.SetBool("dogIsWaiting", false);
-                    //animationControllerDog.SetBool("dogIsLoose", false);
-                    dogSteeringBehaviourScript.dogCalled = true;
-                }
-                else
-                {
-                    Debug.LogError("dog called and not coming");
-                    dogSteeringBehaviourScript.dogCalled = false;
-                    animationControllerDog.SetBool("dogIsWaiting", false);
-                }
-                animationControllerDog.SetBool("dogIsWaiting", false);
-            }
-
-
+            
 
 
         });
@@ -98,25 +54,21 @@ public class VoiceCommands : MonoBehaviour {
             Debug.Log("a");
             if (animationControllerDog.GetBool("dogIsLoose"))
             {
-                dogSteeringBehaviourScript.maxRunningSpeed = 0;
-                animationControllerDog.SetTrigger("dogCalled");
-                Debug.Log("waiting true");
+                dogSteeringBehaviourScript.dogLookingForCall = true;
+                
                 animationControllerDog.SetBool("dogIsWaiting", true);
+               dogSteeringBehaviourScript.resetTimerDogLooking();
                 if (UnityEngine.Random.Range(0, 3) >= 1)
                 {
-                    animationControllerDog.SetTrigger("callToWalkingWithExitTime");
                     Debug.LogError("dog called and coming");
-                    animationControllerDog.SetBool("dogIsWaiting", false);
-                    //animationControllerDog.SetBool("dogIsLoose", false);
-                    dogSteeringBehaviourScript.dogCalled = true;
+                    dogSteeringBehaviourScript.dogCalledInScript = true;
+                    
                 }
                 else
                 {
                     Debug.LogError("dog called and not coming");
-                    dogSteeringBehaviourScript.dogCalled = false;
-                    animationControllerDog.SetBool("dogIsWaiting", false);
+                    dogSteeringBehaviourScript.dogCalledInScript = false;
                 }
-                animationControllerDog.SetBool("dogIsWaiting", false);
             }
 
         }
