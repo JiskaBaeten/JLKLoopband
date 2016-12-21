@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_testScene.unity
+- path: Assets/RadnomFanControl.unity
   isLoaded: 1
   isActive: 1
