@@ -59,11 +59,18 @@ public class ControllersVive : MonoBehaviour
         {
             if (dogAnimationController.GetBool("dogIsLoose"))
             {
-                dogSteeringBehaviourScript.maxRunningSpeed = 1;
-                dogAnimationController.SetBool("dogIsLoose", false);
+                if (Vector3.Distance(dog.transform.position, viveCam.transform.position) < 3)
+                {
+                    dogAnimationController.SetBool("dogIsLoose", false);
+                    Debug.LogError("dog leash attach");
+                    dogSteeringBehaviourScript.maxRunningSpeed = 1;
+                }
+                
+              
             }
             else
             {
+                dogSteeringBehaviourScript.dogCalled = false;
                 dogSteeringBehaviourScript.maxRunningSpeed = 2;
                 dogAnimationController.SetBool("dogIsLoose", true);
             }
