@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\05 Scripts\BodySourceManager.cs" />
      <Compile Include="Assets\05 Scripts\ControllersVive.cs" />
      <Compile Include="Assets\05 Scripts\HomeCamera.cs" />
      <Compile Include="Assets\05 Scripts\MessageListener.cs" />
@@ -99,6 +100,8 @@
      <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
      <Compile Include="Assets\controllerLeftright.cs" />
      <Compile Include="Assets\headRotationSetRig.cs" />
+     <Compile Include="Assets\placeCollider.cs" />
+     <Compile Include="Assets\tempControlsSteering.cs" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
      <None Include="Assets\Editing Terrain.txt" />
@@ -108,6 +111,7 @@
      <None Include="Assets\things that go wrong when switching computers.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
+     <None Include="Assets\00 Scenes\3DTextOneSided.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
      <None Include="Assets\SteamVR\readme.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />

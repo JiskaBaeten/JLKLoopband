@@ -1,11 +1,13 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 3 - training beroerte.CSharp.Plugins", "Project 3 - training beroerte.CSharp.Plugins.csproj", "{77C7F932-8079-FCC2-769A-AD5B843501DF}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{A2C740B5-4605-F21B-5936-41BBDAFFBF94}") = "Project 3 - training beroerte", "Assembly-CSharp-firstpass.csproj", "{BD65F0ED-46F9-C07A-E330-302F85329195}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 3 - training beroerte.CSharp", "Project 3 - training beroerte.CSharp.csproj", "{238045C2-3C92-7D5E-A9CE-1A8B31ACDDB3}"
+Project("{A2C740B5-4605-F21B-5936-41BBDAFFBF94}") = "Project 3 - training beroerte", "Assembly-CSharp.csproj", "{98B029CD-576C-C4C2-D1EA-34933071E566}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 3 - training beroerte.CSharp.Editor", "Project 3 - training beroerte.CSharp.Editor.csproj", "{9CB58FEB-0B07-0F75-8FC3-A736BF66EC95}"
+Project("{A2C740B5-4605-F21B-5936-41BBDAFFBF94}") = "Project 3 - training beroerte", "Assembly-CSharp-Editor-firstpass.csproj", "{47729419-3F1A-5295-9F76-405E5482930A}"
+EndProject
+Project("{A2C740B5-4605-F21B-5936-41BBDAFFBF94}") = "Project 3 - training beroerte", "Assembly-CSharp-Editor.csproj", "{2C6C9E0B-1AE3-3E49-CEE7-E2ECC9F03557}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,20 +15,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{77C7F932-8079-FCC2-769A-AD5B843501DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77C7F932-8079-FCC2-769A-AD5B843501DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77C7F932-8079-FCC2-769A-AD5B843501DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77C7F932-8079-FCC2-769A-AD5B843501DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{238045C2-3C92-7D5E-A9CE-1A8B31ACDDB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{238045C2-3C92-7D5E-A9CE-1A8B31ACDDB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{238045C2-3C92-7D5E-A9CE-1A8B31ACDDB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{238045C2-3C92-7D5E-A9CE-1A8B31ACDDB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CB58FEB-0B07-0F75-8FC3-A736BF66EC95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CB58FEB-0B07-0F75-8FC3-A736BF66EC95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CB58FEB-0B07-0F75-8FC3-A736BF66EC95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CB58FEB-0B07-0F75-8FC3-A736BF66EC95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD65F0ED-46F9-C07A-E330-302F85329195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD65F0ED-46F9-C07A-E330-302F85329195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD65F0ED-46F9-C07A-E330-302F85329195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD65F0ED-46F9-C07A-E330-302F85329195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98B029CD-576C-C4C2-D1EA-34933071E566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98B029CD-576C-C4C2-D1EA-34933071E566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98B029CD-576C-C4C2-D1EA-34933071E566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98B029CD-576C-C4C2-D1EA-34933071E566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47729419-3F1A-5295-9F76-405E5482930A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47729419-3F1A-5295-9F76-405E5482930A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47729419-3F1A-5295-9F76-405E5482930A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47729419-3F1A-5295-9F76-405E5482930A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6C9E0B-1AE3-3E49-CEE7-E2ECC9F03557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6C9E0B-1AE3-3E49-CEE7-E2ECC9F03557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6C9E0B-1AE3-3E49-CEE7-E2ECC9F03557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6C9E0B-1AE3-3E49-CEE7-E2ECC9F03557}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
