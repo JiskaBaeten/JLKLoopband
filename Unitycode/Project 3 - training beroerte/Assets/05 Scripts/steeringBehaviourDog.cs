@@ -153,6 +153,7 @@ public class steeringBehaviourDog : MonoBehaviour
             {
                 maxRunningSpeed = 2;
                 rotateSpeed = 2;
+                currentPathPointDog = cameraMoveScript.currentPathPoint;
                 steerForce = Seek(currentPathPointDog);
             }
             else
@@ -178,7 +179,7 @@ public class steeringBehaviourDog : MonoBehaviour
         if (tmrDogFree > maxWanderTime)
         {
             tmrDogFree = 0;
-            
+            currentPathPointDog = cameraMoveScript.currentPathPoint;
             if (Vector3.Distance(cameraPlayer.transform.position, transform.position) > 10)
             {
                 return Seek(currentPathPointDog);
