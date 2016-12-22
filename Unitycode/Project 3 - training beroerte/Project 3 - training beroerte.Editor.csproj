@@ -104,6 +104,10 @@
       <Project>{13ABCA5E-3FB5-BEF1-57AA-6C78124B62C9}</Project>
       <Name>Project 3 - training beroerte</Name>
     </ProjectReference>
+    <ProjectReference Include="Project 3 - training beroerte.Editor.Plugins.csproj">
+      <Project>{9E86B9EE-82C5-1000-BE39-4DC2BA360C27}</Project>
+      <Name>Project 3 - training beroerte.Editor.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Editor.cs" />
@@ -113,6 +117,7 @@
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Update.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\01 Materials\3DTextOneSided.shader" />
     <None Include="Assets\About Gizmos.txt" />
     <None Include="Assets\Editing Terrain.txt" />
     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
