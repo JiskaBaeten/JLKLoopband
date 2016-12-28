@@ -55,7 +55,7 @@
      <None Include="Assets\things that go wrong when switching computers.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
-     <None Include="Assets\00 Scenes\3DTextOneSided.shader" />
+     <None Include="Assets\01 Materials\3DTextOneSided.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
      <None Include="Assets\SteamVR\readme.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
