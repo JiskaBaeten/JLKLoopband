@@ -45,11 +45,15 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
         //calc movement
         steerForce = dogLooseBehaviour();
+
+        steerForce += ObstacleAvoidance();
+        
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
         velocity += acceleration;//velocity = transform.TransformDirection(velocity);
+        
         Truncate(ref velocity, maxRunningSpeed);
-
+        
 
 
         if (controller.isGrounded)
@@ -85,8 +89,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     public Vector3 dogLooseBehaviour()
     {
-
-        ObstacleAvoidance();
+        
         tmrDogFree += Time.deltaTime;
         if (tmrDogFree > maxWanderTime || Vector3.Distance(eindpos, transform.position) < 1)
         {
@@ -96,8 +99,8 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
             //heading = velocity.normalized;//where we're going                  //where we are + forward + random         
             eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
             eindpos.y = transform.position.y;//same height     
-        
-       
+
+            Debug.Log("eindpos change");
 
            
         }
@@ -106,7 +109,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     public Vector3 ObstacleAvoidance()
     {
-
+        
         //two ray system, like antenna's
         //one extra ray for the middle
         Vector3 mySteeringForceL = Vector3.zero;
@@ -125,10 +128,11 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                                      ObstacleAvoidanceDistance);
         bool hitObstacleInTheMiddle = DetectObstacle(directionM, out hitM,
                                       ObstacleAvoidanceDistance);
+        Debug.Log("collision avoid");
         //obstacle found
         if (hitObstacleOnTheLeft || hitObstacleOnTheRight || hitObstacleInTheMiddle)
         {
-
+            Debug.Log("obstacle");
             //calc forces for each direction
             if (hitObstacleOnTheLeft) mySteeringForceL = CalcAvoidanceForce(hitL);
             if (hitObstacleOnTheRight) mySteeringForceR = CalcAvoidanceForce(hitR);
@@ -144,7 +148,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
             }
             else
             {//full force
-             //   Debug.Log("avoiding");
+                Debug.Log("avoiding");
                 tmrDogFree = maxWanderTime;
                 return ObstacleAvoidanceForce * (mySteeringForceL + mySteeringForceR +
                            mySteeringForceM);//just return the sum of all three
@@ -155,9 +159,13 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     private bool DetectObstacle(Vector3 myDirection, out RaycastHit myHit, float myObstacleAvoidanceDistance)
     {
+        // Debug.Log(Physics.Raycast(transform.position, myDirection, out myHit,  ObstacleAvoidanceDistance));
+        Debug.DrawRay(transform.position, myDirection);
+
         if (Physics.Raycast(transform.position, myDirection, out myHit,
             ObstacleAvoidanceDistance))//raycast, if hit
         {//myHit is out since you need it elsewhere too
+            Debug.Log("obstacle avoidance");
             return true;
         }
         return false;

@@ -32,7 +32,7 @@ public class steeringBehaviourDog : MonoBehaviour
     float tmrDogFree;
     float tmrDogLook;
     float maxLookTime;
-    float maxWanderTime = 3;
+    float maxWanderTime = 5;
     public Vector3 PathPointDogRandom;
     public bool dogCalledInScript;
     public bool dogLookingForCall;
@@ -51,17 +51,20 @@ public class steeringBehaviourDog : MonoBehaviour
         maxLookTime = 4;
         dogLookingForCall = false;
         dogCalledInScript = false;
-        currentPathPointDog = cameraMoveScript.currentPathPoint;
         controller = GetComponent<CharacterController>();
         animationController = GetComponent<Animator>();
         cameraPlayer = GameObject.FindWithTag("cameraTopObject");
+        currentPathPointDog = cameraMoveScript.currentPathPoint;
+       
         //animationController.SetBool("dogIsLoose", true);
     }
 
     void Update()
     {
+        Debug.Log(cameraMoveScript.currentPathPoint + "pathpoint");
         dogWaitForOwner();
         tmrDogLook += Time.deltaTime;
+        tmrDogFree += Time.deltaTime;
         chooseSteeringBehaviour();
 
 
@@ -108,10 +111,13 @@ public class steeringBehaviourDog : MonoBehaviour
     }
     public void dogWaitForOwner()
     {
-        if (Vector3.Distance(transform.position, currentPathPointDog) < minDistToPathPoint || tmrDogFree > maxWanderTime)//if close enough pick next one
+        if (currentPathPointDog == Vector3.zero)
+        {
+            currentPathPointDog = cameraMoveScript.nextPathPoint;
+        }
+        if (Vector3.Distance(transform.position, currentPathPointDog) < minDistToPathPoint)//if close enough pick next one
         {
             dogLookingForCall = false;
-
             if (currentPathPointDog == cameraMoveScript.nextPathPoint) //dog waiting for player?
             {  
                    // animationController.SetTrigger("dogCalled");
@@ -136,27 +142,29 @@ public class steeringBehaviourDog : MonoBehaviour
     public void chooseSteeringBehaviour()
     {
         Debug.Log("looking" + dogLookingForCall);
-        if (animationController.GetBool("dogIsWaiting") || dogLookingForCall)
+        if (animationController.GetBool("dogIsWaiting") || dogLookingForCall) //dog is called
         {
             maxRunningSpeed = 0;
             rotateSpeed = 0;
         }
-        else
+        else //dog is walking/running
         {
-            if (animationController.GetBool("dogIsLoose") && !dogCalledInScript)
+            if (animationController.GetBool("dogIsLoose") && !dogCalledInScript) // dog is running free,not called
             {
                 maxRunningSpeed = 2;
                 rotateSpeed = 2;
                 steerForce = dogLooseBehaviour();
+                steerForce += ObstacleAvoidance();
             }
-            else if (animationController.GetBool("dogIsLoose") && dogCalledInScript)
+            else if (animationController.GetBool("dogIsLoose") && dogCalledInScript) //dog is running free, called so coming to owner
             {
                 maxRunningSpeed = 2;
                 rotateSpeed = 2;
                 currentPathPointDog = cameraMoveScript.currentPathPoint;
                 steerForce = Seek(currentPathPointDog);
+                steerForce += ObstacleAvoidance();
             }
-            else
+            else //dog is on leash
             {
                 rotateSpeed = 0.5f;
                 maxRunningSpeed = 1;
@@ -174,7 +182,6 @@ public class steeringBehaviourDog : MonoBehaviour
     public Vector3 dogLooseBehaviour()
     {
        
-        ObstacleAvoidance();
         tmrDogFree += Time.deltaTime;
         if (tmrDogFree > maxWanderTime)
         {

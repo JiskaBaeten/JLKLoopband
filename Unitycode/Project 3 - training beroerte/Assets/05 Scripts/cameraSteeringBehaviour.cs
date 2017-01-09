@@ -48,7 +48,6 @@ public class cameraSteeringBehaviour : MonoBehaviour
         waypointsCurrentPath = selectPath();
 
         currentPathPoint = nextPathPoint;
-        Debug.Log("next" + nextPathPoint);
 
     }
 
