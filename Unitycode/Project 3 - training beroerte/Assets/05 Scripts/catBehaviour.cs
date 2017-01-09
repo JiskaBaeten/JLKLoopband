@@ -32,6 +32,7 @@ public class catBehaviour : MonoBehaviour {
 
     CharacterController controller;
     public Animator animationController;
+    AudioSource audioCat;
     // Use this for initialization
     void Start()
     {
@@ -43,6 +44,7 @@ public class catBehaviour : MonoBehaviour {
         cameraPlayer = GameObject.FindWithTag("cameraTopObject");
         eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
         eindpos.y = transform.position.y;
+        audioCat = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

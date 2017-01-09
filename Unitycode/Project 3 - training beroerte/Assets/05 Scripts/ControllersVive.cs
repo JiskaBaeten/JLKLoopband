@@ -64,12 +64,14 @@ public class ControllersVive : MonoBehaviour
                     dogAnimationController.SetBool("dogIsLoose", false);
                     Debug.LogError("dog leash attach");
                     dogSteeringBehaviourScript.maxRunningSpeed = 1;
+                    dog.GetComponent<AudioSource>().Play();
                 }
                 
               
             }
             else
             {
+                dog.GetComponent<AudioSource>().Play();
                 dogSteeringBehaviourScript.dogCalledInScript = false;
                 dogSteeringBehaviourScript.maxRunningSpeed = 2;
                 dogAnimationController.SetBool("dogIsLoose", true);
@@ -88,12 +90,14 @@ public class ControllersVive : MonoBehaviour
             {
                 Debug.LogError("left");
                 cameraSteeringScript.findNextPath("left");
+                dog.GetComponent<AudioSource>().Play();
                 
             }
             else if (col.gameObject.tag == "controllerColliderRight")
             {
                 cameraSteeringScript.findNextPath("right");
                 Debug.LogError("right");
+                dog.GetComponent<AudioSource>().Play();
             }
         }
     }

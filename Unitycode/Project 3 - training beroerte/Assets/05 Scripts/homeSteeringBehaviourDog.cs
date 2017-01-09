@@ -29,6 +29,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     CharacterController controller;
     public Animator animationController;
+    AudioSource audioDogBark;
     // Use this for initialization
     void Start () {
         wanderDist = 2;
@@ -38,6 +39,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         cameraPlayer = GameObject.FindWithTag("cameraTopObject");
         eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
         eindpos.y = transform.position.y;
+        audioDogBark = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -109,7 +111,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     public Vector3 ObstacleAvoidance()
     {
-        
         //two ray system, like antenna's
         //one extra ray for the middle
         Vector3 mySteeringForceL = Vector3.zero;
@@ -179,5 +180,12 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                            ObstacleAvoidanceForce / myHit.distance;//calc force
         return mySteeringForce;
     }
+
+    public void dogTrick()
+    {
+        audioDogBark.Play();
+    }
+
+
 }
 

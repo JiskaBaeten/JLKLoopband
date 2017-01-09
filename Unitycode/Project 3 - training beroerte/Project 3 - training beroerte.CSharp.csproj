@@ -84,6 +84,7 @@
     <Compile Include="Assets\05 Scripts\catBehaviour.cs" />
     <Compile Include="Assets\05 Scripts\endGame.cs" />
     <Compile Include="Assets\05 Scripts\homeSteeringBehaviourDog.cs" />
+    <Compile Include="Assets\05 Scripts\homeVoiceCommands.cs" />
     <Compile Include="Assets\05 Scripts\leash.cs" />
     <Compile Include="Assets\05 Scripts\patientDataIO.cs" />
     <Compile Include="Assets\05 Scripts\steeringBehaviourDog.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_UpdatePoses.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
     <Compile Include="Assets\controllerLeftright.cs" />
+    <Compile Include="Assets\dogTrickVoiceCommands.cs" />
     <Compile Include="Assets\headRotationSetRig.cs" />
     <Compile Include="Assets\placeCollider.cs" />
     <Compile Include="Assets\tempControlsSteering.cs" />
