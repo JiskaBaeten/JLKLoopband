@@ -81,7 +81,10 @@
     <Compile Include="Assets\05 Scripts\VoiceCommands.cs" />
     <Compile Include="Assets\05 Scripts\cameraSetAtStart.cs" />
     <Compile Include="Assets\05 Scripts\cameraSteeringBehaviour.cs" />
+    <Compile Include="Assets\05 Scripts\catBehaviour.cs" />
     <Compile Include="Assets\05 Scripts\endGame.cs" />
+    <Compile Include="Assets\05 Scripts\homeSteeringBehaviourDog.cs" />
+    <Compile Include="Assets\05 Scripts\homeVoiceCommands.cs" />
     <Compile Include="Assets\05 Scripts\leash.cs" />
     <Compile Include="Assets\05 Scripts\patientDataIO.cs" />
     <Compile Include="Assets\05 Scripts\steeringBehaviourDog.cs" />
