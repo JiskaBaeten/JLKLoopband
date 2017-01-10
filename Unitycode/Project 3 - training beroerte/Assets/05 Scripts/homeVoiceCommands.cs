@@ -21,66 +21,83 @@ public class homeVoiceCommands : MonoBehaviour
         keywords = new Dictionary<string, System.Action>();
         keywords.Add("bark", () => { Debug.Log("woof"); });
 
-        keywords.Add("zit", () => {
+        keywords.Add("zit", () =>
+        {
             Debug.Log("zit");
 
-                dogSteeringBehaviourScript.dogTrick();
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
                 animationControllerDog.SetTrigger("triggerSit");
-            
+            }
         });
 
-        keywords.Add("sit", () => {
+        keywords.Add("sit", () =>
+        {
             Debug.Log("sit");
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
+                animationControllerDog.SetTrigger("triggerSit");
+            }
 
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerSit");
-            
         });
 
-        keywords.Add("paw", () => {
+        keywords.Add("paw", () =>
+        {
             Debug.Log("paw");
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
 
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerPaw");
-            
+                animationControllerDog.SetTrigger("triggerPaw");
+            }
         });
 
-        keywords.Add("shake", () => {
+        keywords.Add("shake", () =>
+        {
             Debug.Log("shake");
-
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerPaw");
-
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
+                animationControllerDog.SetTrigger("triggerPaw");
+            }
         });
 
-        keywords.Add("poot", () => {
+        keywords.Add("poot", () =>
+        {
             Debug.Log("poot");
-
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerPaw");
-            
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
+                animationControllerDog.SetTrigger("triggerPaw");
+            }
         });
 
-        keywords.Add("lig", () => {
+        keywords.Add("lig", () =>
+        {
             Debug.Log("lig");
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerLay");
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
+                animationControllerDog.SetTrigger("triggerLay");
+            }
             
+            
+
         });
 
-        keywords.Add("lay", () => {
+        keywords.Add("lay", () =>
+        {
             Debug.Log("lay");
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerLay");
-            
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
+                animationControllerDog.SetTrigger("triggerLay");
+            }
+
         });
 
-        keywords.Add("high", () => {
+        keywords.Add("high", () =>
+        {
             Debug.Log("high");
-
-            dogSteeringBehaviourScript.dogTrick();
-            animationControllerDog.SetTrigger("triggerHigh");
-            
+            if (dogSteeringBehaviourScript.dogTrick())
+            {
+                animationControllerDog.SetTrigger("triggerHigh");
+            }
         });
 
 

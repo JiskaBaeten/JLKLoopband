@@ -36,7 +36,7 @@ public class steeringBehaviourDog : MonoBehaviour
     public Vector3 PathPointDogRandom;
     public bool dogCalledInScript;
     public bool dogLookingForCall;
-    public byte minDistanceBetweenDogAndMan;
+    byte minDistanceBetweenDogAndMan;
 
     //obstacle avoidance
     public float ObstacleAvoidanceDistance;
@@ -171,7 +171,8 @@ public class steeringBehaviourDog : MonoBehaviour
                 steerForce = Seek(currentPathPointDog);
             }
         }
-    }
+    } //decide wether to run or walk or ...
+
     public Vector3 Seek(Vector3 seekPosition)
     {
         Vector3 mySteeringForce = (seekPosition - transform.position).normalized * maxForce;//look at target direction, normalized and scaled
@@ -212,9 +213,7 @@ public class steeringBehaviourDog : MonoBehaviour
         {
             return steerForce;
         }
-    }
-
-
+    } //dog is not on leash
 
     public Vector3 ObstacleAvoidance()
     {
@@ -263,7 +262,7 @@ public class steeringBehaviourDog : MonoBehaviour
             }
         }
         return Vector3.zero;//no steering force  because no obstacle was detected}
-    }
+    } 
 
     private bool DetectObstacle(Vector3 myDirection, out RaycastHit myHit, float myObstacleAvoidanceDistance)
     {

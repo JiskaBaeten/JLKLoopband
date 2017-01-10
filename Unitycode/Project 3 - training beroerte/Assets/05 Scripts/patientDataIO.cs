@@ -100,7 +100,7 @@ public class patientDataIO : MonoBehaviour
     }
     void Update()
     {
-        if (addPatientInterface.activeInHierarchy)
+        if (addPatientInterface.activeInHierarchy) //for tab key
         {
             toggleTabAddPatient();
         }
@@ -114,7 +114,7 @@ public class patientDataIO : MonoBehaviour
         }
     }
 
-    private void toggleTabAddPatient()
+    private void toggleTabAddPatient() //tab key for adding patients
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -152,7 +152,7 @@ public class patientDataIO : MonoBehaviour
         }
     }
 
-    private void toggleTabViewData()
+    private void toggleTabViewData() //tab key for viewing data
     {
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -172,6 +172,8 @@ public class patientDataIO : MonoBehaviour
             else if (viewPatientSelectedInput == 5)
             {
                 patientSearch.Select();
+
+           //code unnecessary but usefull for later
              /*   if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     Debug.Log(currentSelectedDropdownValuePatientdata);
@@ -209,7 +211,7 @@ public class patientDataIO : MonoBehaviour
 
     }
 
-    private void toggleTabChooseProject()
+    private void toggleTabChooseProject() //for tabs with the choose project 
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -270,7 +272,7 @@ public class patientDataIO : MonoBehaviour
             toggleX.isOn = false;
         }
 
-    }
+    } //gender choose M radio button
     public void toggleClickedV()
     {
         Debug.Log("toggle clicked");
@@ -280,7 +282,7 @@ public class patientDataIO : MonoBehaviour
             toggleX.isOn = false;
         }
        
-    }
+    } //gender choose V radio button
     public void toggleClickedX()
     {
         if (toggleX.isOn)
@@ -288,7 +290,7 @@ public class patientDataIO : MonoBehaviour
             toggleMan.isOn = false;
             toggleWoman.isOn = false;
         }
-    }
+    } //gender choose X radio button
 
     public void btnPatientEditClicked()
     {
@@ -385,6 +387,9 @@ public class patientDataIO : MonoBehaviour
         inputLevel.text = "";
         inputName.text = "";
         inputNumber.text = "";
+        toggleMan.isOn = false;
+        toggleWoman.isOn = false;
+        toggleX.isOn = false;
     } //deletes input fields
 
     public void btnCancelClicked()

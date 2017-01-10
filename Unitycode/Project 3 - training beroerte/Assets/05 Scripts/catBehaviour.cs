@@ -26,8 +26,6 @@ public class catBehaviour : MonoBehaviour {
 
     //obstacle avoidance
     public float ObstacleAvoidanceDistance;
-    public cameraSteeringBehaviour cameraMoveScript;
-    GameObject cameraPlayer;
     public float ObstacleAvoidanceForce;
 
     CharacterController controller;
@@ -41,7 +39,6 @@ public class catBehaviour : MonoBehaviour {
         wanderRadius = 2;
         controller = GetComponent<CharacterController>();
         animationController = GetComponent<Animator>();
-        cameraPlayer = GameObject.FindWithTag("cameraTopObject");
         eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
         eindpos.y = transform.position.y;
         audioCat = GetComponent<AudioSource>();
@@ -53,8 +50,8 @@ public class catBehaviour : MonoBehaviour {
 
         //calc movement + obstacle avoidance
         steerForce = catWanderBehaviour();
-        steerForce += ObstacleAvoidance();
-
+        //steerForce += ObstacleAvoidance();
+       
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
         velocity += acceleration;//velocity = transform.TransformDirection(velocity);
