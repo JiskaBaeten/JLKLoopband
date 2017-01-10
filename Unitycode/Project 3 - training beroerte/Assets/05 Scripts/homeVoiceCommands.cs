@@ -10,12 +10,12 @@ public class homeVoiceCommands : MonoBehaviour
     Dictionary<string, System.Action> keywords;
     Animator animationControllerDog;
     homeSteeringBehaviourDog dogSteeringBehaviourScript;
-    Renderer dogRenderer;
+
 
 
     void Start()
     {
-        dogRenderer = GetComponent<Renderer>();
+   
         dogSteeringBehaviourScript = GetComponent<homeSteeringBehaviourDog>();
         animationControllerDog = GetComponent<Animator>();
         keywords = new Dictionary<string, System.Action>();
@@ -23,65 +23,57 @@ public class homeVoiceCommands : MonoBehaviour
 
         keywords.Add("zit", () => {
             Debug.Log("zit");
-            if (dogRenderer.isVisible)
-            {
+
                 dogSteeringBehaviourScript.dogTrick();
                 animationControllerDog.SetTrigger("triggerSit");
-            }
         });
 
         keywords.Add("sit", () => {
             Debug.Log("sit");
-        if (dogRenderer.isVisible)
-        {
+
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerSit");
-            }
+            
         });
 
         keywords.Add("paw", () => {
             Debug.Log("paw");
-        if (dogRenderer.isVisible)
-        {
+  
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerPaw");
-            }
+            
         });
 
         keywords.Add("poot", () => {
             Debug.Log("poot");
-        if (dogRenderer.isVisible)
-        {
+  
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerPaw");
-            }
+            
         });
 
         keywords.Add("lig", () => {
             Debug.Log("lig");
-        if (dogRenderer.isVisible)
-        {
+      
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerLay");
-            }
+            
         });
 
         keywords.Add("lay", () => {
             Debug.Log("lay");
-        if (dogRenderer.isVisible)
-        {
+        
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerLay");
-            }
+            
         });
 
         keywords.Add("high", () => {
             Debug.Log("high");
-        if (dogRenderer.isVisible)
-        {
+        
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerHigh");
-            }
+            
         });
 
 
