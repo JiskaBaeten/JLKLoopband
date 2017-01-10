@@ -23,65 +23,56 @@ public class homeVoiceCommands : MonoBehaviour
 
         keywords.Add("zit", () => {
             Debug.Log("zit");
-            if (dogRenderer.isVisible)
-            {
+
                 dogSteeringBehaviourScript.dogTrick();
                 animationControllerDog.SetTrigger("triggerSit");
-            }
+            
         });
 
         keywords.Add("sit", () => {
             Debug.Log("sit");
-        if (dogRenderer.isVisible)
-        {
+
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerSit");
-            }
+            
         });
 
         keywords.Add("paw", () => {
             Debug.Log("paw");
-        if (dogRenderer.isVisible)
-        {
+
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerPaw");
-            }
+            
         });
 
         keywords.Add("poot", () => {
             Debug.Log("poot");
-        if (dogRenderer.isVisible)
-        {
+
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerPaw");
-            }
+            
         });
 
         keywords.Add("lig", () => {
             Debug.Log("lig");
-        if (dogRenderer.isVisible)
-        {
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerLay");
-            }
+            
         });
 
         keywords.Add("lay", () => {
             Debug.Log("lay");
-        if (dogRenderer.isVisible)
-        {
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerLay");
-            }
+            
         });
 
         keywords.Add("high", () => {
             Debug.Log("high");
-        if (dogRenderer.isVisible)
-        {
+
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerHigh");
-            }
+            
         });
 
 

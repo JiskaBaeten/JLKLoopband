@@ -7,20 +7,21 @@ using System.Linq;
 public class VoiceCommands : MonoBehaviour {
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords;
-    GameObject dog;
-    Animator animationControllerDog;
+    public GameObject dog;
+    public Animator animationControllerDog;
     steeringBehaviourDog dogSteeringBehaviourScript;
     GameObject viveCam;
     byte distanceToDogForLeash;
     Renderer dogRenderer; 
     // Use this for initialization
     void Start () {
-       dogRenderer =  dog.GetComponent<Renderer>();
+      
         distanceToDogForLeash = 5;
         dog = GameObject.FindWithTag("Dog");
         viveCam = GameObject.FindWithTag("cameraTopObject");
         dogSteeringBehaviourScript = dog.GetComponent<steeringBehaviourDog>();
         animationControllerDog = dog.GetComponent<Animator>();
+      //  dogRenderer = dog.GetComponent<Renderer>();
         keywords = new Dictionary<string, System.Action>();
         keywords.Add("bark", () => {Debug.Log("woof");});
         
@@ -28,10 +29,10 @@ public class VoiceCommands : MonoBehaviour {
             Debug.Log("coming");
             if (animationControllerDog.GetBool("dogIsLoose"))
             {
-                if (dogRenderer.isVisible)
+             /*   if (dogRenderer.isVisible)
                 {
                     Debug.Log("hond in sight");
-                }
+                }*/
                 dogSteeringBehaviourScript.dogLookingForCall = true;
 
                 animationControllerDog.SetBool("dogIsWaiting", true);
@@ -53,10 +54,7 @@ public class VoiceCommands : MonoBehaviour {
         keywords.Add("kom", () => {
             if (animationControllerDog.GetBool("dogIsLoose"))
             {
-                if (dogRenderer.isVisible)
-                {
-                    Debug.Log("hond in sight");
-                }
+
                 dogSteeringBehaviourScript.dogLookingForCall = true;
 
                 animationControllerDog.SetBool("dogIsWaiting", true);

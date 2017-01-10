@@ -38,7 +38,6 @@ public class patientDataIO : MonoBehaviour
     public InputField inputNumber;
     public InputField inputExtra;
     public InputField inputLevel;
-    public InputField inputGender;
     public Text txtError;
     public Button btnConfirmData;
     public Button btnCancelData;
@@ -55,11 +54,15 @@ public class patientDataIO : MonoBehaviour
     public Dropdown possiblePatientSelect;
     public Dropdown patientSearch;
     public InputField inputSearch;
+    public Toggle toggleMan;
+    public Toggle toggleWoman;
+    public Toggle toggleX;
 
     //ui private
     InputField[] allInputs;
     Button[] interfaceButtonsView;
     Button[] interfaceButtonsChoose;
+
     byte addPatientSelectedInput;
     byte viewPatientSelectedInput;
     byte chooseProjectSelectedInput;
@@ -92,7 +95,7 @@ public class patientDataIO : MonoBehaviour
 
         interfaceButtonsView = new Button[4] { btnEditPatient, btnSelectPatient, btnDeletePatient, btnAddPatient };
         interfaceButtonsChoose = new Button[3] { btnChooseHome, btnChoosePark, btnCancelChoose };
-        allInputs = new InputField[6] { inputNumber, inputName, inputLevel, inputBirthday, inputGender, inputExtra };
+        allInputs = new InputField[5] { inputNumber, inputName, inputLevel, inputBirthday, inputExtra };
     }
     void Update()
     {
@@ -126,6 +129,10 @@ public class patientDataIO : MonoBehaviour
             else if (addPatientSelectedInput < allInputs.Length + 2)
             {
                 btnCancelData.Select();
+            }
+            else if (addPatientSelectedInput < allInputs.Length + 3)
+            {
+                toggleMan.Select();
             }
             else
             {
@@ -245,6 +252,27 @@ public class patientDataIO : MonoBehaviour
         changeInterfaceToAdd();
     } //to add a patient from scratch
 
+    public void toggleClickedM()
+    {
+        toggleMan.isOn = true;
+        toggleWoman.isOn = false;
+        toggleX.isOn = false;
+    }
+    public void toggleClickedV()
+    {
+        Debug.Log("toggle clicked");
+        toggleMan.isOn = false;
+      /*  toggleWoman.isOn = true;
+        toggleX.isOn = false;*/
+    }
+    public void toggleClickedX()
+    {
+        toggleMan.isOn = false;
+        toggleWoman.isOn = false;
+        toggleX.isOn = true;
+
+    }
+
     public void btnPatientEditClicked()
     {
         editScreen = true;
@@ -257,7 +285,6 @@ public class patientDataIO : MonoBehaviour
                 inputLevel.text = patientDetailsToShow.UserSkill;
                 inputName.text = patientDetailsToShow.UserName;
                 inputExtra.text = patientDetailsToShow.UserExtraInfo;
-                inputGender.text = patientDetailsToShow.UserGender;
             }
         }
         changeInterfaceToAdd();
@@ -304,14 +331,14 @@ public class patientDataIO : MonoBehaviour
         {
             btnPatientDeleteClicked();
         }
-        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" || inputGender.text == "")
+        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" )
         {
             txtError.gameObject.SetActive(true);
         }
         else
         {
             txtError.gameObject.SetActive(false);
-            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0", inputGender.text));
+            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0","gender")); //still switch
             writePatientData();
             showPatientData();
             showPatientDetails();
@@ -329,7 +356,6 @@ public class patientDataIO : MonoBehaviour
         inputLevel.text = "";
         inputName.text = "";
         inputNumber.text = "";
-        inputGender.text = "";
     } //deletes input fields
 
     public void btnCancelClicked()
