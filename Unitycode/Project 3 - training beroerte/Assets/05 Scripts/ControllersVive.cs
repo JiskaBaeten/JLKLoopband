@@ -78,13 +78,9 @@ public class ControllersVive : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name == "scene_home")
         {
-            if (triggerButtonDown)
+            if (triggerButtonPressed)
             {
                 ballToThrow.transform.position = transform.position;
-            }
-            else
-            {
-                
             }
         }
        
