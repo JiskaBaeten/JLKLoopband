@@ -8,7 +8,7 @@ public class catBehaviour : MonoBehaviour {
     public float gravity = 9.81f;
     public int maxRunningSpeed = 2;
     float rotateSpeed = 0.5f;
-    float tmrDogFree;
+    float tmrCatWander;
     float maxWanderTime = 3;
     float wanderDist;
     float wanderRadius;
@@ -20,6 +20,9 @@ public class catBehaviour : MonoBehaviour {
     public Vector3 steerForce;
     public Vector3 eindpos;
     float fleeForce = 150;
+    byte maxCatRunTime = 5;
+    float tmrCatRun = 6;
+    bool catIsRunning = false;
 
     //dog object
     GameObject dog;
@@ -34,6 +37,7 @@ public class catBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        
         dog = GameObject.FindWithTag("Dog");
         wanderDist = 2;
         wanderRadius = 2;
@@ -47,7 +51,15 @@ public class catBehaviour : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        tmrCatWander += Time.deltaTime;
+        tmrCatRun += Time.deltaTime;
+        if (Vector3.Distance(transform.position, dog.transform.position) < distanceCatRunAway && !catIsRunning)
+        {
+            catIsRunning = true;
+            tmrCatRun = 0;
+            audioCat.Play();
+            dog.GetComponent<steeringBehaviourDog>().reactOnCat();
+        }
         //calc movement + obstacle avoidance
         steerForce = catWanderBehaviour();
         //steerForce += ObstacleAvoidance();
@@ -108,19 +120,17 @@ public class catBehaviour : MonoBehaviour {
 
     public Vector3 catWanderBehaviour()
     {
-        if (Vector3.Distance(transform.position, dog.transform.position) < distanceCatRunAway)
+        if (tmrCatRun < maxCatRunTime)
         {
-            audioCat.Play();
-            dog.GetComponent<steeringBehaviourDog>().reactOnCat();
             return Flee(dog.transform.position);
         }
 
-        else { 
-        tmrDogFree += Time.deltaTime;
-        if (tmrDogFree > maxWanderTime || Vector3.Distance(eindpos, transform.position) < 1)
+        else {
+        catIsRunning = false;
+        if (tmrCatWander > maxWanderTime || Vector3.Distance(eindpos, transform.position) < 1)
         {
             eindpos = Vector3.zero;
-            tmrDogFree = 0;
+                tmrCatWander = 0;
 
             //heading = velocity.normalized;//where we're going                  //where we are + forward + random         
             eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
@@ -176,7 +186,7 @@ public class catBehaviour : MonoBehaviour {
             else
             {//full force
                 Debug.Log("avoiding");
-                tmrDogFree = maxWanderTime;
+                tmrCatWander = maxWanderTime;
                 return ObstacleAvoidanceForce * (mySteeringForceL + mySteeringForceR +
                            mySteeringForceM);//just return the sum of all three
             }

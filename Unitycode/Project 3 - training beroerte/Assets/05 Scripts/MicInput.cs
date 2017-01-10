@@ -60,11 +60,12 @@ public class MicInput : MonoBehaviour
             if (volume > isYelling && currentTime >= timeSpoken + timeBetweenStartAndEnd)
             {
                 timeSpoken = currentTime; 
+
                 Debug.LogError("yelling" + volume);
-                if (cameraRenderer.isVisible)
+             /*   if (cameraRenderer.isVisible)
                 {
                     Debug.Log("hond sighted");
-                }
+                }*/
             }
         }
         

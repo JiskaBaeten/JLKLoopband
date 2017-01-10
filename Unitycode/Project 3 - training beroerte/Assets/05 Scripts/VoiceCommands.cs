@@ -31,17 +31,11 @@ public class VoiceCommands : MonoBehaviour {
 
                 animationControllerDog.SetBool("dogIsWaiting", true);
                 dogSteeringBehaviourScript.resetTimerDogLooking();
-                if (UnityEngine.Random.Range(0, 3) >= 1)
-                {
                     Debug.LogError("dog called and coming");
                     dogSteeringBehaviourScript.dogCalledInScript = true;
 
-                }
-                else
-                {
-                    Debug.LogError("dog called and not coming");
-                    dogSteeringBehaviourScript.dogCalledInScript = false;
-                }
+                
+
             }
         });
 
@@ -52,17 +46,17 @@ public class VoiceCommands : MonoBehaviour {
 
                 animationControllerDog.SetBool("dogIsWaiting", true);
                 dogSteeringBehaviourScript.resetTimerDogLooking();
-                if (UnityEngine.Random.Range(0, 3) >= 1)
-                {
+           /*     if (UnityEngine.Random.Range(0, 3) >= 1)
+                {*/
                     Debug.LogError("dog called and coming");
                     dogSteeringBehaviourScript.dogCalledInScript = true;
 
-                }
-                else
+                //}
+            /*    else
                 {
                     Debug.LogError("dog called and not coming");
                     dogSteeringBehaviourScript.dogCalledInScript = false;
-                }
+                */
             }
             Debug.Log("ik kom");
 
