@@ -6,7 +6,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     public int maxForce = 150;
     public float mass = 100;
     public float gravity = 9.81f;
-    public int maxRunningSpeed = 2;
+    int maxRunningSpeed = 2;
     float rotateSpeed = 0.5f;
     float tmrDogFree;
     float maxWanderTime = 3;
@@ -19,6 +19,8 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     public Vector3 steerForce;
     public Vector3 eindpos;
 
+    float dogTrickTime = 4f;
+    float tmrDogTrick = 6;
 
 
     //obstacle avoidance
@@ -30,6 +32,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     CharacterController controller;
     public Animator animationController;
     AudioSource audioDogBark;
+    
     // Use this for initialization
     void Start () {
         wanderDist = 2;
@@ -44,8 +47,19 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
+        tmrDogTrick += Time.deltaTime;
         //calc movement
+        if (tmrDogTrick < dogTrickTime)
+        {
+            maxRunningSpeed = 0;
+            rotateSpeed = 0;
+        }
+        else
+        {
+
+            maxRunningSpeed = 2;
+            rotateSpeed = 0.5f;
+        }
         steerForce = dogLooseBehaviour();
 
         steerForce += ObstacleAvoidance();
@@ -184,6 +198,12 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     public void dogTrick()
     {
         audioDogBark.Play();
+        tmrDogTrick = 0;
+        Debug.Log(animationController.GetCurrentAnimatorStateInfo(0).IsName("lay (from sit)"));
+        if (animationController.GetCurrentAnimatorStateInfo(0).IsName("lay"))
+        {
+            Debug.Log("lay");
+        }
     }
 
 

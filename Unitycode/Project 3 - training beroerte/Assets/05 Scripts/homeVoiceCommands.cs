@@ -15,7 +15,7 @@ public class homeVoiceCommands : MonoBehaviour
 
     void Start()
     {
-        dogRenderer = GetComponent<Renderer>();
+
         dogSteeringBehaviourScript = GetComponent<homeSteeringBehaviourDog>();
         animationControllerDog = GetComponent<Animator>();
         keywords = new Dictionary<string, System.Action>();
@@ -43,6 +43,14 @@ public class homeVoiceCommands : MonoBehaviour
             dogSteeringBehaviourScript.dogTrick();
             animationControllerDog.SetTrigger("triggerPaw");
             
+        });
+
+        keywords.Add("shake", () => {
+            Debug.Log("shake");
+
+            dogSteeringBehaviourScript.dogTrick();
+            animationControllerDog.SetTrigger("triggerPaw");
+
         });
 
         keywords.Add("poot", () => {

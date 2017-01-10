@@ -66,6 +66,7 @@ public class patientDataIO : MonoBehaviour
     byte addPatientSelectedInput;
     byte viewPatientSelectedInput;
     byte chooseProjectSelectedInput;
+    string genderToSave;
 
     int currentSelectedDropdownValuePatientdata;
     int currentSelectedDropdownValuePatientSearch;
@@ -124,16 +125,25 @@ public class patientDataIO : MonoBehaviour
             }
             else if (addPatientSelectedInput < allInputs.Length + 1)
             {
-                btnConfirmData.Select();
+                toggleMan.Select();
             }
             else if (addPatientSelectedInput < allInputs.Length + 2)
             {
-                btnCancelData.Select();
+                toggleWoman.Select();
             }
             else if (addPatientSelectedInput < allInputs.Length + 3)
             {
-                toggleMan.Select();
+                toggleX.Select();
             }
+            else if (addPatientSelectedInput < allInputs.Length + 4)
+            {
+                btnConfirmData.Select();
+            }
+            else if (addPatientSelectedInput < allInputs.Length + 5)
+            {
+                btnCancelData.Select();
+            }
+
             else
             {
                 addPatientSelectedInput = 0;
@@ -254,23 +264,30 @@ public class patientDataIO : MonoBehaviour
 
     public void toggleClickedM()
     {
-        toggleMan.isOn = true;
-        toggleWoman.isOn = false;
-        toggleX.isOn = false;
+        if (toggleMan.isOn)
+        {
+            toggleWoman.isOn = false;
+            toggleX.isOn = false;
+        }
+
     }
     public void toggleClickedV()
     {
         Debug.Log("toggle clicked");
-        toggleMan.isOn = false;
-      /*  toggleWoman.isOn = true;
-        toggleX.isOn = false;*/
+        if (toggleWoman.isOn)
+        {
+            toggleMan.isOn = false;
+            toggleX.isOn = false;
+        }
+       
     }
     public void toggleClickedX()
     {
-        toggleMan.isOn = false;
-        toggleWoman.isOn = false;
-        toggleX.isOn = true;
-
+        if (toggleX.isOn)
+        {
+            toggleMan.isOn = false;
+            toggleWoman.isOn = false;
+        }
     }
 
     public void btnPatientEditClicked()
@@ -331,14 +348,26 @@ public class patientDataIO : MonoBehaviour
         {
             btnPatientDeleteClicked();
         }
-        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" )
+        if (inputNumber.text == "" || inputBirthday.text == "" || inputName.text == "" || inputLevel.text == "" || (!toggleX.isOn && !toggleMan.isOn && !toggleWoman.isOn))
         {
             txtError.gameObject.SetActive(true);
         }
         else
         {
             txtError.gameObject.SetActive(false);
-            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0","gender")); //still switch
+            if (toggleMan.isOn)
+            {
+                genderToSave = "Man";
+            }
+            else if (toggleWoman.isOn)
+            {
+                genderToSave = "Vrouw";
+            }
+            else
+            {
+                genderToSave = "X";
+            }
+            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0",genderToSave)); //still switch
             writePatientData();
             showPatientData();
             showPatientDetails();

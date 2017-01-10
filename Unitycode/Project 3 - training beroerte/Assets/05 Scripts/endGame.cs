@@ -12,16 +12,7 @@ public class endGame : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape)) //if playing, return to startscreen, otherwise stop the application
         {
-            if (confirmEscapeShowed)
-            {
-                exitScene();       
-            }
-            else
-            {
-                confirmEscapeShowed = true;
-                escapeWarningInterface.SetActive(true);
-            }
-            
+                exitScene();              
         }
 
 	}
@@ -37,10 +28,5 @@ public class endGame : MonoBehaviour {
             SceneManager.LoadScene("StartScene");
         }
 
-    }
-    public void btnCancelExit()
-    {
-        confirmEscapeShowed = false;
-        escapeWarningInterface.SetActive(false);
     }
 }
