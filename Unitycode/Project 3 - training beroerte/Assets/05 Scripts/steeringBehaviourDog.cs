@@ -44,6 +44,7 @@ public class steeringBehaviourDog : MonoBehaviour
     GameObject cameraPlayer;
     public float ObstacleAvoidanceForce;
 
+    public AudioSource audioMultipleBark;
     public Animator animationController;
     void Start()
     {
@@ -61,7 +62,6 @@ public class steeringBehaviourDog : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(cameraMoveScript.currentPathPoint + "pathpoint");
         dogWaitForOwner();
         tmrDogLook += Time.deltaTime;
         tmrDogFree += Time.deltaTime;
@@ -93,6 +93,8 @@ public class steeringBehaviourDog : MonoBehaviour
         //rotate
         if (new Vector3(velocity.x, 0, velocity.z) != Vector3.zero)//otherwise warning
         {
+            Debug.Log(Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.z)) + "rotate" + transform.rotation);
+
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.z)), rotateSpeed * Time.deltaTime);
         }
     }
@@ -103,6 +105,11 @@ public class steeringBehaviourDog : MonoBehaviour
             myVector.Normalize();// Vector3.normalized returns this vector with a magnitude of 1
             myVector *= myMax;//scale to max
         }
+    }
+
+    public void reactOnCat()
+    {
+        audioMultipleBark.Play();
     }
 
     public void resetTimerDogLooking()

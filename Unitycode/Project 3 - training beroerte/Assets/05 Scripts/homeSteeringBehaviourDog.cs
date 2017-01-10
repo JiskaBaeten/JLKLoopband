@@ -228,10 +228,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         return false;
     }
 
-    public void reactOnCat()
-    {
-       
-    }
+
 
     private Vector3 CalcAvoidanceForce(RaycastHit myHit)
     {

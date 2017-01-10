@@ -96,9 +96,9 @@ public class catBehaviour : MonoBehaviour {
         float distance = Vector3.Distance(transform.position, eindpos);
         //distance to target ==> afstand tussen deze twee
         Vector3 mySteeringForce = Vector3.zero;
-
-            // (beginpos - eindpos).normalized * fleeforce / distance
-            mySteeringForce = (transform.position - eindpos).normalized * fleeForce / distance;
+        Debug.DrawLine(transform.position, eindpos, Color.green);
+        // (beginpos - eindpos).normalized * fleeforce / distance
+        mySteeringForce = (transform.position - eindpos).normalized * fleeForce / distance;
             //look away from target direction, normalized and scaled
         
         return mySteeringForce;
@@ -110,8 +110,12 @@ public class catBehaviour : MonoBehaviour {
     {
         if (Vector3.Distance(transform.position, dog.transform.position) < distanceCatRunAway)
         {
+            audioCat.Play();
+            dog.GetComponent<steeringBehaviourDog>().reactOnCat();
             return Flee(dog.transform.position);
         }
+
+        else { 
         tmrDogFree += Time.deltaTime;
         if (tmrDogFree > maxWanderTime || Vector3.Distance(eindpos, transform.position) < 1)
         {
@@ -127,6 +131,7 @@ public class catBehaviour : MonoBehaviour {
 
         }
         return Seek(eindpos);
+        }
     }
 
     public Vector3 ObstacleAvoidance()
