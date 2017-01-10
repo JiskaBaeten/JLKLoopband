@@ -59,8 +59,9 @@ public class BodySourceManager : MonoBehaviour
                 frame.Dispose();
                 frame = null;
             }
+            WriteKinectData();
         }
-        WriteKinectData();
+        
     }
     
     void OnApplicationQuit()
