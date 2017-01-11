@@ -48,6 +48,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     Vector3 seekPointForAvoidance;
     float smallestDistanceToBall;
     Vector3 currentObstacleAvoidancePathPointChosen;
+    bool goToBallWithAvoidancePath;
     
     // Use this for initialization
     void Start () {
@@ -65,7 +66,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         carpet = GameObject.FindWithTag("carpet");
         avoidancePointsWithFetch.Add(new Vector3(0, 0, 0));
         avoidancePointsWithFetch.Add(new Vector3(10, 0, 10));
-
+        goToBallWithAvoidancePath = false;
     }
 
     // Update is called once per frame
@@ -74,29 +75,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         // {
         //    Debug.Log("testDog");
         // }
-        if (Physics.Raycast(transform.position, ballToFetch.transform.position)) //if the dog cant see the ball, he has to go around an obstacle
-        {
-            currentObstacleAvoidancePathPointChosen = Vector3.zero;
-            foreach (Vector3 pathpointToCheck in avoidancePointsWithFetch) //checking all points for avoiding obstacle
-            {
-                if (!Physics.Raycast(transform.position, pathpointToCheck)) //if the dog can see the point (otherwise no use in going to this point)
-                {
-                    if (Vector3.Distance(ballToFetch.transform.position, pathpointToCheck) < smallestDistanceToBall)//check if distance is smaller than last distance
-                    {
-                        smallestDistanceToBall = Vector3.Distance(ballToFetch.transform.position, pathpointToCheck); //if distance is smaller, go to this point
-                        currentObstacleAvoidancePathPointChosen = pathpointToCheck;
-                    }
-                }
-            }
-            if (currentObstacleAvoidancePathPointChosen != Vector3.zero) 
-            {
-                Seek(currentObstacleAvoidancePathPointChosen);
-            }
-            else //if no point was found, go straight to ball, let old obstacle avoidance work
-            {
-                Seek(ballToFetch.transform.position);
-            }
-        }
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             dogCatch();
@@ -125,13 +104,43 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         }
         if (dogPlayingFetch)
         {
-            if (!(tmrDogTrick < dogFetchTime))
+            if (!(tmrDogTrick < dogFetchTime)) //if dog is not already fetching/ doing a trick
             {
-                if (Vector3.Distance(transform.position, ballToFetch.transform.position) > fetchDistance)
+
+                if (Vector3.Distance(transform.position, ballToFetch.transform.position) > fetchDistance) // if dog is far away from ball, go near
                 {
+                    //code for avoidance 
+                    //Still add if dog see the point just switch
+                    if (Physics.Raycast(transform.position, ballToFetch.transform.position)) //if the dog cant see the ball, he has to go around an obstacle
+                    {
+                        currentObstacleAvoidancePathPointChosen = Vector3.zero;
+                        foreach (Vector3 pathpointToCheck in avoidancePointsWithFetch) //checking all points for avoiding obstacle
+                        {
+                            if (!Physics.Raycast(transform.position, pathpointToCheck)) //if the dog can see the point (otherwise no use in going to this point)
+                            {
+                                if (Vector3.Distance(ballToFetch.transform.position, pathpointToCheck) < smallestDistanceToBall)//check if distance is smaller than last distance
+                                {
+                                    smallestDistanceToBall = Vector3.Distance(ballToFetch.transform.position, pathpointToCheck); //if distance is smaller, go to this point
+                                    currentObstacleAvoidancePathPointChosen = pathpointToCheck;
+                                }
+                            }
+                        }
+                        if (currentObstacleAvoidancePathPointChosen != Vector3.zero)
+                        {
+                            Seek(currentObstacleAvoidancePathPointChosen);
+                        }
+                        else //if no point was found, go straight to ball, let old obstacle avoidance work
+                        {
+                            Seek(ballToFetch.transform.position);
+                        }
+                    }
+
+
+
+
                     steerForce = Seek(ballToFetch.transform.position);
                 }
-                else
+                else //if dog is near enough, pick up ball
                 {
                     animationController.SetTrigger("dogPickUpBall");
                     dogPlayingFetch = false;
@@ -143,7 +152,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                 }
             }          
         }
-        else if (dogReturningBall)
+        else if (dogReturningBall) //dog got ball, brings back to mat
         {
            
             ballToFetch.transform.position = dogMouthBone.transform.position;
@@ -151,7 +160,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
             // ballToFetch.transform.position =new Vector3( dogMouthBone.transform.position.x, ballFetchHeight - 0.2f, dogMouthBone.transform.position.z);
             if (Vector3.Distance(transform.position, carpet.transform.position) > fetchBringBackDistance)
             {
-           
                 steerForce = Seek(carpet.transform.position);
             }
             else
