@@ -575,6 +575,10 @@ public class patientDataIO : MonoBehaviour
             sWriter.Close();
         }
     }
+    public void OpenFolder()
+    {
+        Application.OpenURL("file://" + Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "\\A walk in the park");
+    }
 }
 
 public class profile

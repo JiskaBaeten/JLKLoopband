@@ -9,7 +9,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Threading;
-using System.Management;
 
 /**
  * This class allows a Unity program to continually check for messages from a
@@ -28,7 +27,7 @@ using System.Management;
 public class SerialController : MonoBehaviour
 {
     [Tooltip("Port name with which the SerialPort object will be created.")]
-    public string portName = AutodetectArduinoPort();
+    public string portName = "COM3";
 
     [Tooltip("Baud rate that the serial device is using to transmit data.")]
     public int baudRate = 9600;
@@ -156,31 +155,10 @@ public class SerialController : MonoBehaviour
         this.userDefinedTearDownFunction = userFunction;
     }
 
-    private string AutodetectArduinoPort()
+    void DetectArduino()
     {
-        ManagementScope connectionScope = new ManagementScope();
-        SelectQuery serialQuery = new SelectQuery("SELECT * FROM Win32_SerialPort");
-        ManagementObjectSearcher searcher = new ManagementObjectSearcher(connectionScope, serialQuery);
 
-        try
-        {
-            foreach (ManagementObject item in searcher.Get())
-            {
-                string desc = item["Description"].ToString();
-                string deviceId = item["DeviceID"].ToString();
-
-                if (desc.Contains("Arduino"))
-                {
-                    return deviceId;
-                }
-            }
-        }
-        catch (ManagementException e)
-        {
-            /* Do Nothing */
-        }
-
-        return null;
     }
+
 
 }
