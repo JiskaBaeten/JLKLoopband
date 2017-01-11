@@ -42,6 +42,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     float dogFetchTime =3f;
     public GameObject dogMouthBone;
     public float ballFetchHeight = 10f;
+    float fleeForce = 150;
     // Use this for initialization
     void Start () {
         dogYPos = transform.position.y;
@@ -100,17 +101,18 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                     dogPlayingFetch = false;
                     dogReturningBall = true;
                     tmrDogTrick = 0;
-                   //ballToFetch.transform.position = dogMouthBone.transform.position;
+                    //ballToFetch.transform.position = dogMouthBone.transform.position;
+                   ballToFetch.GetComponent<Collider>().isTrigger = true;
+                    ballToFetch.GetComponent<Rigidbody>().useGravity = false;
                 }
             }          
         }
         else if (dogReturningBall)
         {
-            if (true)
-            {
-
-            }
-            ballToFetch.transform.position =new Vector3( dogMouthBone.transform.position.x, dogMouthBone.transform.position.y - 0.2f, dogMouthBone.transform.position.z);
+           
+            ballToFetch.transform.position = dogMouthBone.transform.position;
+            //GetComponent<Collider>().enabled = true;
+            // ballToFetch.transform.position =new Vector3( dogMouthBone.transform.position.x, ballFetchHeight - 0.2f, dogMouthBone.transform.position.z);
             if (Vector3.Distance(transform.position, carpet.transform.position) > fetchBringBackDistance)
             {
            
@@ -118,13 +120,18 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
             }
             else
             {
-                
+              //  Debug.Log("trigger" + ballToFetch.GetComponent<Collider>().isTrigger);
+               
+                // Debug.Log("trigger" + ballToFetch.GetComponent<Collider>().isTrigger);
                 dogReturningBall = false;
+                steerForce = Flee(ballToFetch.transform.position);
+                ballToFetch.GetComponent<Collider>().isTrigger = false;
+                ballToFetch.GetComponent<Rigidbody>().useGravity = true;
             }
         }
         else
         {
-           steerForce = dogLooseBehaviour();
+            steerForce = dogLooseBehaviour(); 
         }
 
         steerForce += ObstacleAvoidance();
@@ -168,6 +175,19 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         return mySteeringForce;
     }
 
+    public Vector3 Flee(Vector3 eindpos)
+    {
+        float distance = Vector3.Distance(transform.position, eindpos);
+        //distance to target ==> afstand tussen deze twee
+        Vector3 mySteeringForce = Vector3.zero;
+        Debug.DrawLine(transform.position, eindpos, Color.green);
+        // (beginpos - eindpos).normalized * fleeforce / distance
+        mySteeringForce = (transform.position - eindpos).normalized * fleeForce / distance;
+        //look away from target direction, normalized and scaled
+
+        return mySteeringForce;
+    }
+
     public void dogCatch()
     {
         animationController.SetTrigger("ballThrow");
@@ -187,7 +207,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
             eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
             eindpos.y = transform.position.y;//same height     
 
-            Debug.Log("eindpos change");
 
            
         }
@@ -214,11 +233,9 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                                      ObstacleAvoidanceDistance);
         bool hitObstacleInTheMiddle = DetectObstacle(directionM, out hitM,
                                       ObstacleAvoidanceDistance);
-        Debug.Log("collision avoid");
         //obstacle found
         if (hitObstacleOnTheLeft || hitObstacleOnTheRight || hitObstacleInTheMiddle)
         {
-            Debug.Log("obstacle");
             //calc forces for each direction
             if (hitObstacleOnTheLeft) mySteeringForceL = CalcAvoidanceForce(hitL);
             if (hitObstacleOnTheRight) mySteeringForceR = CalcAvoidanceForce(hitR);
@@ -229,12 +246,10 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                 mySteeringForceR != Vector3.zero &&
                 mySteeringForceM == Vector3.zero)
             {//possible narrow pathway
-                Debug.Log("narrow");
                 return Vector3.zero;//keep on going 
             }
             else
             {//full force
-                Debug.Log("avoiding");
                 tmrDogFree = maxWanderTime;
                 return ObstacleAvoidanceForce * (mySteeringForceL + mySteeringForceR +
                            mySteeringForceM);//just return the sum of all three

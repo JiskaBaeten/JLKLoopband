@@ -25,11 +25,12 @@ public class SteamVR_TestThrow : MonoBehaviour
 		{
             if (!dog.GetComponent<homeSteeringBehaviourDog>().dogPlayingFetch && !dog.GetComponent<homeSteeringBehaviourDog>().dogReturningBall)
             {
-                if (go == null)
-            {
-                go = GameObject.Instantiate(prefab);
-            }
-			
+                /*      if (go == null)
+                  {
+                      go = GameObject.Instantiate(prefab);
+                  }
+                  */
+                go = GameObject.FindWithTag("Ball");
 			go.transform.position = attachPoint.transform.position;
 
 			joint = go.AddComponent<FixedJoint>();
@@ -46,7 +47,7 @@ public class SteamVR_TestThrow : MonoBehaviour
 			var rigidbody = go.GetComponent<Rigidbody>();
 			Object.DestroyImmediate(joint);
 			joint = null;
-			Object.Destroy(go, 15.0f);
+			//Object.Destroy(go, 15.0f);
             dog.GetComponent<homeSteeringBehaviourDog>().dogCatch();
 
             // We should probably apply the offset between trackedObj.transform.position
