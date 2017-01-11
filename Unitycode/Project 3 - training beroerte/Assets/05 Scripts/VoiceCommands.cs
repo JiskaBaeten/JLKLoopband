@@ -13,6 +13,8 @@ public class VoiceCommands : MonoBehaviour {
     GameObject viveCam;
     byte distanceToDogForLeash;
     GameObject imageDogUnderstood;
+    float tmrDogCalledUnderstood = 3;
+    byte showDogUnderstoodImageTime = 2;
     // Use this for initialization
     void Start () {
         imageDogUnderstood.SetActive(false);
@@ -41,8 +43,11 @@ public class VoiceCommands : MonoBehaviour {
         keywords.Add("kom", () => {
             if (animationControllerDog.GetBool("dogIsLoose"))
             {
-                dogSteeringBehaviourScript.dogLookingForCall = true;
+                //show image, dog heard you well, play timer
+                imageDogUnderstood.SetActive(true);
+                tmrDogCalledUnderstood = 0;
 
+                dogSteeringBehaviourScript.dogLookingForCall = true;
                 animationControllerDog.SetBool("dogIsWaiting", true);
                 dogSteeringBehaviourScript.resetTimerDogLooking();
            /*     if (UnityEngine.Random.Range(0, 3) >= 1)
@@ -78,6 +83,11 @@ public class VoiceCommands : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if ( tmrDogCalledUnderstood > showDogUnderstoodImageTime) //how long does image show?
+        {
+            imageDogUnderstood.SetActive(false);
+        }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("a");

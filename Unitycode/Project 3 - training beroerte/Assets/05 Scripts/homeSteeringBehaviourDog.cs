@@ -21,7 +21,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     float dogTrickTime = 4f;
     float tmrDogTrick = 6;
-
+    float dogPickUpBallTime = 1.5f;
 
     //obstacle avoidance
     public float ObstacleAvoidanceDistance;
@@ -37,14 +37,16 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     GameObject ballToFetch;
     GameObject carpet;
     float dogYPos;
-    byte fetchDistance = 1;
+    float fetchDistance = 0.8f;
     byte fetchBringBackDistance = 3;
-    byte dogFetchTime = 2;
+    float dogFetchTime =3f;
+    public GameObject dogMouthBone;
     // Use this for initialization
     void Start () {
         dogYPos = transform.position.y;
         wanderDist = 2;
         wanderRadius = 2;
+        dogMouthBone = GameObject.FindWithTag("dogMouth");
         controller = GetComponent<CharacterController>();
         animationController = GetComponent<Animator>();
         cameraPlayer = GameObject.FindWithTag("cameraTopObject");
@@ -58,9 +60,23 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            dogCatch();
+        }
         tmrDogTrick += Time.deltaTime;
         //calc movement
-        if (tmrDogTrick < dogTrickTime)
+        if (dogReturningBall && tmrDogTrick < dogPickUpBallTime)
+        {
+            maxRunningSpeed = 0;
+            rotateSpeed = 0;
+        }
+        else if (dogReturningBall && tmrDogTrick > dogPickUpBallTime)
+        {
+            maxRunningSpeed = 1;
+            rotateSpeed = 0.5f;
+        }
+       else if (tmrDogTrick < dogTrickTime)
         {
             maxRunningSpeed = 0;
             rotateSpeed = 0;
@@ -80,9 +96,11 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
                 }
                 else
                 {
+                    animationController.SetTrigger("dogPickUpBall");
                     dogPlayingFetch = false;
                     dogReturningBall = true;
                     tmrDogTrick = 0;
+                //   ballToFetch.transform.position = dogMouthBone.transform.position;
                 }
             }          
         }
@@ -90,10 +108,12 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         {
             if (Vector3.Distance(transform.position, carpet.transform.position) > fetchBringBackDistance)
             {
+              //  ballToFetch.transform.position = dogMouthBone.transform.position;
                 steerForce = Seek(carpet.transform.position);
             }
             else
             {
+                
                 dogReturningBall = false;
             }
         }
@@ -145,6 +165,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
 
     public void dogCatch()
     {
+        animationController.SetTrigger("ballThrow");
         dogPlayingFetch = true;
     }
 
