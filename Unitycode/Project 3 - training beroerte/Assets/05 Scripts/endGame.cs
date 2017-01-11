@@ -5,7 +5,7 @@ public class endGame : MonoBehaviour {
 
     void Start()
     {
-        Debug.Log(gameObject.name);
+
     }
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape)) //if playing, return to startscreen, otherwise stop the application

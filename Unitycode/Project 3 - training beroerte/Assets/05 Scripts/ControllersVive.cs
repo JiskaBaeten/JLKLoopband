@@ -42,6 +42,7 @@ public class ControllersVive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (controller == null)
         {
             Debug.Log("Controller not initialized");
@@ -114,25 +115,25 @@ public class ControllersVive : MonoBehaviour
                     dog.GetComponent<AudioSource>().Play();
                 }
             }
+            else
+            {
+                if (col.gameObject.tag == "controllerColliderLeft")
+                {
+                    Debug.LogError("colliderLeft");
+                    arrowLeft.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                    arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                else if (col.gameObject.tag == "controllerColliderRight")
+                {
+                    Debug.LogError("colliderRight");
+                    arrowRight.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                    arrowLeft.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+            }
+
+        }
         else
         {
-            if (col.gameObject.tag == "controllerColliderLeft")
-            {
-                    Debug.LogError("colliderLeft");
-                arrowLeft.transform.localScale = new Vector3(0.75f,0.75f,0.75f);
-                arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            }
-            else if (col.gameObject.tag == "controllerColliderRight")
-
-                    Debug.LogError("colliderRight");
-                arrowRight.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-                arrowLeft.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            }
-        }
-        
-    
-    else
-	    {
             arrowRight.transform.localScale = new Vector3(0, 0, 0);
             arrowLeft.transform.localScale = new Vector3(0, 0, 0);
         }

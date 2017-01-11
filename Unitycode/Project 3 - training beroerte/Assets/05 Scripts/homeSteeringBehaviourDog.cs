@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class homeSteeringBehaviourDog : MonoBehaviour {
     //character control parameters
@@ -43,6 +44,11 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     public GameObject dogMouthBone;
     public float ballFetchHeight = 10f;
     float fleeForce = 150;
+    List<Vector3> avoidancePointsWithFetch;
+    Vector3 seekPointForAvoidance;
+    float smallestDistanceToBall;
+    Vector3 currentObstacleAvoidancePathPointChosen;
+    
     // Use this for initialization
     void Start () {
         dogYPos = transform.position.y;
@@ -57,10 +63,40 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         audioDogBark = GetComponent<AudioSource>();
         ballToFetch = GameObject.FindWithTag("Ball");
         carpet = GameObject.FindWithTag("carpet");
+        avoidancePointsWithFetch.Add(new Vector3(0, 0, 0));
+        avoidancePointsWithFetch.Add(new Vector3(10, 0, 10));
+
     }
 
     // Update is called once per frame
     void Update () {
+        //  if (ballToFetch.transform.position.z > 3 && ballToFetch.transform.position.x < 0) //gets position of 'hard places to reach'
+        // {
+        //    Debug.Log("testDog");
+        // }
+        if (Physics.Raycast(transform.position, ballToFetch.transform.position)) //if the dog cant see the ball, he has to go around an obstacle
+        {
+            currentObstacleAvoidancePathPointChosen = Vector3.zero;
+            foreach (Vector3 pathpointToCheck in avoidancePointsWithFetch) //checking all points for avoiding obstacle
+            {
+                if (!Physics.Raycast(transform.position, pathpointToCheck)) //if the dog can see the point (otherwise no use in going to this point)
+                {
+                    if (Vector3.Distance(ballToFetch.transform.position, pathpointToCheck) < smallestDistanceToBall)//check if distance is smaller than last distance
+                    {
+                        smallestDistanceToBall = Vector3.Distance(ballToFetch.transform.position, pathpointToCheck); //if distance is smaller, go to this point
+                        currentObstacleAvoidancePathPointChosen = pathpointToCheck;
+                    }
+                }
+            }
+            if (currentObstacleAvoidancePathPointChosen != Vector3.zero) 
+            {
+                Seek(currentObstacleAvoidancePathPointChosen);
+            }
+            else //if no point was found, go straight to ball, let old obstacle avoidance work
+            {
+                Seek(ballToFetch.transform.position);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             dogCatch();
