@@ -39,6 +39,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
     float dogYPos;
     byte fetchDistance = 1;
     byte fetchBringBackDistance = 3;
+    byte dogFetchTime = 2;
     // Use this for initialization
     void Start () {
         dogYPos = transform.position.y;
@@ -71,17 +72,19 @@ public class homeSteeringBehaviourDog : MonoBehaviour {
         }
         if (dogPlayingFetch)
         {
-            if (Vector3.Distance( transform.position, ballToFetch.transform.position) > fetchDistance )
+            if (!(tmrDogTrick < dogFetchTime))
             {
-                steerForce = Seek(ballToFetch.transform.position);
-            }
-            else
-            {
-                dogPlayingFetch = false;
-                dogReturningBall = true;
-                tmrDogTrick = 0;
-            }
-          
+                if (Vector3.Distance(transform.position, ballToFetch.transform.position) > fetchDistance)
+                {
+                    steerForce = Seek(ballToFetch.transform.position);
+                }
+                else
+                {
+                    dogPlayingFetch = false;
+                    dogReturningBall = true;
+                    tmrDogTrick = 0;
+                }
+            }          
         }
         else if (dogReturningBall)
         {
