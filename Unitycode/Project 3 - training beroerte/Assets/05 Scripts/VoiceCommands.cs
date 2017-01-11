@@ -12,8 +12,10 @@ public class VoiceCommands : MonoBehaviour {
     steeringBehaviourDog dogSteeringBehaviourScript;
     GameObject viveCam;
     byte distanceToDogForLeash;
+    GameObject imageDogUnderstood;
     // Use this for initialization
     void Start () {
+        imageDogUnderstood.SetActive(false);
         distanceToDogForLeash = 5;
         dog = GameObject.FindWithTag("Dog");
         viveCam = GameObject.FindWithTag("cameraTopObject");
@@ -33,9 +35,6 @@ public class VoiceCommands : MonoBehaviour {
                 dogSteeringBehaviourScript.resetTimerDogLooking();
                     Debug.LogError("dog called and coming");
                     dogSteeringBehaviourScript.dogCalledInScript = true;
-
-                
-
             }
         });
 

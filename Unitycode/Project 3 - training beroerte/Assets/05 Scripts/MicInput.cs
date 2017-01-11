@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class MicInput : MonoBehaviour
 {
     public AudioSource audioSource;
@@ -15,6 +15,8 @@ public class MicInput : MonoBehaviour
     private float[] clipSampleData;
     public float volume;
     public float isYelling;
+    public GameObject dogYellingImage;
+
 
     public Transform targetPoint;
     public float holdGazeTimeInSeconds = 2;
@@ -22,9 +24,13 @@ public class MicInput : MonoBehaviour
     public GameObject dog;
     Vector3 screenPoint;
     Renderer cameraRenderer;
+    float tmrDogYellingImage = 3;
+    byte showDogYellingImageTime = 2;
+    
     // Use this for initialization
     void Start()
     {
+        dogYellingImage.SetActive(false);
         dog = GameObject.FindWithTag("dogMesh");
         isYelling = 0.05f;
         timeBetweenStartAndEnd = 3;
@@ -45,6 +51,7 @@ public class MicInput : MonoBehaviour
     {
         currentUpdateTime += Time.deltaTime;
         currentTime += Time.deltaTime;
+        tmrDogYellingImage += Time.deltaTime;
         if (currentUpdateTime >= updateStep)
         {
             currentUpdateTime = 0f;
@@ -56,17 +63,21 @@ public class MicInput : MonoBehaviour
             }
             clipLoudness /= sampleDataLength; //clipLoudness is what you are looking for
             volume = clipLoudness;
-
             if (volume > isYelling && currentTime >= timeSpoken + timeBetweenStartAndEnd)
             {
-                timeSpoken = currentTime; 
-
+                timeSpoken = currentTime;
+                dogYellingImage.SetActive(true);
                 Debug.LogError("yelling" + volume);
-             /*   if (cameraRenderer.isVisible)
-                {
-                    Debug.Log("hond sighted");
-                }*/
+                tmrDogYellingImage = 0;
+                /*   if (cameraRenderer.isVisible)
+                   {
+                       Debug.Log("hond sighted");
+                   }*/
             }
+            if (tmrDogYellingImage > showDogYellingImageTime)
+            {
+                dogYellingImage.SetActive(false);
+            }    
         }
         
     }

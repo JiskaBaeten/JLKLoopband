@@ -93,8 +93,6 @@ public class steeringBehaviourDog : MonoBehaviour
         //rotate
         if (new Vector3(velocity.x, 0, velocity.z) != Vector3.zero)//otherwise warning
         {
-            Debug.Log(Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.z)) + "rotate" + transform.rotation);
-
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.z)), rotateSpeed * Time.deltaTime);
         }
     }
@@ -148,7 +146,7 @@ public class steeringBehaviourDog : MonoBehaviour
 
     public void chooseSteeringBehaviour()
     {
-        Debug.Log("looking" + dogLookingForCall);
+
         if (animationController.GetBool("dogIsWaiting") || dogLookingForCall) //dog is called
         {
             maxRunningSpeed = 0;
