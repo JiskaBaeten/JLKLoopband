@@ -9,7 +9,8 @@ public class leash : MonoBehaviour {
     Animator dogAnimationController;
     // Use this for initialization
     void Start () {
-        dog = GameObject.FindWithTag("Dog");
+        dog = GameObject.FindWithTag("dogLeash");
+        hand = GameObject.FindWithTag("handLeash");
         lineRendererObject = GetComponent<LineRenderer>();
         dogLeashWidth = 0.02f;
         lineRendererObject.SetWidth(dogLeashWidth, dogLeashWidth);
