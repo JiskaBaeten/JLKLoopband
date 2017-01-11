@@ -12,7 +12,7 @@ public class VoiceCommands : MonoBehaviour {
     steeringBehaviourDog dogSteeringBehaviourScript;
     GameObject viveCam;
     byte distanceToDogForLeash;
-    GameObject imageDogUnderstood;
+    public GameObject imageDogUnderstood;
     float tmrDogCalledUnderstood = 3;
     byte showDogUnderstoodImageTime = 2;
     // Use this for initialization

@@ -23,6 +23,8 @@ public class ControllersVive : MonoBehaviour
     private cameraSteeringBehaviour cameraSteeringScript;
     private steeringBehaviourDog dogSteeringBehaviourScript;
     private GameObject ballToThrow;
+    public GameObject arrowLeft;
+    public GameObject arrowRight;
     // Use this for initialization
     void Start()
     {
@@ -33,6 +35,8 @@ public class ControllersVive : MonoBehaviour
         dogAnimationController = dog.GetComponent<Animator>();
         dogSteeringBehaviourScript = dog.GetComponent<steeringBehaviourDog>();
         ballToThrow = GameObject.FindWithTag("Ball");
+        arrowLeft = GameObject.FindWithTag("arrowLeft");
+        arrowRight = GameObject.FindWithTag("arrowRight");
     }
 
     // Update is called once per frame
@@ -91,9 +95,11 @@ public class ControllersVive : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-
+        if (!cameraSteeringScript.nextPathIsChosen)
+        {
             if (triggerButtonDown)
             {
+
                 if (col.gameObject.tag == "controllerColliderLeft")
                 {
                     Debug.LogError("left");
@@ -108,8 +114,25 @@ public class ControllersVive : MonoBehaviour
                     dog.GetComponent<AudioSource>().Play();
                 }
             }
+        else
+        {
+            if (col.gameObject.tag == "controllerColliderLeft")
+            {
+                arrowLeft.transform.localScale = new Vector3(0.75f,0.75f,0.75f);
+                arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
+            else if (col.gameObject.tag == "controllerColliderRight")
+            {
+                arrowRight.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                arrowLeft.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
         }
-
-
+        }
     
+    else
+	    {
+            arrowRight.transform.localScale = new Vector3(0, 0, 0);
+            arrowLeft.transform.localScale = new Vector3(0, 0, 0);
+        }
+    }
 }

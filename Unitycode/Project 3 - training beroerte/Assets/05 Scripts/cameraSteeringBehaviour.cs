@@ -27,7 +27,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
     List<WaypointPath> allPaths;
     public WaypointPath currentPath;
     public int nextPathNumber;
-    bool nextPathIsChosen;
+    public bool nextPathIsChosen;
     CharacterController controller;//this GO's CharacterController
     bool nextPathShouldBeReversed = false;
     int numberToCheckIfReversed = 100;
