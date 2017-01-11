@@ -33,8 +33,7 @@ void loop(void)
       if(deltamicros > 2000) //als tijd te lang (stilstaan), tijd negeren (was 73000) tijd voor 12 km/uur afronden voor de veiligheid
       {
       kmph = WHEELPINDISTANCE*36000/deltamicros; //omtrek * 36000 (voor km) / tijd, 10 waarschijnlijk voor aantal flanken
-      Serial.print(kmph);
-      Serial.println(" km/h");
+      Serial.println(kmph);
       }
     }
 }
