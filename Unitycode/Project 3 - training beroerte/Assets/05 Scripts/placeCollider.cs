@@ -9,7 +9,7 @@ public class placeCollider : MonoBehaviour {
         if (tag == "controllerColliderLeft") //collider left
         {
 
-            transform.position = viveCam.transform.position + new Vector3(0, 0,1.5f);
+            transform.position = viveCam.transform.position + new Vector3(0, 0,1);
         }
         else if (tag == "controllerColliderRight")
         {
