@@ -94,26 +94,8 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         }
         tmrDogTrick += Time.deltaTime;
         //calc movement
-        if (dogReturningBall && tmrDogTrick < dogPickUpBallTime)
-        {
-            maxRunningSpeed = 0;
-            rotateSpeed = 0;
-        }
-        else if (dogReturningBall && tmrDogTrick > dogPickUpBallTime)
-        {
-            maxRunningSpeed = 1;
-            rotateSpeed = 1f;
-        }
-        else if (!dogReturningBall && tmrDogTrick < dogTrickTime)
-        {
-            maxRunningSpeed = 0;
-            rotateSpeed = 0;
-        }
-        else
-        {
-            maxRunningSpeed = 1;
-            rotateSpeed = 0.5f;
-        }
+        setSpeed();
+
         if (dogPlayingFetch && !(tmrDogTrick < dogFetchTime)) //if dog is not already fetching/ doing a trick)
         {
             if (Vector3.Distance(transform.position, ballToFetch.transform.position) > fetchDistance) // if dog is far away from ball, go near
@@ -172,6 +154,29 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         {
             myVector.Normalize();// Vector3.normalized returns this vector with a magnitude of 1
             myVector *= myMax;//scale to max
+        }
+    }
+    private void setSpeed()
+    {
+        if (dogReturningBall && tmrDogTrick < dogPickUpBallTime)
+        {
+            maxRunningSpeed = 0;
+            rotateSpeed = 0;
+        }
+        else if (dogReturningBall && tmrDogTrick > dogPickUpBallTime)
+        {
+            maxRunningSpeed = 1;
+            rotateSpeed = 1f;
+        }
+        else if (!dogReturningBall && tmrDogTrick < dogTrickTime)
+        {
+            maxRunningSpeed = 0;
+            rotateSpeed = 0;
+        }
+        else
+        {
+            maxRunningSpeed = 1;
+            rotateSpeed = 0.5f;
         }
     }
 
@@ -250,8 +255,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                     Debug.Log("seek obstacle point");
                     return steerForce = Seek(currentObstacleAvoidancePathPointChosen);
                 }
-
-
             }
             else //if no point was found, go straight to ball, let old obstacle avoidance work
             {
@@ -263,21 +266,11 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         else //if dog can see the ball
         {
             Debug.Log("see ball");
-            if (Vector3.Distance(currentObstacleAvoidancePathPointChosen, transform.position) < minDistanceBeforeSeeBall)
-            {
+
                 Debug.Log("go for ball");
                 avoidancePathFinished = true;
                 goToBallWithAvoidancePath = false;
-                return steerForce = Seek(endPosition);
-            }
-            else
-            {
-                Debug.Log("dont go for ball");
-                return steerForce = Seek(currentObstacleAvoidancePathPointChosen);
-                
-            }
-
-            
+                return steerForce = Seek(endPosition);                      
         }
     }
 
