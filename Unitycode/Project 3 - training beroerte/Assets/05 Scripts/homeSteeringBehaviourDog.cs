@@ -83,7 +83,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
         goToBallWithAvoidancePath = false;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -210,9 +209,17 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     {
         //code for avoidance 
         //Still add if dog see the point just switch
-        allRaycastHits = Physics.RaycastAll(transform.position, endPosition);
+      allRaycastHits = Physics.RaycastAll(transform.position + (velocity * Time.fixedDeltaTime), endPosition);
+        Debug.Log(endPosition + "end");
+        //Debug.DrawLine(transform.position, endPosition, Color.red);
+          
+        foreach (RaycastHit hit in allRaycastHits)
+        {
+            Debug.Log(hit.collider.name);
+        }
         if (allRaycastHits.Length > 1) //if the dog cant see the ball, he has to go around an obstacle, bigger than one, first is always the room
         {
+
             Debug.Log("not seeing ball");
             if (avoidancePathFinished) //if the dog is near the point, he can find a new one
             {
@@ -288,7 +295,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
             ballToFetch.GetComponent<Rigidbody>().useGravity = true;
             dogReturningBall = false;
             return steerForce = Flee(ballToFetch.transform.position);
-
         }
     }
 
