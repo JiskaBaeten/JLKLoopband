@@ -59,6 +59,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     RaycastHit[] allRaycastHits;
     RaycastHit[] raycastHitsSeek;
     RaycastHit[] allRaycastHitsToAvoidancePoint;
+    Vector3 rayCastDirAvoidance;
     // Use this for initialization
     void Start()
     {
@@ -208,16 +209,14 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     public Vector3 dogFetchBehaviour(Vector3 endPosition)
     {
         //code for avoidance 
+        Vector3 raycastDirBall = endPosition - transform.position;
+        
         //Still add if dog see the point just switch
-      allRaycastHits = Physics.RaycastAll(transform.position + (velocity * Time.fixedDeltaTime), endPosition);
-        Debug.Log(endPosition + "end");
-        //Debug.DrawLine(transform.position, endPosition, Color.red);
+        allRaycastHits = Physics.RaycastAll(transform.position, raycastDirBall);
+
+        Debug.DrawRay(transform.position, raycastDirBall, Color.red);
           
-        foreach (RaycastHit hit in allRaycastHits)
-        {
-            Debug.Log(hit.collider.name);
-        }
-        if (allRaycastHits.Length > 1) //if the dog cant see the ball, he has to go around an obstacle, bigger than one, first is always the room
+        if (Physics.Raycast(transform.position, raycastDirBall)) //if the dog cant see the ball, he has to go around an obstacle, bigger than one, first is always the room
         {
 
             Debug.Log("not seeing ball");
@@ -232,9 +231,10 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                 smallestDistanceToBall = 0;
                 foreach (Vector3 pathpointToCheck in avoidancePointsWithFetch) //checking all points for avoiding obstacle
                 {
+
                     Debug.DrawLine(transform.position, pathpointToCheck, Color.blue);
-                    allRaycastHitsToAvoidancePoint = Physics.RaycastAll(transform.position, pathpointToCheck);
-                    if (!(allRaycastHitsToAvoidancePoint.Length > 1)) //if the dog can see the point (otherwise no use in going to this point)
+                    rayCastDirAvoidance = endPosition - transform.position;
+                    if (!Physics.Raycast(transform.position, rayCastDirAvoidance)) //if the dog can see the point (otherwise no use in going to this point)
                     {
                         if (Vector3.Distance(endPosition, pathpointToCheck) < smallestDistanceToBall || smallestDistanceToBall == 0)//check if distance is smaller than last distance
                         {
