@@ -42,18 +42,7 @@ public class ControllersVive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Debug.LogError("left");
-            cameraSteeringScript.findNextPath("left");
-            dog.GetComponent<AudioSource>().Play();
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            cameraSteeringScript.findNextPath("right");
-            Debug.LogError("right");
-            dog.GetComponent<AudioSource>().Play();
-        }
+
         if (controller == null)
         {
             Debug.Log("Controller not initialized");

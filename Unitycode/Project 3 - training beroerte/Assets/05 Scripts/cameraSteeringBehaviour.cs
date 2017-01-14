@@ -35,6 +35,10 @@ public class cameraSteeringBehaviour : MonoBehaviour
     public byte distanceForNewPath;
     private bool showArrowsNextPath;
 
+    //Arrows
+    public GameObject arrowRight;
+    public GameObject arrowLeft;
+
     void Start()
     {
 
@@ -55,6 +59,51 @@ public class cameraSteeringBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (showArrows())
+        {
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+            {
+
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    Debug.LogError("left");
+                    findNextPath("left");
+
+                }
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    Debug.LogError("right");
+                    findNextPath("right");
+                }
+            }
+            else
+            {
+
+                    arrowLeft.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                    arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
+
+        }
+        else
+        {
+            arrowRight.transform.localScale = new Vector3(0, 0, 0);
+            arrowLeft.transform.localScale = new Vector3(0, 0, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Debug.LogError("left");
+            findNextPath("left");
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            findNextPath("right");
+            Debug.LogError("right");
+        }
+
+
+
+
         steerForce = FollowPath(waypointsCurrentPath);
         //calc movement
         Truncate(ref steerForce, maxForce);// not > max
@@ -80,13 +129,21 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
     public bool showArrows()
     {
-        if (getNextPathLeft() == getNextPathRight())
+        if (!nextPathIsChosen)
         {
-            return false;
+            if (getNextPathLeft() == getNextPathRight())
+            {
+                chooseNextRandomPath();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
-            return true;
+            return false;
         }
     }
 
@@ -142,7 +199,6 @@ public class cameraSteeringBehaviour : MonoBehaviour
     }
     public void findNextPath(string direction)
     {
-        Debug.Log("in camera script" + direction);
         if (!nextPathIsChosen)
         {
             if (direction == "left") //go left
