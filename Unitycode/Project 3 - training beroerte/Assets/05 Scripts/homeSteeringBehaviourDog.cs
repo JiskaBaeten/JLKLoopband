@@ -56,6 +56,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     float minDistanceBeforeSeeBall = 3f;
     float minDistanceToAvoidancePoint = 1f;
     RaycastHit hitinfo;
+
     RaycastHit[] allRaycastHits;
     RaycastHit[] raycastHitsSeek;
     RaycastHit[] allRaycastHitsToAvoidancePoint;
@@ -79,7 +80,8 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         avoidancePointsGameObjects = GameObject.FindGameObjectsWithTag("collisionAvoidancePoint");
         foreach (GameObject avoidancePointToAdd in avoidancePointsGameObjects)
         {
-            avoidancePointsWithFetch.Add(avoidancePointToAdd.transform.position);
+            
+            avoidancePointsWithFetch.Add(new Vector3( avoidancePointToAdd.transform.position.x, transform.position.y, avoidancePointToAdd.transform.position.z));
         }
 
         goToBallWithAvoidancePath = false;
@@ -115,7 +117,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         }
         else if (dogReturningBall) //dog got ball, brings back to mat
         {
-            dogReturnBallBehaviour();
+           steerForce = dogReturnBallBehaviour();
         }
 
         else
@@ -123,7 +125,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
             steerForce = dogLooseBehaviour();
         }
 
-        steerForce += ObstacleAvoidance();
+       steerForce += ObstacleAvoidance();
 
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
@@ -216,10 +218,10 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
         Debug.DrawRay(transform.position, raycastDirBall, Color.red);
           
-        if (Physics.Raycast(transform.position, raycastDirBall)) //if the dog cant see the ball, he has to go around an obstacle, bigger than one, first is always the room
+        if (Physics.Raycast(transform.position, raycastDirBall,out hitinfo, Vector3.Distance(transform.position, endPosition))) //if the dog cant see the ball, he has to go around an obstacle, bigger than one, first is always the room
         {
 
-            Debug.Log("not seeing ball");
+            Debug.Log("not seeing ball" + hitinfo.collider.name);
             if (avoidancePathFinished) //if the dog is near the point, he can find a new one
             {
                 goToBallWithAvoidancePath = false;
@@ -231,19 +233,26 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                 smallestDistanceToBall = 0;
                 foreach (Vector3 pathpointToCheck in avoidancePointsWithFetch) //checking all points for avoiding obstacle
                 {
-
-                    Debug.DrawLine(transform.position, pathpointToCheck, Color.blue);
-                    rayCastDirAvoidance = endPosition - transform.position;
-                    if (!Physics.Raycast(transform.position, rayCastDirAvoidance)) //if the dog can see the point (otherwise no use in going to this point)
+                    rayCastDirAvoidance = pathpointToCheck - transform.position;
+                    Debug.DrawRay(transform.position, rayCastDirAvoidance, Color.blue);
+                    if (!Physics.Raycast(transform.position, rayCastDirAvoidance, out hitinfo,Vector3.Distance(transform.position, pathpointToCheck))) //if the dog can see the point (otherwise no use in going to this point)
                     {
                         if (Vector3.Distance(endPosition, pathpointToCheck) < smallestDistanceToBall || smallestDistanceToBall == 0)//check if distance is smaller than last distance
                         {
-                            avoidancePathFinished = false;
-                            smallestDistanceToBall = Vector3.Distance(endPosition, pathpointToCheck); //if distance is smaller, go to this point
-                            currentObstacleAvoidancePathPointChosen = pathpointToCheck;
-                            goToBallWithAvoidancePath = true;
-                            Debug.Log("path chosen" + currentObstacleAvoidancePathPointChosen);
+                            if (Vector3.Distance(transform.position, pathpointToCheck) > minDistanceToAvoidancePoint)
+                            {
+                                avoidancePathFinished = false;
+                                smallestDistanceToBall = Vector3.Distance(endPosition, pathpointToCheck); //if distance is smaller, go to this point
+                                currentObstacleAvoidancePathPointChosen = pathpointToCheck;
+                                goToBallWithAvoidancePath = true;
+                            }
+                            
+                           
                         }
+                    }
+                    else
+                    {
+                        Debug.Log("obstacle" + hitinfo.collider.name);
                     }
                 }
             }
