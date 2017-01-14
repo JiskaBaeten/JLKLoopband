@@ -42,7 +42,18 @@ public class ControllersVive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            Debug.LogError("left");
+            cameraSteeringScript.findNextPath("left");
+            dog.GetComponent<AudioSource>().Play();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            cameraSteeringScript.findNextPath("right");
+            Debug.LogError("right");
+            dog.GetComponent<AudioSource>().Play();
+        }
         if (controller == null)
         {
             Debug.Log("Controller not initialized");
@@ -96,7 +107,7 @@ public class ControllersVive : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-        if (!cameraSteeringScript.nextPathIsChosen)
+        if (cameraSteeringScript.showArrows())
         {
             if (triggerButtonDown)
             {
@@ -119,13 +130,11 @@ public class ControllersVive : MonoBehaviour
             {
                 if (col.gameObject.tag == "controllerColliderLeft")
                 {
-                    Debug.LogError("colliderLeft");
                     arrowLeft.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                     arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 }
                 else if (col.gameObject.tag == "controllerColliderRight")
                 {
-                    Debug.LogError("colliderRight");
                     arrowRight.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                     arrowLeft.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 }

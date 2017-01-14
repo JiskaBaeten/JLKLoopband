@@ -33,6 +33,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
     int numberToCheckIfReversed = 100;
     public Vector3 nextPathPoint;
     public byte distanceForNewPath;
+    private bool showArrowsNextPath;
 
     void Start()
     {
@@ -76,6 +77,19 @@ public class cameraSteeringBehaviour : MonoBehaviour
             myVector *= myMax;//scale to max
         }
     }
+
+    public bool showArrows()
+    {
+        if (getNextPathLeft() == getNextPathRight())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public Vector3[] selectPath()
     {
         if (nextPathNumber >= numberToCheckIfReversed) //if the number is bigger than 100, the path should be reversed
@@ -103,7 +117,29 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
         return allPaths[0].WaypointsFromPath;
     }
+   private int getNextPathLeft()
+    {
+        if (currentPath.pathIsReversed)
+        {
+           return nextPathNumber = currentPath.NextPathNumberLeftBehind;
+        }
+        else
+        {
+           return nextPathNumber = currentPath.NextPathNumberLeftBefore;
+        }
+    }
 
+    private int getNextPathRight()
+    {
+        if (currentPath.pathIsReversed)
+        {
+           return nextPathNumber = currentPath.NextPathNumberRightBehind;
+        }
+        else
+        {
+          return  nextPathNumber = currentPath.NextPathNumberRightBefore;
+        }
+    }
     public void findNextPath(string direction)
     {
         Debug.Log("in camera script" + direction);
@@ -111,30 +147,15 @@ public class cameraSteeringBehaviour : MonoBehaviour
         {
             if (direction == "left") //go left
             {
-                if (currentPath.pathIsReversed)
-                {
-                    nextPathNumber = currentPath.NextPathNumberLeftBehind;
-                }
-                else
-                {
-                    nextPathNumber = currentPath.NextPathNumberLeftBefore;
-                }
-                nextPathIsChosen = true;
+                getNextPathLeft();
                 Debug.Log("path chosen left" + nextPathNumber);
             }
             else if (direction == "right")
             {
-                if (currentPath.pathIsReversed)
-                {
-                    nextPathNumber = currentPath.NextPathNumberRightBehind;
-                }
-                else
-                {
-                    nextPathNumber = currentPath.NextPathNumberRightBefore;
-                }
-                nextPathIsChosen = true;
+                getNextPathRight();
                 Debug.Log("path chosen right" + nextPathNumber);
             }
+            nextPathIsChosen = true;
         }
     }
 
@@ -143,28 +164,14 @@ public class cameraSteeringBehaviour : MonoBehaviour
         float rndPathChoice = UnityEngine.Random.Range(0, 2);//for the first time use.
         if (rndPathChoice == 0)
         {
-            if (currentPath.pathIsReversed)
-            {
-                nextPathNumber = currentPath.NextPathNumberLeftBehind;
-            }
-            else
-            {
-                nextPathNumber = currentPath.NextPathNumberLeftBefore;
-            }
-            nextPathIsChosen = true;
+            getNextPathLeft();
+            
         }
         else
         {
-            if (currentPath.pathIsReversed)
-            {
-                nextPathNumber = currentPath.NextPathNumberRightBehind;
-            }
-            else
-            {
-                nextPathNumber = currentPath.NextPathNumberRightBefore;
-            }
-            nextPathIsChosen = true;
+            getNextPathRight();
         }
+        nextPathIsChosen = true;
     }
     public Vector3 FollowPath(Vector3[] myPath)
     {
@@ -191,7 +198,6 @@ public class cameraSteeringBehaviour : MonoBehaviour
         else if (Vector3.Distance(transform.position, currentPathPoint) < minDistToPathPoint)//if close enough pick next one
         {
             currentPathPoint = nextPathPoint;
-
         }
 
         else if (nextPathPoint == currentPathPoint)

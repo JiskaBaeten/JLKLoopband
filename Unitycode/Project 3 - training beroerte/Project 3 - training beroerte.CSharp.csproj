@@ -76,7 +76,6 @@
     <Compile Include="Assets\05 Scripts\MessageReadWrite.cs" />
     <Compile Include="Assets\05 Scripts\MicInput.cs" />
     <Compile Include="Assets\05 Scripts\SetTime.cs" />
-    <Compile Include="Assets\05 Scripts\ShowInstructions.cs" />
     <Compile Include="Assets\05 Scripts\SpawnObstacle.cs" />
     <Compile Include="Assets\05 Scripts\VoiceCommands.cs" />
     <Compile Include="Assets\05 Scripts\cameraSetAtStart.cs" />
