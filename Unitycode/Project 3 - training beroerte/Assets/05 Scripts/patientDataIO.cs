@@ -44,6 +44,7 @@ public class patientDataIO : MonoBehaviour
 
     public Button btnChooseHome;
     public Button btnChoosePark;
+    public Button btnChooseUZA;
     public Button btnCancelChoose;
 
     //view interface
@@ -95,7 +96,7 @@ public class patientDataIO : MonoBehaviour
         currentSelectedDropdownValuePatientSearch = 0;
 
         interfaceButtonsView = new Button[4] { btnEditPatient, btnSelectPatient, btnDeletePatient, btnAddPatient };
-        interfaceButtonsChoose = new Button[3] { btnChooseHome, btnChoosePark, btnCancelChoose };
+        interfaceButtonsChoose = new Button[4] { btnChooseHome, btnChooseUZA, btnChoosePark, btnCancelChoose };
         allInputs = new InputField[5] { inputNumber, inputName, inputLevel, inputBirthday, inputExtra };
     }
     void Update()
@@ -407,7 +408,14 @@ public class patientDataIO : MonoBehaviour
         SceneManager.LoadScene("scene_park");
     } //starts park scene + counts to user
 
-    public void btnHomeClicked()
+  public void btnUZAClicked()
+  {
+    /*patientSelected.playingPark();
+    writePatientData();*/
+    SceneManager.LoadScene("UZARoom");
+  } 
+
+  public void btnHomeClicked()
     {
         patientSelected.playingHome();
         writePatientData();

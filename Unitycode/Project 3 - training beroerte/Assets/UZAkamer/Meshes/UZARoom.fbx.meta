@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: de97978efd408734db1e8c03be7fd0b1
+timeCreated: 1484125863
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: 0
+    100002: bureau
+    100004: Cloner
+    100006: Closet_0
+    100008: Closet_1
+    100010: Closet_2
+    100012: Closet_3
+    100014: Desk
+    100016: Deurblad
+    100018: Kabelgoten
+    100020: lIJNEN_OP_GROND
+    100022: Muren_Vloer_Plafond
+    100024: Opmeting
+    100026: //RootNode
+    100028: Closet
+    100030: Door
+    100032: WallsFloorRoof
+    100034: Lamp
+    400000: 0
+    400002: bureau
+    400004: Cloner
+    400006: Closet_0
+    400008: Closet_1
+    400010: Closet_2
+    400012: Closet_3
+    400014: Desk
+    400016: Deurblad
+    400018: Kabelgoten
+    400020: lIJNEN_OP_GROND
+    400022: Muren_Vloer_Plafond
+    400024: Opmeting
+    400026: //RootNode
+    400028: Closet
+    400030: Door
+    400032: WallsFloorRoof
+    400034: Lamp
+    2300000: 0
+    2300002: bureau
+    2300004: Closet_0
+    2300006: Closet_1
+    2300008: Closet_2
+    2300010: Closet_3
+    2300012: Desk
+    2300014: Deurblad
+    2300016: Kabelgoten
+    2300018: lIJNEN_OP_GROND
+    2300020: Muren_Vloer_Plafond
+    2300022: Closet
+    2300024: Door
+    2300026: WallsFloorRoof
+    2300028: Lamp
+    3300000: 0
+    3300002: bureau
+    3300004: Closet_0
+    3300006: Closet_1
+    3300008: Closet_2
+    3300010: Closet_3
+    3300012: Desk
+    3300014: Deurblad
+    3300016: Kabelgoten
+    3300018: lIJNEN_OP_GROND
+    3300020: Muren_Vloer_Plafond
+    3300022: Closet
+    3300024: Door
+    3300026: WallsFloorRoof
+    3300028: Lamp
+    4300000: Kabelgoten
+    4300002: Muren_Vloer_Plafond
+    4300004: Deurblad
+    4300006: Desk
+    4300008: Closet_0
+    4300010: Closet_1
+    4300012: Closet_2
+    4300014: Closet_3
+    4300016: 0
+    4300018: lIJNEN_OP_GROND
+    4300020: bureau
+    4300022: Closet
+    4300024: Door
+    4300026: WallsFloorRoof
+    4300028: Lamp
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
