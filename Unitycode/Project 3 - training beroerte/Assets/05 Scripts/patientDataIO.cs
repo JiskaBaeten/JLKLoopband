@@ -325,6 +325,7 @@ public class patientDataIO : MonoBehaviour
         }
         PlayerPrefs.SetInt("numberOfTimesPlayedHome", patientSelected.timesInHomeScene);
         PlayerPrefs.SetInt("numberOfTimesPlayedPark", patientSelected.timesInParkScene);
+        PlayerPrefs.SetInt("numberOfTimesPlayedUZA", patientSelected.timesInParkScene);
     } //switches interface and selects correct user
 
     public void btnPatientDeleteClicked()
@@ -370,7 +371,7 @@ public class patientDataIO : MonoBehaviour
             {
                 genderToSave = "X";
             }
-            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0",genderToSave)); //still switch
+            Patients.Add(new profile(inputNumber.text, inputName.text, inputLevel.text, inputBirthday.text, inputExtra.text, "0", "0", "0", genderToSave)); //still switch
             writePatientData();
             showPatientData();
             showPatientDetails();
@@ -410,8 +411,8 @@ public class patientDataIO : MonoBehaviour
 
   public void btnUZAClicked()
   {
-    /*patientSelected.playingPark();
-    writePatientData();*/
+    patientSelected.playingUZA();
+    writePatientData();
     SceneManager.LoadScene("UZARoom");
   } 
 
@@ -434,7 +435,7 @@ public class patientDataIO : MonoBehaviour
                 while (userData != null)
                 {
                     dataSplitted = userData.Split(';');
-                    Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4], dataSplitted[5], dataSplitted[6], dataSplitted[7]));
+                    Patients.Add(new profile(dataSplitted[0], dataSplitted[1], dataSplitted[2], dataSplitted[3], dataSplitted[4], dataSplitted[5], dataSplitted[6], dataSplitted[7], dataSplitted[8]));
                     userData = sReader.ReadLine();
                     patientCount++;
                 }
@@ -598,10 +599,11 @@ public class profile
     string extraInfo;
     ushort numberOfTimesInHomeScene;
     ushort numberOfTimesInParkScene;
+    ushort numberOfTimesInUZAScene;
     string gender;
     public profile() { }
 
-    public profile(string tUserNumber, string tName, string tSkill, string tBirthday, string tExtraInfo, string tTimesInHome, string tTimesInPark, string tGender)
+    public profile(string tUserNumber, string tName, string tSkill, string tBirthday, string tExtraInfo, string tTimesInHome, string tTimesInPark, string tTimesInUZA, string tGender)
     {
         userNumber = tUserNumber;
         name = tName;
@@ -611,6 +613,7 @@ public class profile
         gender = tGender;
         numberOfTimesInHomeScene = ushort.Parse(tTimesInHome);
         numberOfTimesInParkScene = ushort.Parse(tTimesInPark);
+        numberOfTimesInUZAScene = ushort.Parse(tTimesInUZA);
     }
     public string UserNumber
     {
@@ -651,6 +654,10 @@ public class profile
     {
         get { return numberOfTimesInParkScene; }
     }
+    public ushort timesInUZAScene
+    {
+        get { return numberOfTimesInUZAScene; }
+    }
 
     public void playingPark()
     {
@@ -661,10 +668,15 @@ public class profile
         numberOfTimesInHomeScene++;
     }
 
+    public void playingUZA()
+    {
+        numberOfTimesInUZAScene++;
+    }
+
     // methods
     public string writePatientData()
     {
-        return userNumber + ';' + name + ';' + skill + ";" + birthday + ";" + extraInfo + ";" + numberOfTimesInHomeScene + ";" + numberOfTimesInParkScene + ";" + gender;
+        return userNumber + ';' + name + ';' + skill + ";" + birthday + ";" + extraInfo + ";" + numberOfTimesInHomeScene + ";" + numberOfTimesInParkScene + ";" + numberOfTimesInUZAScene + ";" + gender;
     }
     public bool patientSelectCheck(string nameToTest)
     {
@@ -679,7 +691,7 @@ public class profile
     }
     public string showPatientDetails()
     {
-        return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nGeslacht: " + gender + "\nAantal keer in het park: " + numberOfTimesInParkScene + "\nAantal keer in het huis: " + numberOfTimesInHomeScene + "\nExtra info: " + extraInfo;
+        return "Patiëntnummer: " + userNumber + "\nPatiëntnaam: " + name + "\nNiveau: niveau " + skill + "\nGeboortedatum: " + birthday + "\nGeslacht: " + gender + "\nAantal keer in het park: " + numberOfTimesInParkScene + "\nAantal keer in het huis: " + numberOfTimesInHomeScene +"\nAantal keer in het UZA: " + numberOfTimesInUZAScene +"\nExtra info: " + extraInfo;
     }
 
 } //profile objects
