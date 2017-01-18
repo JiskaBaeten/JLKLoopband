@@ -59,6 +59,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (showArrows())
         {
             if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
@@ -100,7 +101,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
             findNextPath("right");
             Debug.LogError("right");
         }
-
+        */
 
 
 
@@ -129,7 +130,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
     public bool showArrows()
     {
-        if (!nextPathIsChosen)
+        if (!nextPathIsChosen && (indexOfCurrentPathPoint == (waypointsCurrentPath.Length -2) ))
         {
             if (getNextPathLeft() == getNextPathRight())
             {
