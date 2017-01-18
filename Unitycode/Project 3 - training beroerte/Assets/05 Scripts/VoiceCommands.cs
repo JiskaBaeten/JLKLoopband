@@ -14,7 +14,7 @@ public class VoiceCommands : MonoBehaviour {
     byte distanceToDogForLeash;
     public GameObject imageDogUnderstood;
     float tmrDogCalledUnderstood = 3;
-    byte showDogUnderstoodImageTime = 2;
+    byte showDogUnderstoodImageTime = 3;
     // Use this for initialization
     void Start () {
         imageDogUnderstood.SetActive(false);
@@ -83,6 +83,7 @@ public class VoiceCommands : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        tmrDogCalledUnderstood += Time.deltaTime;
         if ( tmrDogCalledUnderstood > showDogUnderstoodImageTime) //how long does image show?
         {
             imageDogUnderstood.SetActive(false);

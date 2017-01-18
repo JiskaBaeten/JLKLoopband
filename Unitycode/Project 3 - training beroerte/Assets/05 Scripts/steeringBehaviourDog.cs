@@ -37,6 +37,7 @@ public class steeringBehaviourDog : MonoBehaviour
     public bool dogCalledInScript;
     public bool dogLookingForCall;
     byte minDistanceBetweenDogAndMan;
+    byte distanceDogRunAway;
 
     //obstacle avoidance
     public float ObstacleAvoidanceDistance;
@@ -51,7 +52,8 @@ public class steeringBehaviourDog : MonoBehaviour
     {
         arduinoSpeedScript = GameObject.FindWithTag("serialReadWrite").GetComponent<MessageReadWrite>();
         maxRunningSpeed = (int)arduinoSpeedScript.calculatedSpeed;
-        minDistanceBetweenDogAndMan = 2;
+        minDistanceBetweenDogAndMan = 3;
+        distanceDogRunAway = 1;
         maxLookTime = 4;
         dogLookingForCall = false;
         dogCalledInScript = false;
