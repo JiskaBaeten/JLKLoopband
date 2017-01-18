@@ -21,6 +21,8 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     public Vector3 steerForce;
     public Vector3 eindpos;
 
+    byte ignoreBallTime = 3;
+    float tmrDogIgnoreBall = 0;
     float dogTrickTime = 4f;
     float tmrDogTrick = 6;
     float dogPickUpBallTime = 1f;
@@ -100,6 +102,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
             dogCatch();
         }
         tmrDogTrick += Time.deltaTime;
+        tmrDogIgnoreBall += Time.deltaTime;
         //calc movement
         setSpeed();
 
@@ -218,6 +221,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         dogPlayingFetch = true;
         animationController.SetTrigger("ballUnstuck");
         animationController.SetBool("ballStuck", false);
+        tmrDogIgnoreBall = 0f;
     }
 
     public Vector3 dogFetchBehaviour(Vector3 endPosition)
@@ -232,7 +236,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
         if ( ballToFetch.transform.position.y > ballOnObjectHeight && Vector3.Distance(transform.position, ballToFetch.transform.position) < minDistanceToObjectBallStuck) //ball is stuck on an object
         {
-            if (!animationController.GetBool("ballStuck") && !dogReturningBall && tmrDogTrick > dogTrickTime)
+            if (!animationController.GetBool("ballStuck") && !dogReturningBall && tmrDogIgnoreBall > ignoreBallTime)
             {
                 animationController.SetBool("ballStuck", true);
                 audioDogBarkLong.Play();
