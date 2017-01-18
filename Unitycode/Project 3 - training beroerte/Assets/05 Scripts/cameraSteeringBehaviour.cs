@@ -10,7 +10,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
     public int maxForce = 150;
     public float mass = 100;
     public float gravity = 9.81f;
-    public int maxRunningSpeed = 1;
+    public int maxRunningSpeed;
     public float rotateSpeed = 0.3f;
 
     //steer forces
@@ -39,9 +39,13 @@ public class cameraSteeringBehaviour : MonoBehaviour
     public GameObject arrowRight;
     public GameObject arrowLeft;
 
+    //arduino
+    private MessageReadWrite arduinoSpeedScript;
+
     void Start()
     {
-
+        arduinoSpeedScript = GameObject.FindWithTag("serialReadWrite").GetComponent<MessageReadWrite>();
+        maxRunningSpeed = (int)arduinoSpeedScript.calculatedSpeed;
         allPaths = new List<WaypointPath>();
         controller = GetComponent<CharacterController>();//this GO's CharacterController
         waypointPathsContainer = GameObject.FindGameObjectsWithTag("WayPoints");
@@ -59,6 +63,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        maxRunningSpeed = (int)arduinoSpeedScript.calculatedSpeed;
         if (showArrows())
         {
             if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
