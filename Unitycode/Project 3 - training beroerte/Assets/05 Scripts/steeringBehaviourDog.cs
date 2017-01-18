@@ -9,7 +9,7 @@ public class steeringBehaviourDog : MonoBehaviour
     public int maxForce = 150;
     public float mass = 100;
     public float gravity = 9.81f;
-    public int maxRunningSpeed = 1;
+    public int maxRunningSpeed;
     public float rotateSpeed = 0.3f;
 
     //steer forces
@@ -44,10 +44,13 @@ public class steeringBehaviourDog : MonoBehaviour
     GameObject cameraPlayer;
     public float ObstacleAvoidanceForce;
 
+    private MessageReadWrite arduinoSpeedScript;
     public AudioSource audioMultipleBark;
     public Animator animationController;
     void Start()
     {
+        arduinoSpeedScript = GameObject.FindWithTag("serialReadWrite").GetComponent<MessageReadWrite>();
+        maxRunningSpeed = (int)arduinoSpeedScript.calculatedSpeed;
         minDistanceBetweenDogAndMan = 2;
         maxLookTime = 4;
         dogLookingForCall = false;
@@ -62,6 +65,7 @@ public class steeringBehaviourDog : MonoBehaviour
 
     void Update()
     {
+        maxRunningSpeed =(int)arduinoSpeedScript.calculatedSpeed;
         dogWaitForOwner();
         tmrDogLook += Time.deltaTime;
         tmrDogFree += Time.deltaTime;

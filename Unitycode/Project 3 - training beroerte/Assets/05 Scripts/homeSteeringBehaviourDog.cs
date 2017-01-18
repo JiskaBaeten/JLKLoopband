@@ -34,7 +34,8 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
     CharacterController controller;
     public Animator animationController;
-    AudioSource audioDogBark;
+   public  AudioSource audioDogBarkShort;
+    public AudioSource audioDogBarkLong;
     public bool dogPlayingFetch = false;
     public bool dogReturningBall = false;
     GameObject ballToFetch;
@@ -58,6 +59,9 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     float minDistanceToAvoidancePoint = 1f;
     RaycastHit hitinfo;
     float minDistanceToBall = 2.5f;
+    float minDistanceToObjectBallStuck = 2;
+    float ballOnObjectHeight = 0.5f;
+
 
     RaycastHit[] allRaycastHits;
     RaycastHit[] raycastHitsSeek;
@@ -75,7 +79,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         cameraPlayer = GameObject.FindWithTag("cameraTopObject");
         eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
         eindpos.y = transform.position.y;
-        audioDogBark = GetComponent<AudioSource>();
         ballToFetch = GameObject.FindWithTag("Ball");
         carpet = GameObject.FindWithTag("carpet");
         avoidancePointsWithFetch = new List<Vector3>();
@@ -101,7 +104,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         //calc movement
         setSpeed();
 
-        if (dogPlayingFetch && !(tmrDogTrick < dogFetchTime) && ballToFetch.transform.position.y < ballFetchHeight) //if dog is not already fetching/ doing a trick)
+        if (dogPlayingFetch && !(tmrDogTrick < dogFetchTime)) //if dog is not already fetching/ doing a trick)
         {
             if (Vector3.Distance(transform.position, ballToFetch.transform.position) > fetchDistance) // if dog is far away from ball, go near
             {
@@ -167,22 +170,26 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     {
         if (dogReturningBall && tmrDogTrick < dogWaitForBallTime)
         {
+            Debug.Log("dog run");
             maxRunningSpeed = 0;
             rotateSpeed = 0;
         }
         else if (dogReturningBall && tmrDogTrick > dogWaitForBallTime)
         {
+            Debug.Log("dog run");
             maxRunningSpeed = 1;
             rotateSpeed = 1f;
 
         }
-        else if (!dogReturningBall && tmrDogTrick < dogTrickTime)
+        else if ((!dogReturningBall && tmrDogTrick < dogTrickTime) || animationController.GetBool("ballStuck"))
         {
+            Debug.Log("dog stuck");
             maxRunningSpeed = 0;
             rotateSpeed = 0;
         }
-        else
+
         {
+           
             maxRunningSpeed = 1;
             rotateSpeed = 0.5f;
         }
@@ -212,6 +219,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     {
         animationController.SetTrigger("ballThrow");
         dogPlayingFetch = true;
+        animationController.SetBool("ballStuck", false);
     }
 
     public Vector3 dogFetchBehaviour(Vector3 endPosition)
@@ -223,7 +231,19 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         allRaycastHits = Physics.RaycastAll(transform.position, raycastDirBall);
 
         Debug.DrawRay(transform.position, raycastDirBall, Color.red);
-          
+
+        if (ballToFetch.transform.position.y > ballOnObjectHeight && Vector3.Distance( transform.position, ballToFetch.transform.position) < minDistanceToObjectBallStuck) //ball is stuck on an object
+        {
+            if (!animationController.GetBool("ballStuck"))
+            {
+                animationController.SetBool("ballStuck", true);
+                audioDogBarkLong.Play();
+                dogPlayingFetch = false;
+                dogReturningBall = false;
+            }
+
+            
+        }
         if (Physics.Raycast(transform.position, raycastDirBall,out hitinfo, Vector3.Distance(transform.position, endPosition))) //if the dog cant see the ball, he has to go around an obstacle, bigger than one, first is always the room
         {
 
@@ -408,7 +428,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     {
         if (tmrDogTrick > dogTrickTime)
         {
-            audioDogBark.Play();
+            audioDogBarkShort.Play();
             tmrDogTrick = 0;
             return true;
         }

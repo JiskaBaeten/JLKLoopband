@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MessageReadWrite : MonoBehaviour {
 
     public SerialController serialController;
     private int randomizer;
     public int maxRange;
+    public int maxSpeed = 12;
+    public double minSpeed = 0.2;
+    private List<double> speedList;
+    private double messageDouble;
+    public double calculatedSpeed;
 
     void Start()
     {
         serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
+        speedList = new List<double>();
     }
 
     void Update()
@@ -24,9 +31,22 @@ public class MessageReadWrite : MonoBehaviour {
 
         //recieve data
         string message = serialController.ReadSerialMessage();
-
         if (message == null)
             return;
+
+        Debug.Log("data recieved: " + message);
+        messageDouble = double.Parse(message);
+        if (messageDouble > minSpeed && messageDouble < maxSpeed) //if value is between the min and max values
+        {
+            speedList.Add(messageDouble);
+        }
+        if (speedList.Count == 10)  //calculate median of last 10 values
+        {
+            CalculateSpeed();
+            speedList.Clear();
+        }
+
+
 
         // Check if the message is plain data or a connect/disconnect event.
         if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
@@ -36,4 +56,11 @@ public class MessageReadWrite : MonoBehaviour {
         else
             Debug.Log("Message arrived: " + message);
     }
+    void CalculateSpeed()
+    {
+        speedList.Sort();
+        calculatedSpeed = speedList[3];
+        Debug.Log("speed is: " + calculatedSpeed);
+    }
+
 }
