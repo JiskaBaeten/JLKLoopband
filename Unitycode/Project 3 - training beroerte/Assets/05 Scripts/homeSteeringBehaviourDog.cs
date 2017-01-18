@@ -57,6 +57,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     float minDistanceBeforeSeeBall = 3f;
     float minDistanceToAvoidancePoint = 1f;
     RaycastHit hitinfo;
+    float minDistanceToBall = 2.5f;
 
     RaycastHit[] allRaycastHits;
     RaycastHit[] raycastHitsSeek;
@@ -86,6 +87,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         }
 
         goToBallWithAvoidancePath = false;
+        Physics.IgnoreCollision(ballToFetch.GetComponent<Collider>(), GetComponent<Collider>());
     }
     // Update is called once per frame
     void Update()
@@ -124,8 +126,11 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         {
             steerForce = dogLooseBehaviour();
         }
-
-       steerForce += ObstacleAvoidance();
+        if (Vector3.Distance(transform.position, ballToFetch.transform.position) > minDistanceToBall)
+        {
+            steerForce += ObstacleAvoidance();
+        }
+       
 
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
