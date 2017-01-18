@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/00 Scenes/StartScene.unity
+- path: Assets/00 Scenes/UZARoom.unity
   isLoaded: 1
   isActive: 1

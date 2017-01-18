@@ -59,31 +59,23 @@ public class cameraSteeringBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (showArrows())
+
+       /* if (showArrows())
         {
-            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+
+            arrowRight.transform.localScale = new Vector3(1, 1, 1);
+            arrowLeft.transform.localScale = new Vector3(1, 1, 1);
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                Debug.LogError("left");
+                findNextPath("left");
 
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    Debug.LogError("left");
-                    findNextPath("left");
-
-                }
-                else if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    Debug.LogError("right");
-                    findNextPath("right");
-                }
             }
-            else
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-
-                    arrowLeft.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-                    arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                Debug.LogError("right");
+                findNextPath("right");
             }
-
         }
         else
         {
@@ -94,16 +86,16 @@ public class cameraSteeringBehaviour : MonoBehaviour
         {
             Debug.LogError("left");
             findNextPath("left");
-            
+
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             findNextPath("right");
             Debug.LogError("right");
         }
-        */
 
 
+    */
 
         steerForce = FollowPath(waypointsCurrentPath);
         //calc movement
@@ -130,8 +122,11 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
     public bool showArrows()
     {
-        if (!nextPathIsChosen && (indexOfCurrentPathPoint == (waypointsCurrentPath.Length -2) ))
+        Debug.Log("index" + indexOfCurrentPathPoint + "show when:" + (waypointsCurrentPath.Length - 2));
+
+        if (!nextPathIsChosen && (indexOfCurrentPathPoint > (waypointsCurrentPath.Length - 2)))
         {
+            Debug.Log("show arrow");
             if (getNextPathLeft() == getNextPathRight())
             {
                 chooseNextRandomPath();
@@ -175,15 +170,15 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
         return allPaths[0].WaypointsFromPath;
     }
-   private int getNextPathLeft()
+    private int getNextPathLeft()
     {
         if (currentPath.pathIsReversed)
         {
-           return nextPathNumber = currentPath.NextPathNumberLeftBehind;
+            return nextPathNumber = currentPath.NextPathNumberLeftBehind;
         }
         else
         {
-           return nextPathNumber = currentPath.NextPathNumberLeftBefore;
+            return nextPathNumber = currentPath.NextPathNumberLeftBefore;
         }
     }
 
@@ -191,11 +186,11 @@ public class cameraSteeringBehaviour : MonoBehaviour
     {
         if (currentPath.pathIsReversed)
         {
-           return nextPathNumber = currentPath.NextPathNumberRightBehind;
+            return nextPathNumber = currentPath.NextPathNumberRightBehind;
         }
         else
         {
-          return  nextPathNumber = currentPath.NextPathNumberRightBefore;
+            return nextPathNumber = currentPath.NextPathNumberRightBefore;
         }
     }
     public void findNextPath(string direction)
@@ -222,7 +217,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
         if (rndPathChoice == 0)
         {
             getNextPathLeft();
-            
+
         }
         else
         {

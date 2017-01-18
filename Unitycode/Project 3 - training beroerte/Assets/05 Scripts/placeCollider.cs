@@ -9,11 +9,11 @@ public class placeCollider : MonoBehaviour {
         if (tag == "controllerColliderLeft") //collider left
         {
 
-            transform.position = viveCam.transform.position + new Vector3(0, 0,1);
+            transform.position = viveCam.transform.position + new Vector3(0, 0,0.5f);
         }
         else if (tag == "controllerColliderRight")
         {
-            transform.position = viveCam.transform.position - new Vector3(0, 0, 1);
+            transform.position = viveCam.transform.position - new Vector3(0, 0,1.5f);
         }
 
     }

@@ -25,7 +25,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     float tmrDogTrick = 6;
     float dogPickUpBallTime = 1f;
     float dogWaitForBallTime = 1.5f;
-    bool dogTriedToTakeBall;
 
     //obstacle avoidance
     public float ObstacleAvoidanceDistance;
@@ -71,7 +70,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        dogTriedToTakeBall = false;
         dogYPos = transform.position.y;
         wanderDist = 2;
         wanderRadius = 2;
@@ -97,7 +95,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.F))
         {
             dogCatch();
@@ -217,7 +214,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
     public void dogCatch()
     {
-        dogTriedToTakeBall = false;
         animationController.SetTrigger("ballThrow");
         dogPlayingFetch = true;
         animationController.SetTrigger("ballUnstuck");
@@ -234,9 +230,9 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
         Debug.DrawRay(transform.position, raycastDirBall, Color.red);
 
-        if (dogTriedToTakeBall &&  ballToFetch.transform.position.y > ballOnObjectHeight && Vector3.Distance(transform.position, ballToFetch.transform.position) < minDistanceToObjectBallStuck) //ball is stuck on an object
+        if ( ballToFetch.transform.position.y > ballOnObjectHeight && Vector3.Distance(transform.position, ballToFetch.transform.position) < minDistanceToObjectBallStuck) //ball is stuck on an object
         {
-            if (!animationController.GetBool("ballStuck") && !dogReturningBall)
+            if (!animationController.GetBool("ballStuck") && !dogReturningBall && tmrDogTrick > dogTrickTime)
             {
                 animationController.SetBool("ballStuck", true);
                 audioDogBarkLong.Play();
@@ -284,7 +280,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                     }
                 }
             }
-            dogTriedToTakeBall = true;
             if (currentObstacleAvoidancePathPointChosen != Vector3.zero && !avoidancePathFinished)
             {
                 if (Vector3.Distance(currentObstacleAvoidancePathPointChosen, transform.position) < minDistanceToAvoidancePoint)
@@ -311,7 +306,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         else //if dog can see the ball
         {
             Debug.Log("see ball");
-            dogTriedToTakeBall = true;
             Debug.Log("go for ball");
             avoidancePathFinished = true;
             goToBallWithAvoidancePath = false;
@@ -337,7 +331,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         {
             ballToFetch.GetComponent<Collider>().isTrigger = false;
             ballToFetch.GetComponent<Rigidbody>().useGravity = true;
-            dogTriedToTakeBall = false;
             dogReturningBall = false;
             return steerForce = Flee(ballToFetch.transform.position);
         }
