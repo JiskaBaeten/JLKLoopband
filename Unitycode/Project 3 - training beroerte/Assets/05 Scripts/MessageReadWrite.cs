@@ -12,6 +12,7 @@ public class MessageReadWrite : MonoBehaviour {
     private List<double> speedList;
     private double messageDouble;
     public double calculatedSpeed;
+    private double median;
 
     void Start()
     {
@@ -58,8 +59,15 @@ public class MessageReadWrite : MonoBehaviour {
     }
     void CalculateSpeed()
     {
-        speedList.Sort();
-        calculatedSpeed = speedList[3];
+        // speedList.Sort();
+        //calculatedSpeed = speedList[3];
+        calculatedSpeed = 0;
+
+        foreach (double speedData in speedList)
+        {
+            median += speedData;
+        }
+        calculatedSpeed = (median / 10);
         Debug.Log("speed is: " + calculatedSpeed);
     }
 
