@@ -136,7 +136,6 @@ public class catBehaviour : MonoBehaviour {
             eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
             eindpos.y = transform.position.y;//same height     
 
-            Debug.Log("eindpos change");
 
 
         }

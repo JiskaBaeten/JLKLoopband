@@ -8,12 +8,11 @@ public class placeCollider : MonoBehaviour {
         viveCam = GameObject.FindWithTag("MainCamera");
         if (tag == "controllerColliderLeft") //collider left
         {
-
-            transform.position = viveCam.transform.position + new Vector3(0, 0,1);
+            transform.position = viveCam.transform.position + new Vector3(0, 0,0.6f);
         }
         else if (tag == "controllerColliderRight")
         {
-            transform.position = viveCam.transform.position - new Vector3(0, 0, 1);
+            transform.position = viveCam.transform.position - new Vector3(0, 0,1.4f);
         }
 
     }
