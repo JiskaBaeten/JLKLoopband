@@ -6,11 +6,13 @@ public class headRotationSetRig : MonoBehaviour {
     float cameraToTurn; 
 	// Use this for initialization
 	void Start () {
-        Debug.LogError("setting rotation");
+        Debug.LogError("setting rotation" + mainCamVR.transform.localRotation.eulerAngles.y);
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
         cameraToTurn = 360 - mainCamVR.transform.localRotation.eulerAngles.y;
-        transform.localRotation = Quaternion.Euler(0, cameraToTurn, 0);
+        Debug.Log(cameraToTurn);
+        transform.rotation = Quaternion.Euler(0, cameraToTurn, 0);
+        
     }
 	
 }
