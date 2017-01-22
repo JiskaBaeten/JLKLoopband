@@ -94,6 +94,37 @@ public class BodySourceManager : MonoBehaviour
             throw;
         }
     }
+
+    void OnDestroy()
+    {
+        if (_Reader != null)
+        {
+            _Reader.Dispose();
+            _Reader = null;
+        }
+
+        if (_Sensor != null)
+        {
+            if (_Sensor.IsOpen)
+            {
+                _Sensor.Close();
+            }
+
+            _Sensor = null;
+        }
+
+        try
+        {
+            File.AppendAllText(writePath, csv.ToString());
+            Debug.Log("File written to:" + writePath);
+        }
+
+        catch (System.Exception)
+        {
+            Debug.Log("Could not write to file: ");
+            throw;
+        }
+    }
     void WriteKinectData()
     {
 
