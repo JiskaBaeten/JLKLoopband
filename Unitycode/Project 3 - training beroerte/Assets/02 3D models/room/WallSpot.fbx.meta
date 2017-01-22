@@ -1,63 +1,79 @@
 fileFormatVersion: 2
-guid: 1511f0f3adde06a42bfd3bec757578e8
-timeCreated: 1484510336
+guid: f80f8b9aa562abc479f0446056fb3a12
+timeCreated: 1484917972
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: GripSign
-    100002: //RootNode
-    100004: sign
-    100006: sign_2
-    100008: sign_3
-    100010: signBack
-    100012: signBack_1
-    100014: signBack_2
-    100016: stick
-    100018: stick_2
-    100020: stick_3
-    100022: TriggerSign
-    100024: YellSign
-    400000: GripSign
-    400002: //RootNode
-    400004: sign
-    400006: sign_2
-    400008: sign_3
-    400010: signBack
-    400012: signBack_1
-    400014: signBack_2
-    400016: stick
-    400018: stick_2
-    400020: stick_3
-    400022: TriggerSign
-    400024: YellSign
-    2300000: sign
-    2300002: sign_2
-    2300004: sign_3
-    2300006: signBack
-    2300008: signBack_1
-    2300010: signBack_2
-    2300012: stick
-    2300014: stick_2
-    2300016: stick_3
-    3300000: sign
-    3300002: sign_2
-    3300004: sign_3
-    3300006: signBack
-    3300008: signBack_1
-    3300010: signBack_2
-    3300012: stick
-    3300014: stick_2
-    3300016: stick_3
-    4300000: sign
-    4300002: signBack
-    4300004: stick
-    4300006: signBack_2
-    4300008: sign_2
-    4300010: stick_2
-    4300012: signBack_1
-    4300014: sign_3
-    4300016: stick_3
+    100000: boog
+    100002: CilinderBottom
+    100004: flat_piece_1
+    100006: Holder
+    100008: Holdring_Pivot_
+    100010: lamp
+    100012: LightCap
+    100014: steun_1
+    100016: steun_2
+    100018: steun_3
+    100020: steun_4
+    100022: steun_5
+    100024: steunen
+    100026: wallSegment
+    100028: //RootNode
+    400000: boog
+    400002: CilinderBottom
+    400004: flat_piece_1
+    400006: Holder
+    400008: Holdring_Pivot_
+    400010: lamp
+    400012: LightCap
+    400014: steun_1
+    400016: steun_2
+    400018: steun_3
+    400020: steun_4
+    400022: steun_5
+    400024: steunen
+    400026: wallSegment
+    400028: //RootNode
+    2300000: boog
+    2300002: CilinderBottom
+    2300004: flat_piece_1
+    2300006: Holder
+    2300008: Holdring_Pivot_
+    2300010: lamp
+    2300012: LightCap
+    2300014: steun_1
+    2300016: steun_2
+    2300018: steun_3
+    2300020: steun_4
+    2300022: steun_5
+    2300024: wallSegment
+    3300000: boog
+    3300002: CilinderBottom
+    3300004: flat_piece_1
+    3300006: Holder
+    3300008: Holdring_Pivot_
+    3300010: lamp
+    3300012: LightCap
+    3300014: steun_1
+    3300016: steun_2
+    3300018: steun_3
+    3300020: steun_4
+    3300022: steun_5
+    3300024: wallSegment
+    4300000: wallSegment
+    4300002: flat_piece_1
+    4300004: CilinderBottom
+    4300006: boog
+    4300008: Holdring_Pivot_
+    4300010: Holder
+    4300012: LightCap
+    4300014: lamp
+    4300016: steun_5
+    4300018: steun_4
+    4300020: steun_3
+    4300022: steun_2
+    4300024: steun_1
   materials:
     importMaterials: 1
     materialName: 0
