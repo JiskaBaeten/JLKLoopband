@@ -3,7 +3,7 @@ using UnityEngine.Windows.Speech;
 using System.Collections.Generic;
 using System.Linq;
 
-
+//voicecommands for park
 public class VoiceCommands : MonoBehaviour {
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords;
@@ -24,8 +24,7 @@ public class VoiceCommands : MonoBehaviour {
         dogSteeringBehaviourScript = dog.GetComponent<steeringBehaviourDog>();
         animationControllerDog = dog.GetComponent<Animator>();
         keywords = new Dictionary<string, System.Action>();
-        keywords.Add("bark", () => {Debug.Log("woof");});
-        
+        //add keyword to listen to + reaction dog will give
         keywords.Add("come", () => {
             Debug.Log("coming");
             if (animationControllerDog.GetBool("dogIsLoose"))
@@ -50,17 +49,9 @@ public class VoiceCommands : MonoBehaviour {
                 dogSteeringBehaviourScript.dogLookingForCall = true;
                 animationControllerDog.SetBool("dogIsWaiting", true);
                 dogSteeringBehaviourScript.resetTimerDogLooking();
-           /*     if (UnityEngine.Random.Range(0, 3) >= 1)
-                {*/
+
                     Debug.LogError("dog called and coming");
                     dogSteeringBehaviourScript.dogCalledInScript = true;
-
-                //}
-            /*    else
-                {
-                    Debug.LogError("dog called and not coming");
-                    dogSteeringBehaviourScript.dogCalledInScript = false;
-                */
             }
             Debug.Log("ik kom");
 
@@ -88,53 +79,5 @@ public class VoiceCommands : MonoBehaviour {
         {
             imageDogUnderstood.SetActive(false);
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log("a");
-            if (animationControllerDog.GetBool("dogIsLoose"))
-            {
-                dogSteeringBehaviourScript.dogLookingForCall = true;
-                
-                animationControllerDog.SetBool("dogIsWaiting", true);
-               dogSteeringBehaviourScript.resetTimerDogLooking();
-                if (UnityEngine.Random.Range(0, 3) >= 1)
-                {
-                    Debug.LogError("dog called and coming");
-                    dogSteeringBehaviourScript.dogCalledInScript = true;
-                    
-                }
-                else
-                {
-                    Debug.LogError("dog called and not coming");
-                    dogSteeringBehaviourScript.dogCalledInScript = false;
-                }
-            }
-
-        }
-        
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (animationControllerDog.GetBool("dogIsLoose"))
-            {
-                if (Vector3.Distance(dog.transform.position, viveCam.transform.position) < distanceToDogForLeash)
-                {
-                    animationControllerDog.SetBool("dogIsLoose", false);
-                    Debug.LogError("dog leash attach");
-                    dogSteeringBehaviourScript.maxRunningSpeed = 1;
-                }
-
-
-            }
-            else
-            {
-                dogSteeringBehaviourScript.maxRunningSpeed = 2;
-                animationControllerDog.SetBool("dogIsLoose", true);
-            }
-        }
-       /* if (Input.GetKeyDown(KeyCode.C))
-        {
-            animationControllerDog.SetBool("dogCalled", false);
-        }*/
     }
 }

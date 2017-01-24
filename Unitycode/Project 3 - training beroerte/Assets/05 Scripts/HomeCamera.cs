@@ -3,12 +3,7 @@ using System.Collections;
 
 public class HomeCamera : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
+	//script for looking around in house, without vive
 	void Update () {
         if (Input.GetKey(KeyCode.RightArrow))
         {

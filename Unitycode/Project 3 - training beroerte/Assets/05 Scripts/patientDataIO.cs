@@ -72,6 +72,17 @@ public class patientDataIO : MonoBehaviour
     int currentSelectedDropdownValuePatientdata;
     int currentSelectedDropdownValuePatientSearch;
 
+    //indexes for tab
+    byte inputSearchIndex = 4;
+    byte patientSearchIndex = 5;
+    byte possiblePatientSelectIndex = 6;
+
+    byte toggleManIndex = 1;
+    byte toggleWomanIndex = 2;
+    byte toggleXIndex = 3;
+    byte confirmDataIndex = 4;
+    byte cancelDataIndex = 5;
+
     void Start()
     {
         Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\A walk in the park");
@@ -86,8 +97,7 @@ public class patientDataIO : MonoBehaviour
         readPatientData();
         showPatientData();
 
-
-
+    
         addPatientSelectedInput = 0;
         viewPatientSelectedInput = 4;
         chooseProjectSelectedInput = 0;
@@ -124,23 +134,23 @@ public class patientDataIO : MonoBehaviour
             {
                 allInputs[addPatientSelectedInput].Select();
             }
-            else if (addPatientSelectedInput < allInputs.Length + 1)
+            else if (addPatientSelectedInput < allInputs.Length + toggleManIndex)
             {
                 toggleMan.Select();
             }
-            else if (addPatientSelectedInput < allInputs.Length + 2)
+            else if (addPatientSelectedInput < allInputs.Length + toggleWomanIndex)
             {
                 toggleWoman.Select();
             }
-            else if (addPatientSelectedInput < allInputs.Length + 3)
+            else if (addPatientSelectedInput < allInputs.Length + toggleXIndex)
             {
                 toggleX.Select();
             }
-            else if (addPatientSelectedInput < allInputs.Length + 4)
+            else if (addPatientSelectedInput < allInputs.Length + confirmDataIndex)
             {
                 btnConfirmData.Select();
             }
-            else if (addPatientSelectedInput < allInputs.Length + 5)
+            else if (addPatientSelectedInput < allInputs.Length + cancelDataIndex)
             {
                 btnCancelData.Select();
             }
@@ -161,48 +171,24 @@ public class patientDataIO : MonoBehaviour
 
             viewPatientSelectedInput++;
 
-            if (viewPatientSelectedInput < 4)
+            if (viewPatientSelectedInput < inputSearchIndex)
             {
                 Debug.Log(viewPatientSelectedInput);
                 interfaceButtonsView[viewPatientSelectedInput].Select();
             }
-            else if (viewPatientSelectedInput == 4)
+            else if (viewPatientSelectedInput == inputSearchIndex)
             {
                 inputSearch.Select();
             }
-            else if (viewPatientSelectedInput == 5)
+            else if (viewPatientSelectedInput == patientSearchIndex)
             {
-                patientSearch.Select();
-
-           //code unnecessary but usefull for later
-             /*   if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    Debug.Log(currentSelectedDropdownValuePatientdata);
-                    currentSelectedDropdownValuePatientdata--;
-                    if (currentSelectedDropdownValuePatientdata < 0)
-                    {
-                        currentSelectedDropdownValuePatientdata = possiblePatientSelect.options.Count;
-                    }
-                    possiblePatientSelect.RefreshShownValue();
-                    possiblePatientSelect.value = currentSelectedDropdownValuePatientdata;
-                }
-                else if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    currentSelectedDropdownValuePatientdata++;
-                    if (!(currentSelectedDropdownValuePatientdata < possiblePatientSelect.options.Count))
-                    {
-                        currentSelectedDropdownValuePatientdata = 0;
-                    }
-                    possiblePatientSelect.RefreshShownValue();
-                    possiblePatientSelect.value = currentSelectedDropdownValuePatientdata;
-                }*/
-                
+                patientSearch.Select();                
             }
-            else if (viewPatientSelectedInput == 6)
+            else if (viewPatientSelectedInput == possiblePatientSelectIndex)
             {
                 possiblePatientSelect.Select();
             }
-            else if (viewPatientSelectedInput > 6)
+            else if (viewPatientSelectedInput > possiblePatientSelectIndex)
             {
                 viewPatientSelectedInput = 0;
                 interfaceButtonsView[viewPatientSelectedInput].Select();
@@ -443,7 +429,7 @@ public class patientDataIO : MonoBehaviour
             }
             catch
             {
-
+                Debug.LogError("Couldn't read patient data file");
             }
             finally
             {
@@ -589,7 +575,7 @@ public class patientDataIO : MonoBehaviour
         Application.OpenURL("file://" + Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "\\A walk in the park");
     }
 }
-
+//used for storing patient data
 public class profile
 {
     string userNumber;

@@ -10,6 +10,8 @@ public class SpawnObstacle : MonoBehaviour {
   Vector3 obstaclePos; //to place an obstacle at a chosen position
   GameObject[] waypointContainer;
   float heightBetweenWpAndGround = 0.35f; //to make sure the obstacles are on the ground
+    byte maxRandomObstacle = 13;
+    byte showObstacleMinimum = 6;
 
   void Start () {
     //usually the first waypoint in each path was tagged with this tag
@@ -18,9 +20,9 @@ public class SpawnObstacle : MonoBehaviour {
     foreach (GameObject wp in waypointContainer)
     {
       obstaclePos = new Vector3(wp.transform.position.x, wp.transform.position.y-heightBetweenWpAndGround, wp.transform.position.z); ///use current WP position but lower Y-pos to place on ground
-      byte randomDeciderPlaceObstacle = (byte)Random.Range(1, 13); // will decide if an obstacle will be placed or not (between 1 and 12 > 12 to even out the odds)
+      byte randomDeciderPlaceObstacle = (byte)Random.Range(1, maxRandomObstacle); // will decide if an obstacle will be placed or not (between 1 and 12 > 12 to even out the odds)
 
-      if (randomDeciderPlaceObstacle > 6)
+      if (randomDeciderPlaceObstacle > showObstacleMinimum)
       {
         switch(randomDeciderPlaceObstacle) //decides which obstacle will be instantiated
         { 

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+//used for yelling feedback
 public class MicInput : MonoBehaviour
 {
     public AudioSource audioSource;
-    //  public AudioSource audioSource2;
     public float updateStep = 0.1f;
     public int sampleDataLength = 1024;
     public float timeBetweenStartAndEnd;
@@ -57,24 +57,21 @@ public class MicInput : MonoBehaviour
             currentUpdateTime = 0f;
             audioSource.clip.GetData(clipSampleData, audioSource.timeSamples); //I read 1024 samples, which is about 80 ms on a 44khz stereo clip, beginning at the current sample position of the clip.
             clipLoudness = 0f;
-            foreach (var sample in clipSampleData)
+            foreach (var sample in clipSampleData) //get all data + calculate average
             {
                 clipLoudness += Mathf.Abs(sample);
             }
             clipLoudness /= sampleDataLength; //clipLoudness is what you are looking for
             volume = clipLoudness;
+
             if (volume > isYelling && currentTime >= timeSpoken + timeBetweenStartAndEnd)
             {
                 timeSpoken = currentTime;
                 dogYellingImage.SetActive(true);
                 Debug.LogError("yelling" + volume);
                 tmrDogYellingImage = 0;
-                /*   if (cameraRenderer.isVisible)
-                   {
-                       Debug.Log("hond sighted");
-                   }*/
             }
-            if (tmrDogYellingImage > showDogYellingImageTime)
+            if (tmrDogYellingImage > showDogYellingImageTime) // if dogimage is on long enough, deactivate
             {
                 dogYellingImage.SetActive(false);
             }    

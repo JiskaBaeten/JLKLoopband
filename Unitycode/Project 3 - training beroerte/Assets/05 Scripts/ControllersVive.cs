@@ -2,8 +2,10 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+//script for linking controller input to right script
 public class ControllersVive : MonoBehaviour
 {
+
     private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
     public bool gripButtonDown = false;
     public bool gripButtonUp = false;
@@ -17,14 +19,22 @@ public class ControllersVive : MonoBehaviour
 
     public GameObject viveCam; //werken met camera rig of met head??
     private GameObject dog;
+    private byte dogCatchDistance = 3;
+    private byte dogWalkingSpeed = 1;
+    private byte dogRunningSpeed = 2;
     public Animator dogAnimationController;
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
     private cameraSteeringBehaviour cameraSteeringScript;
     private steeringBehaviourDog dogSteeringBehaviourScript;
     private GameObject ballToThrow;
+
+
+    //arrows 
     public GameObject arrowLeft;
     public GameObject arrowRight;
+    private float scaleArrowBig = 0.75f;
+    private float scaleArrowSmall = 0.5f;
     // Use this for initialization
     void Start()
     {
@@ -62,35 +72,32 @@ public class ControllersVive : MonoBehaviour
         {
             if (gripButtonUp)
             {
-                if (dogAnimationController.GetBool("dogIsLoose"))
+                if (dogAnimationController.GetBool("dogIsLoose")) //if the dog is loose, catch the dog but only when within distance
                 {
-                    if (Vector3.Distance(dog.transform.position, viveCam.transform.position) < 3)
+                    if (Vector3.Distance(dog.transform.position, viveCam.transform.position) < dogCatchDistance)
                     {
                         dogAnimationController.SetBool("dogIsLoose", false);
                         Debug.LogError("dog leash attach");
-                        dogSteeringBehaviourScript.maxRunningSpeed = 1;
+                        dogSteeringBehaviourScript.maxRunningSpeed = dogWalkingSpeed;
                         dog.GetComponent<AudioSource>().Play();
                     }
                 }
-                else
+                else // set the dog loose
                 {
                     dog.GetComponent<AudioSource>().Play();
                     dogSteeringBehaviourScript.dogCalledInScript = false;
-                    dogSteeringBehaviourScript.maxRunningSpeed = 2;
+                    dogSteeringBehaviourScript.maxRunningSpeed = dogRunningSpeed;
                     dogAnimationController.SetBool("dogIsLoose", true);
                 }
             }
         }
-        else if (SceneManager.GetActiveScene().name == "scene_home")
+        else if (SceneManager.GetActiveScene().name == "scene_home") //pickup the ball
         {
             if (triggerButtonPressed)
             {
                 ballToThrow.transform.position = transform.position;
             }
         }
-       
-
-
     }
 
 
@@ -101,14 +108,14 @@ public class ControllersVive : MonoBehaviour
             if (triggerButtonDown)
             {
 
-                if (col.gameObject.tag == "controllerColliderLeft")
+                if (col.gameObject.tag == "controllerColliderLeft") //player choosing left
                 {
                     Debug.LogError("left");
                     cameraSteeringScript.findNextPath("left");
                     dog.GetComponent<AudioSource>().Play();
 
                 }
-                else if (col.gameObject.tag == "controllerColliderRight")
+                else if (col.gameObject.tag == "controllerColliderRight") //player choosing right
                 {
                     cameraSteeringScript.findNextPath("right");
                     Debug.LogError("right");
@@ -117,23 +124,23 @@ public class ControllersVive : MonoBehaviour
             }
             else
             {
-                if (col.gameObject.tag == "controllerColliderLeft")
+                if (col.gameObject.tag == "controllerColliderLeft") //controller is on left side of player
                 {
-                    arrowLeft.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-                    arrowRight.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                    arrowLeft.transform.localScale = new Vector3(scaleArrowBig, scaleArrowBig, scaleArrowBig);
+                    arrowRight.transform.localScale = new Vector3(scaleArrowSmall, scaleArrowSmall, scaleArrowSmall);
                 }
-                else if (col.gameObject.tag == "controllerColliderRight")
+                else if (col.gameObject.tag == "controllerColliderRight") // controller is on right side of player
                 {
-                    arrowRight.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-                    arrowLeft.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                    arrowRight.transform.localScale = new Vector3(scaleArrowBig, scaleArrowBig, scaleArrowBig);
+                    arrowLeft.transform.localScale = new Vector3(scaleArrowSmall, scaleArrowSmall, scaleArrowSmall);
                 }
             }
 
         }
         else
         {
-            arrowRight.transform.localScale = new Vector3(0, 0, 0);
-            arrowLeft.transform.localScale = new Vector3(0, 0, 0);
+            arrowRight.transform.localScale = Vector3.zero;
+            arrowLeft.transform.localScale = Vector3.zero;
         }
     }
 }
