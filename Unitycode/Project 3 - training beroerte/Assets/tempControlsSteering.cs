@@ -4,7 +4,7 @@ using System.Collections;
 public class tempControlsSteering : MonoBehaviour
 {
 
-    public GameObject viveCam; //werken met camera rig of met head??
+    public GameObject viveCam; //work with camera rig or head?
     private GameObject dog;
     public Animator dogAnimationController;
     private cameraSteeringBehaviour cameraSteeringScript;

@@ -5,13 +5,15 @@ using System.IO;
 using System.Text;
 using Environment = System.Environment;
 
+//code to use the kinect
 public class BodySourceManager : MonoBehaviour 
 {
     private KinectSensor _Sensor;
     private BodyFrameReader _Reader;
     private Body[] _Data = null;
 
-    string writePath;
+    string writePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+    string documentName = "\\A walk in the park\\KinectData.csv";
     string newline;
     StringBuilder csv;
 
@@ -36,8 +38,7 @@ public class BodySourceManager : MonoBehaviour
         }
 
         //IO
-        writePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        writePath += "\\A walk in the park\\KinectData.csv";
+        writePath += documentName;
         csv = new StringBuilder();
 
     }

@@ -3,6 +3,7 @@ using UnityEngine.Windows.Speech;
 using System.Collections.Generic;
 using System.Linq;
 
+//script is for using specific voice commands for the home scene
 public class homeVoiceCommands : MonoBehaviour
 {
     //using keywordrecognizer

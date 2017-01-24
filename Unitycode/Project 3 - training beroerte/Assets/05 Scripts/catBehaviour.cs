@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//used to make the cat in the scene do stuff
 public class catBehaviour : MonoBehaviour {
     //character control parameters
     public int maxForce = 150;

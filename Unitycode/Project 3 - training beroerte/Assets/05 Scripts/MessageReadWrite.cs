@@ -2,65 +2,67 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MessageReadWrite : MonoBehaviour {
+//script used to send and read messages from and to the arduino
+public class MessageReadWrite : MonoBehaviour
+{
+  public SerialController serialController;
+  private int randomizer;
+  public int maxRange;
+  public int maxSpeed = 12;
+  public double minSpeed = 0.2;
+  private List<double> speedList;
+  private double messageDouble;
+  public double calculatedSpeed;
+  private byte totNumbersToGetMedianfrom = 10;
 
-    public SerialController serialController;
-    private int randomizer;
-    public int maxRange;
-    public int maxSpeed = 12;
-    public double minSpeed = 0.2;
-    private List<double> speedList;
-    private double messageDouble;
-    public double calculatedSpeed;
+  void Start()
+  {
+    serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
+    speedList = new List<double>();
+  }
 
-    void Start()
+  void Update()
+  {
+    randomizer = Random.Range(0, maxRange);
+    //send data
+    if (randomizer == 6)
     {
-        serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-        speedList = new List<double>();
+      Debug.Log("Sending A");
+      serialController.SendSerialMessage("A");
     }
 
-    void Update()
+    //recieve data
+    string message = serialController.ReadSerialMessage();
+    if (message == null)
+      return;
+
+    Debug.Log("data recieved: " + message);
+    messageDouble = double.Parse(message);
+    if (messageDouble > minSpeed && messageDouble < maxSpeed) //if value is between the min and max values
     {
-        randomizer = Random.Range(0, maxRange);
-        //send data
-        if (randomizer == 6)
-        {
-            Debug.Log("Sending A");
-            serialController.SendSerialMessage("A");
-            }
-
-        //recieve data
-        string message = serialController.ReadSerialMessage();
-        if (message == null)
-            return;
-
-        Debug.Log("data recieved: " + message);
-        messageDouble = double.Parse(message);
-        if (messageDouble > minSpeed && messageDouble < maxSpeed) //if value is between the min and max values
-        {
-            speedList.Add(messageDouble);
-        }
-        if (speedList.Count == 10)  //calculate median of last 10 values
-        {
-            CalculateSpeed();
-            speedList.Clear();
-        }
-
-
-
-        // Check if the message is plain data or a connect/disconnect event.
-        if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
-            Debug.Log("Connection established");
-        else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
-            Debug.Log("Connection attempt failed or disconnection detected");
-        else
-            Debug.Log("Message arrived: " + message);
+      speedList.Add(messageDouble);
     }
-    void CalculateSpeed()
+    if (speedList.Count == totNumbersToGetMedianfrom)  //calculate median of last 10 values
     {
-        speedList.Sort();
-        calculatedSpeed = speedList[3];
-        Debug.Log("speed is: " + calculatedSpeed);
+      CalculateSpeed();
+      speedList.Clear();
     }
+
+
+
+    // Check if the message is plain data or a connect/disconnect event.
+    if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
+      Debug.Log("Connection established");
+    else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
+      Debug.Log("Connection attempt failed or disconnection detected");
+    else
+      Debug.Log("Message arrived: " + message);
+  }
+  void CalculateSpeed()
+  {
+    speedList.Sort();
+    calculatedSpeed = speedList[3];
+    Debug.Log("speed is: " + calculatedSpeed);
+  }
 
 }

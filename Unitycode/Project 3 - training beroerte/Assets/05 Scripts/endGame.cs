@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//used everywhere to return to the homescene (PatientIO) or to quit the game
 public class endGame : MonoBehaviour {
 
 	void Update () {

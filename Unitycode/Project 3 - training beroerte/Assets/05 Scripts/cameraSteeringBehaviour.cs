@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+//used to steer the vivecam on the paths in the park scene
 public class cameraSteeringBehaviour : MonoBehaviour
 {
-
     //character control parameters
     public int maxForce = 150;
     public float mass = 100;
@@ -34,9 +34,10 @@ public class cameraSteeringBehaviour : MonoBehaviour
     public Vector3 nextPathPoint;
     public byte distanceForNewPath;
     private bool showArrowsNextPath;
+    private string tagWaypoints = "WayPoints";
 
     //Arrows
-    public GameObject arrowRight;
+  public GameObject arrowRight;
     public GameObject arrowLeft;
 
     void Start()
@@ -45,7 +46,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
         //get waypoints + group per path
         allPaths = new List<WaypointPath>();
-        waypointPathsContainer = GameObject.FindGameObjectsWithTag("WayPoints");
+        waypointPathsContainer = GameObject.FindGameObjectsWithTag(tagWaypoints);
         foreach (GameObject pathToAdd in waypointPathsContainer)
         {
             allPaths.Add(new WaypointPath(pathToAdd));

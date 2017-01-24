@@ -26,12 +26,13 @@ public class MicInput : MonoBehaviour
     Renderer cameraRenderer;
     float tmrDogYellingImage = 3;
     byte showDogYellingImageTime = 2;
-    
+    string dogMeshTag = "dogMesh";
+
     // Use this for initialization
-    void Start()
+  void Start()
     {
         dogYellingImage.SetActive(false);
-        dog = GameObject.FindWithTag("dogMesh");
+        dog = GameObject.FindWithTag(dogMeshTag);
         isYelling = 0.05f;
         timeBetweenStartAndEnd = 3;
         audioSource = GetComponent<AudioSource>();

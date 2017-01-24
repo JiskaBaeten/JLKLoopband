@@ -5,6 +5,8 @@ using System.IO;
 using UnityEngine.UI;
 using Environment = System.Environment;
 using UnityEngine.SceneManagement;
+
+//script for all the patientIO
 public class patientDataIO : MonoBehaviour
 {
     //to read and write patient data
