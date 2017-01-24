@@ -5,7 +5,7 @@ using System.Linq;
 
 public class homeVoiceCommands : MonoBehaviour
 {
-
+    //using keywordrecognizer
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords;
     Animator animationControllerDog;
@@ -19,8 +19,8 @@ public class homeVoiceCommands : MonoBehaviour
         dogSteeringBehaviourScript = GetComponent<homeSteeringBehaviourDog>();
         animationControllerDog = GetComponent<Animator>();
         keywords = new Dictionary<string, System.Action>();
-        keywords.Add("bark", () => { Debug.Log("woof"); });
 
+        //add new keyword and assign right reaction to it
         keywords.Add("zit", () =>
         {
             Debug.Log("zit");

@@ -41,9 +41,10 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
     void Start()
     {
-
-        allPaths = new List<WaypointPath>();
         controller = GetComponent<CharacterController>();//this GO's CharacterController
+
+        //get waypoints + group per path
+        allPaths = new List<WaypointPath>();
         waypointPathsContainer = GameObject.FindGameObjectsWithTag("WayPoints");
         foreach (GameObject pathToAdd in waypointPathsContainer)
         {
@@ -51,57 +52,19 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
         nextPathNumber = 0;
         waypointsCurrentPath = selectPath();
-
         currentPathPoint = nextPathPoint;
-
     }
 
     // Update is called once per frame
     void Update()
     {
 
-       /* if (showArrows())
-        {
-
-            arrowRight.transform.localScale = new Vector3(1, 1, 1);
-            arrowLeft.transform.localScale = new Vector3(1, 1, 1);
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                Debug.LogError("left");
-                findNextPath("left");
-
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                Debug.LogError("right");
-                findNextPath("right");
-            }
-        }
-        else
-        {
-            arrowRight.transform.localScale = new Vector3(0, 0, 0);
-            arrowLeft.transform.localScale = new Vector3(0, 0, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Debug.LogError("left");
-            findNextPath("left");
-
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            findNextPath("right");
-            Debug.LogError("right");
-        }
-
-
-    */
-
         steerForce = FollowPath(waypointsCurrentPath);
-        //calc movement
-        Truncate(ref steerForce, maxForce);// not > max
+
+        //calculate movement
+        Truncate(ref steerForce, maxForce);
         acceleration = steerForce / mass;
-        velocity += acceleration;//velocity = transform.TransformDirection(velocity);
+        velocity += acceleration;
         Truncate(ref velocity, maxRunningSpeed);
         controller.Move(velocity * Time.deltaTime);//move
 
@@ -119,14 +82,13 @@ public class cameraSteeringBehaviour : MonoBehaviour
             myVector *= myMax;//scale to max
         }
     }
-
+    //show the arrows to make user know he can choose a path
     public bool showArrows()
     {
-        Debug.Log("index" + indexOfCurrentPathPoint + "show when:" + (waypointsCurrentPath.Length - 2));
-
+        
         if (!nextPathIsChosen && (indexOfCurrentPathPoint > (waypointsCurrentPath.Length - 2)))
         {
-            Debug.Log("show arrow");
+          
             if (getNextPathLeft() == getNextPathRight())
             {
                 chooseNextRandomPath();
@@ -143,6 +105,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
     }
 
+    //if the path is chosen, select the right path
     public Vector3[] selectPath()
     {
         if (nextPathNumber >= numberToCheckIfReversed) //if the number is bigger than 100, the path should be reversed
@@ -159,8 +122,6 @@ public class cameraSteeringBehaviour : MonoBehaviour
 
             if (pathToCheck.PathNumber == nextPathNumber)
             {
-
-                //next path number??
                 nextPathIsChosen = false;
                 pathToCheck.reversePath(nextPathShouldBeReversed);
                 currentPath = pathToCheck;
@@ -170,11 +131,13 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
         return allPaths[0].WaypointsFromPath;
     }
+
+    //if user has chosen left path
     private int getNextPathLeft()
     {
-        if (currentPath.pathIsReversed)
+        if (currentPath.pathIsReversed) //if the user is going 'backwards'
         {
-            return nextPathNumber = currentPath.NextPathNumberLeftBehind;
+            return nextPathNumber = currentPath.NextPathNumberLeftBehind; 
         }
         else
         {
@@ -182,6 +145,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
     }
 
+    //if user has chosen right path
     private int getNextPathRight()
     {
         if (currentPath.pathIsReversed)
@@ -193,6 +157,8 @@ public class cameraSteeringBehaviour : MonoBehaviour
             return nextPathNumber = currentPath.NextPathNumberRightBefore;
         }
     }
+
+    // catch call from user choice and call right method
     public void findNextPath(string direction)
     {
         if (!nextPathIsChosen)
@@ -211,13 +177,13 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
     }
 
+    //if user hasn't chosen path, the next path is random
     public void chooseNextRandomPath()
     {
         float rndPathChoice = UnityEngine.Random.Range(0, 2);//for the first time use.
         if (rndPathChoice == 0)
         {
             getNextPathLeft();
-
         }
         else
         {
@@ -225,6 +191,8 @@ public class cameraSteeringBehaviour : MonoBehaviour
         }
         nextPathIsChosen = true;
     }
+
+    //steering behaviour to follow the path
     public Vector3 FollowPath(Vector3[] myPath)
     {
 
@@ -285,6 +253,7 @@ public class cameraSteeringBehaviour : MonoBehaviour
     }
 }
 
+//class to 'save' the path data
 public class WaypointPath
 {
     byte pathNumber;
@@ -312,7 +281,7 @@ public class WaypointPath
 
     }
 
-    private void initializePathName(GameObject path)
+    private void initializePathName(GameObject path) //get right path and initialize the paths before and after (left and right)
     {
         switch (path.name)
         {
@@ -321,7 +290,7 @@ public class WaypointPath
                 pathNumber = 0;
                 pathBeforeLeft = 7;
                 pathBeforeRight = 1;
-                pathBehindLeft = 113; //path 13
+                pathBehindLeft = 113; //path 13 --> +100 means reversed
                 pathBehindRight = 115;
                 break;
 

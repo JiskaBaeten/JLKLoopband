@@ -21,12 +21,14 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     public Vector3 steerForce;
     public Vector3 eindpos;
 
+    //timing for tricks
     byte ignoreBallTime = 3;
     float tmrDogIgnoreBall = 0;
     float dogTrickTime = 4f;
     float tmrDogTrick = 6;
     float dogPickUpBallTime = 1f;
     float dogWaitForBallTime = 1.5f;
+    float dogFetchTime = 3f;
 
     //obstacle avoidance
     public float ObstacleAvoidanceDistance;
@@ -34,21 +36,27 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     GameObject cameraPlayer;
     public float ObstacleAvoidanceForce;
 
+    //animation + sound
     CharacterController controller;
     public Animator animationController;
     public AudioSource audioDogBarkShort;
     public AudioSource audioDogBarkLong;
+
+    //dog behaviour
     public bool dogPlayingFetch = false;
     public bool dogReturningBall = false;
     GameObject ballToFetch;
     GameObject carpet;
     float dogYPos;
+
+    //dog fetch vars
     float fetchDistance = 0.8f;
     byte fetchBringBackDistance = 3;
-    float dogFetchTime = 3f;
     public GameObject dogMouthBone;
     public float ballFetchHeight = 1f;
     float fleeForce = 150;
+
+    //used for fetch, waypoint avoidance
     List<Vector3> avoidancePointsWithFetch;
     GameObject[] avoidancePointsGameObjects;
     Vector3 seekPointForAvoidance;
@@ -60,16 +68,19 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     float minDistanceBeforeSeeBall = 3f;
     float minDistanceToAvoidancePoint = 1f;
     RaycastHit hitinfo;
+
+    //make sure dog can reach ball
     float minDistanceToBall = 2.5f;
     float minDistanceToObjectBallStuck = 2;
     float ballOnObjectHeight = 0.5f;
 
-
+    //raycasts
     RaycastHit[] allRaycastHits;
     RaycastHit[] raycastHitsSeek;
     RaycastHit[] allRaycastHitsToAvoidancePoint;
     Vector3 rayCastDirAvoidance;
-    // Use this for initialization
+
+
     void Start()
     {
         dogYPos = transform.position.y;
@@ -87,7 +98,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         avoidancePointsGameObjects = GameObject.FindGameObjectsWithTag("collisionAvoidancePoint");
         foreach (GameObject avoidancePointToAdd in avoidancePointsGameObjects)
         {
-
             avoidancePointsWithFetch.Add(new Vector3(avoidancePointToAdd.transform.position.x, transform.position.y, avoidancePointToAdd.transform.position.z));
         }
 
@@ -97,12 +107,16 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //for testing without vive
         if (Input.GetKeyDown(KeyCode.F))
         {
             dogCatch();
         }
+
+        //timers increase
         tmrDogTrick += Time.deltaTime;
         tmrDogIgnoreBall += Time.deltaTime;
+
         //calc movement
         setSpeed();
 
@@ -118,8 +132,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                 dogPlayingFetch = false;
                 dogReturningBall = true;
                 tmrDogTrick = 0;
-                //ballToFetch.GetComponent<Collider>().isTrigger = true;
-                //ballToFetch.GetComponent<Rigidbody>().useGravity = false;
             }
         }
         else if (dogReturningBall) //dog got ball, brings back to mat
@@ -170,26 +182,24 @@ public class homeSteeringBehaviourDog : MonoBehaviour
     }
     private void setSpeed()
     {
-        if (dogReturningBall && tmrDogTrick < dogWaitForBallTime)
+        if (dogReturningBall && tmrDogTrick < dogWaitForBallTime) // if the dog is picking up the ball
         {
             maxRunningSpeed = 0;
             rotateSpeed = 0;
         }
-        else if (dogReturningBall && tmrDogTrick > dogWaitForBallTime)
+        else if (dogReturningBall && tmrDogTrick > dogWaitForBallTime) // if the dog is returning the ball after picking it up
         {
             maxRunningSpeed = 1;
             rotateSpeed = 1f;
 
         }
-        else if ((!dogReturningBall && tmrDogTrick < dogTrickTime) || animationController.GetBool("ballStuck"))
+        else if ((!dogReturningBall && tmrDogTrick < dogTrickTime) || animationController.GetBool("ballStuck")) //if the dog is doing a trick or he can't reach the ball
         {
-            Debug.Log("dog stuck");
             maxRunningSpeed = 0;
             rotateSpeed = 0;
         }
         else
         {
-            Debug.Log("dog run" + animationController.GetBool("ballStuck"));
             maxRunningSpeed = 1;
             rotateSpeed = 0.5f;
         }
@@ -215,7 +225,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
         return mySteeringForce;
     }
 
-    public void dogCatch()
+    public void dogCatch() //if the dog is playing catch
     {
         animationController.SetTrigger("ballThrow");
         dogPlayingFetch = true;
@@ -234,7 +244,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
         Debug.DrawRay(transform.position, raycastDirBall, Color.red);
 
-        if ( ballToFetch.transform.position.y > ballOnObjectHeight && Vector3.Distance(transform.position, ballToFetch.transform.position) < minDistanceToObjectBallStuck) //ball is stuck on an object
+        if (ballToFetch.transform.position.y > ballOnObjectHeight && Vector3.Distance(transform.position, ballToFetch.transform.position) < minDistanceToObjectBallStuck) //ball is stuck on an object
         {
             if (!animationController.GetBool("ballStuck") && !dogReturningBall && tmrDogIgnoreBall > ignoreBallTime)
             {
@@ -274,8 +284,6 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                                 currentObstacleAvoidancePathPointChosen = pathpointToCheck;
                                 goToBallWithAvoidancePath = true;
                             }
-
-
                         }
                     }
                     else
@@ -284,19 +292,18 @@ public class homeSteeringBehaviourDog : MonoBehaviour
                     }
                 }
             }
-            if (currentObstacleAvoidancePathPointChosen != Vector3.zero && !avoidancePathFinished)
+            if (currentObstacleAvoidancePathPointChosen != Vector3.zero && !avoidancePathFinished) // dog is still using avoidance
             {
                 if (Vector3.Distance(currentObstacleAvoidancePathPointChosen, transform.position) < minDistanceToAvoidancePoint)
                 {
-                    Debug.Log("seek ball");
+                    //if the dog finished the path, seek the ball
                     avoidancePathFinished = true;
                     currentObstacleAvoidancePathPointChosen = Vector3.zero;
                     goToBallWithAvoidancePath = false;
                     return steerForce = Seek(endPosition);
                 }
-                else
+                else //if the dog is still avoiding
                 {
-                    Debug.Log("seek obstacle point");
                     return steerForce = Seek(currentObstacleAvoidancePathPointChosen);
                 }
             }
@@ -307,7 +314,7 @@ public class homeSteeringBehaviourDog : MonoBehaviour
             }
         }
 
-        else //if dog can see the ball
+        else //if dog can see the ball, go to the ball
         {
             Debug.Log("see ball");
             Debug.Log("go for ball");
@@ -320,23 +327,23 @@ public class homeSteeringBehaviourDog : MonoBehaviour
 
     public Vector3 dogReturnBallBehaviour()
     {
-        if (tmrDogTrick > dogPickUpBallTime)
+        if (tmrDogTrick > dogPickUpBallTime) // dog pickup ball
         {
             ballToFetch.GetComponent<Collider>().isTrigger = true;
             ballToFetch.GetComponent<Rigidbody>().useGravity = false;
             ballToFetch.transform.position = dogMouthBone.transform.position;
         }
 
-        if (Vector3.Distance(transform.position, carpet.transform.position) > fetchBringBackDistance)
+        if (Vector3.Distance(transform.position, carpet.transform.position) > fetchBringBackDistance) //dog brings ball to carpet
         {
             return steerForce = dogFetchBehaviour(carpet.transform.position);
         }
-        else
+        else //if dog is near enough, drop ball en leave
         {
             ballToFetch.GetComponent<Collider>().isTrigger = false;
             ballToFetch.GetComponent<Rigidbody>().useGravity = true;
             dogReturningBall = false;
-            return steerForce = Flee(ballToFetch.transform.position);
+            return steerForce = Flee(ballToFetch.transform.position); //get away from ball
         }
     }
 

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//script for turning the camera at begin of the game
 public class headRotationSetRig : MonoBehaviour {
   public Transform mainCamVR;
     float cameraToTurn; 
-	// Use this for initialization
+
+
 	/*void Start () {
         Debug.LogError("setting rotation");
         transform.rotation = Quaternion.Euler(0, 0, 0);

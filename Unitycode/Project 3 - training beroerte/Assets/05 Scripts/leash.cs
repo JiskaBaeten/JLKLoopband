@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//using lineRenderer for leash
 public class leash : MonoBehaviour {
     public GameObject hand;
     LineRenderer lineRendererObject;
     public GameObject dogLeash;
-     GameObject dog;
+    GameObject dog;
     float dogLeashWidth;
     Animator dogAnimationController;
     // Use this for initialization
@@ -13,21 +14,15 @@ public class leash : MonoBehaviour {
         dog = GameObject.FindWithTag("Dog");
         dogLeash = GameObject.FindWithTag("dogLeash");
         dogAnimationController = dog.GetComponent<Animator>();
-        //    hand = GameObject.FindWithTag("handLeash");
         lineRendererObject = GetComponent<LineRenderer>();
         dogLeashWidth = 0.02f;
         lineRendererObject.SetWidth(dogLeashWidth, dogLeashWidth);
-        //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
-        //lineRendererObject.material = whiteDiffuseMat;
         GetComponent<Renderer>().material.color = Color.red;
         lineRendererObject.SetColors(Color.red, Color.red);
     }
 	
-	// Update is called once per frame
+	
 	void Update () {
-        // GameObject gameObjectLineRenderer = new GameObject();
-
-        // GameObject hand = GameObject.Find("manArm");
         if (!dogAnimationController.GetBool("dogIsLoose"))
         {
             lineRendererObject.enabled = true;

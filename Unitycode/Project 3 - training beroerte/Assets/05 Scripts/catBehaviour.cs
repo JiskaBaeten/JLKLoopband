@@ -48,7 +48,7 @@ public class catBehaviour : MonoBehaviour {
         audioCat = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         tmrCatWander += Time.deltaTime;
@@ -60,9 +60,10 @@ public class catBehaviour : MonoBehaviour {
             audioCat.Play();
             dog.GetComponent<steeringBehaviourDog>().reactOnCat();
         }
-        //calc movement + obstacle avoidance
+        
+        //cat behaviour is flee when in range 
         steerForce = catWanderBehaviour();
-        //steerForce += ObstacleAvoidance();
+     
        
         Truncate(ref steerForce, maxForce);// not > max
         acceleration = steerForce / mass;
@@ -124,7 +125,6 @@ public class catBehaviour : MonoBehaviour {
         {
             return Flee(dog.transform.position);
         }
-
         else {
         catIsRunning = false;
         if (tmrCatWander > maxWanderTime || Vector3.Distance(eindpos, transform.position) < 1)
@@ -135,9 +135,6 @@ public class catBehaviour : MonoBehaviour {
             //heading = velocity.normalized;//where we're going                  //where we are + forward + random         
             eindpos = transform.position + transform.forward * wanderDist + Random.onUnitSphere * wanderRadius;
             eindpos.y = transform.position.y;//same height     
-
-
-
         }
         return Seek(eindpos);
         }

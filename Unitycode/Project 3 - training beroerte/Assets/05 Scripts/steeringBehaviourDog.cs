@@ -12,6 +12,12 @@ public class steeringBehaviourDog : MonoBehaviour
     public int maxRunningSpeed;
     public float rotateSpeed = 0.3f;
 
+    //parameters for changing speed and rotation
+    byte dogRunningSpeed = 2;
+    byte dogRunningRotation = 2;
+    float dogWalkingRotation = 0.5f;
+    byte dogWalkingSpeed = 1;
+
     //steer forces
     public Vector3 velocity;
     public Vector3 acceleration;
@@ -131,7 +137,6 @@ public class steeringBehaviourDog : MonoBehaviour
             dogLookingForCall = false;
             if (currentPathPointDog == cameraMoveScript.nextPathPoint) //dog waiting for player?
             {  
-                   // animationController.SetTrigger("dogCalled");
                     animationController.SetBool("dogIsWaiting", true);        
             }
             else
@@ -162,23 +167,23 @@ public class steeringBehaviourDog : MonoBehaviour
         {
             if (animationController.GetBool("dogIsLoose") && !dogCalledInScript) // dog is running free,not called
             {
-                maxRunningSpeed = 2;
-                rotateSpeed = 2;
+                maxRunningSpeed = dogRunningSpeed;
+                rotateSpeed = dogRunningRotation;
                 steerForce = dogLooseBehaviour();
                 steerForce += ObstacleAvoidance();
             }
             else if (animationController.GetBool("dogIsLoose") && dogCalledInScript) //dog is running free, called so coming to owner
             {
-                maxRunningSpeed = 2;
-                rotateSpeed = 2;
+                maxRunningSpeed = dogRunningSpeed;
+                rotateSpeed = dogRunningRotation;
                 currentPathPointDog = cameraMoveScript.currentPathPoint;
                 steerForce = Seek(currentPathPointDog);
                 steerForce += ObstacleAvoidance();
             }
             else //dog is on leash
             {
-                rotateSpeed = 0.5f;
-                maxRunningSpeed = 1;
+                rotateSpeed = dogWalkingRotation;
+                maxRunningSpeed = dogWalkingSpeed;
                 steerForce = Seek(currentPathPointDog);
             }
         }
