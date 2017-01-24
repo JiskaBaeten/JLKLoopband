@@ -97,6 +97,7 @@ ModelImporter:
     400088: waist
     4300000: Abyssinian_2_MeshPart0
     4300002: Abyssinian_2_MeshPart1
+    7400000: Cat_Run_anim
     9500000: //RootNode
     13700000: Abyssinian_2_MeshPart0
     13700002: Abyssinian_2_MeshPart1
@@ -120,7 +121,125 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Cat_Run_anim
+      takeName: CINEMA_4D_Main
+      firstFrame: 10
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Abyssinian_2
+        weight: 1
+      - path: Abyssinian_2/Abyssinian_2_MeshPart0
+        weight: 1
+      - path: Abyssinian_2/Abyssinian_2_MeshPart1
+        weight: 1
+      - path: Abyssinian_3
+        weight: 1
+      - path: Abyssinian_3/hip
+        weight: 1
+      - path: Abyssinian_3/hip/lThigh
+        weight: 1
+      - path: Abyssinian_3/hip/lThigh/lLeg
+        weight: 1
+      - path: Abyssinian_3/hip/lThigh/lLeg/lShin
+        weight: 1
+      - path: Abyssinian_3/hip/lThigh/lLeg/lShin/lFoot
+        weight: 1
+      - path: Abyssinian_3/hip/rThigh
+        weight: 1
+      - path: Abyssinian_3/hip/rThigh/rLeg
+        weight: 1
+      - path: Abyssinian_3/hip/rThigh/rLeg/rShin
+        weight: 1
+      - path: Abyssinian_3/hip/rThigh/rLeg/rShin/rFoot
+        weight: 1
+      - path: Abyssinian_3/hip/tail1
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6/tail7
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6/tail7/tail8
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6/tail7/tail8/tail9
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6/tail7/tail8/tail9/tail10
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6/tail7/tail8/tail9/tail10/tail11
+        weight: 1
+      - path: Abyssinian_3/hip/tail1/tail2/tail3/tail4/tail5/tail6/tail7/tail8/tail9/tail10/tail11/tail12
+        weight: 1
+      - path: Abyssinian_3/hip/waist
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/lShldr
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/lShldr/lForeArm
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/lShldr/lForeArm/lWrist
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/lShldr/lForeArm/lWrist/lHand
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head/lEar
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head/leftEye
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head/lWhisker
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head/rEar
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head/rightEye
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/neck/head/rWhisker
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/rShldr
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/rShldr/rForeArm
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/rShldr/rForeArm/rWrist
+        weight: 1
+      - path: Abyssinian_3/hip/waist/abdomen/chest/rShldr/rForeArm/rWrist/rHand
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 10
     isReadable: 1
   meshes:
     lODScreenPercentages: []
