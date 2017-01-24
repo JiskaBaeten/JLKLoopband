@@ -66,8 +66,6 @@ public class steeringBehaviourDog : MonoBehaviour
     animationController = GetComponent<Animator>();
     cameraPlayer = GameObject.FindWithTag(cameraTopObjectTag);
     currentPathPointDog = cameraMoveScript.currentPathPoint;
-
-    //animationController.SetBool("dogIsLoose", true);
   }
 
   void Update()
