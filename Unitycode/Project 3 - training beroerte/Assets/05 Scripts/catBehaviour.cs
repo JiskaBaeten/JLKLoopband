@@ -7,8 +7,8 @@ public class catBehaviour : MonoBehaviour {
     public int maxForce = 150;
     public float mass = 100;
     public float gravity = 9.81f;
-    public int maxRunningSpeed = 2;
-    float rotateSpeed = 0.5f;
+    int maxRunningSpeed = 2;
+    float rotateSpeed = 1.5f;
     float tmrCatWander;
     float maxWanderTime = 3;
     float wanderDist;
