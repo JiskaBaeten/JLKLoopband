@@ -61,7 +61,7 @@ public class steeringBehaviourDog : MonoBehaviour
   void Start()
   {
     arduinoSpeedScript = GameObject.FindWithTag(serialReadWriteTag).GetComponent<MessageReadWrite>();
-    maxRunningSpeed = (int)arduinoSpeedScript.calculatedSpeed;
+    maxRunningSpeed = Mathf.CeilToInt((float)arduinoSpeedScript.calculatedSpeed);
     controller = GetComponent<CharacterController>();
     animationController = GetComponent<Animator>();
     cameraPlayer = GameObject.FindWithTag(cameraTopObjectTag);
@@ -70,7 +70,7 @@ public class steeringBehaviourDog : MonoBehaviour
 
   void Update()
   {
-    maxRunningSpeed = (int)arduinoSpeedScript.calculatedSpeed;
+    maxRunningSpeed = Mathf.CeilToInt((float)arduinoSpeedScript.calculatedSpeed);
     dogWaitForOwner();
     tmrDogLook += Time.deltaTime;
     tmrDogFree += Time.deltaTime;
@@ -180,7 +180,7 @@ public class steeringBehaviourDog : MonoBehaviour
       else //dog is on leash
       {
         rotateSpeed = dogWalkingRotation;
-        maxRunningSpeed = dogWalkingSpeed;
+        //maxRunningSpeed = dogWalkingSpeed;        //uncomment this line if not using optoslot
         steerForce = Seek(currentPathPointDog);
       }
     }

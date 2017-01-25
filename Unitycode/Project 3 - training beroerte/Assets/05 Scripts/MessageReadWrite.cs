@@ -11,7 +11,7 @@ public class MessageReadWrite : MonoBehaviour
   public int maxSpeed = 12;
   public double minSpeed = 0.2;
   private List<double> speedList;
-  private double messageDouble;
+  private double messageDouble, median;
   public double calculatedSpeed;
   private byte totNumbersToGetMedianfrom = 10;
 
@@ -33,11 +33,15 @@ public class MessageReadWrite : MonoBehaviour
 
     //recieve data
     string message = serialController.ReadSerialMessage();
-    if (message == null)
-      return;
+    if (message == null) { return; }
 
-    Debug.Log("data recieved: " + message);
-    messageDouble = double.Parse(message);
+    double.TryParse(message,out messageDouble);
+
+    if (messageDouble == 0)
+    {
+            calculatedSpeed = 0;
+            return;
+    }
     if (messageDouble > minSpeed && messageDouble < maxSpeed) //if value is between the min and max values
     {
       speedList.Add(messageDouble);
@@ -60,8 +64,14 @@ public class MessageReadWrite : MonoBehaviour
   }
   void CalculateSpeed()
   {
-    speedList.Sort();
-    calculatedSpeed = speedList[3];
+    calculatedSpeed = 0;
+    median = 0;
+
+    foreach (double speedData in speedList)
+    {
+        median += speedData;
+    }
+    calculatedSpeed = (median / 10);
     Debug.Log("speed is: " + calculatedSpeed);
   }
 
